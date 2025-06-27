@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewMetrics - Select Your Beer</title>
+    <!-- Link to shared stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Optional: Add Google Fonts if your style.css doesn't import them -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Specific styles for this page, can be moved to style.css */
+        body {
+            display: block; /* Override flex centering from shared style if needed */
+            padding: 20px; /* Add some padding back */
+        }
+        header, main, footer {
+            max-width: 700px; /* Control content width */
+            margin: 20px auto; /* Center content blocks */
+            padding: 0 15px;
+        }
+        header h1, header h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--header-bg, #343a40); /* Use variable from style.css or fallback */
+        }
+        header h1 span {
+            color: var(--primary-color, #e67e22); /* Use variable */
+            font-weight: 700;
+        }
+        header h2 {
+            font-size: 1.2em;
+            font-weight: 400;
+            color: var(--dark-grey, #6c757d);
+        }
+
+        .beer-item {
+            border: 1px solid var(--medium-grey, #ced4da);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            background-color: var(--white, #ffffff);
+            border-radius: var(--border-radius, 6px);
+            cursor: pointer;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: var(--box-shadow-light, 0 2px 5px rgba(0,0,0,0.06));
+        }
+        .beer-item:hover {
+            background-color: #fdf8f2; /* Very light orange tint on hover */
+            box-shadow: var(--box-shadow, 0 4px 12px rgba(0,0,0,0.08));
+        }
+        .beer-item h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: var(--header-bg, #343a40);
+        }
+        .beer-item p {
+            margin-bottom: 0;
+            font-size: 0.95em;
+            color: var(--dark-grey, #6c757d);
+        }
+        #error-message {
+            /* Uses .error-message styles from style.css */
+            text-align: center; /* Center error text */
+            margin-top: 20px;
+        }
+        #loading-batches {
+            padding: 30px;
+            text-align: center;
+            font-style: italic;
+            color: var(--dark-grey, #6c757d);
+            font-size: 1.1em;
+        }
+        footer {
+             text-align: center;
+             margin-top: 40px;
+             padding-top: 20px;
+             border-top: 1px solid var(--medium-grey, #ced4da);
+             font-size: 0.9em;
+             color: var(--dark-grey, #6c757d);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Welcome to <span id="brewery-name">[Brewery Name Loading...]</span>!</h1>
+        <h2>Please select the beer you are drinking:</h2>
+    </header>
+
+    <main>
+        <div id="error-message" class="error-message" style="display: none;">
+            <!-- Error messages will be displayed here -->
+        </div>
+        <div id="loading-batches">Loading available beers...</div>
+        <div id="beer-list-container">
+            <!-- Beer batches will be loaded here by patron.js -->
+        </div>
+    </main>
+
+    <footer>
+        Powered by BrewMetrics
+    </footer>
+
+    <!-- Firebase SDK (Required for Firestore access) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script> <!-- Include Auth SDK just in case -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+      // Ensure this config is identical to other pages (index, dashboard)
+      const firebaseConfig = {
+      apiKey: "AIzaSyDmvUqgMlnaQFiyqlo50D66fX0Bwav3j1k",
+      authDomain: "brewmetrics-xyz-app-e8d51.firebaseapp.com",
+      projectId: "brewmetrics-xyz-app-e8d51",
+      storageBucket: "brewmetrics-xyz-app-e8d51.firebasestorage.app",
+      messagingSenderId: "391623246374",
+      appId: "1:391623246374:web:3b8e39db5fff674befdce7",
+      measurementId: "G-MHT3H2ZVRY"
+};
+
+      // Initialize Firebase (Make db globally accessible for patron.js)
+      let app, db, auth; // Declare globally within this script's scope
+      try {
+          app = firebase.initializeApp(firebaseConfig);
+          auth = firebase.auth(); // Initialize Auth service
+          db = firebase.firestore(); // Initialize Firestore service
+          console.log("Firebase Initialized on Patron Page!");
+      } catch (e) {
+          console.error("Error initializing Firebase on Patron page:", e);
+          // Display critical error to the user
+          const errorDiv = document.getElementById('error-message');
+          const loadingDiv = document.getElementById('loading-batches');
+          if (errorDiv) {
+              errorDiv.textContent = 'Critical Error: Could not initialize application. Please try again later.';
+              errorDiv.style.display = 'block';
+          }
+          if (loadingDiv) loadingDiv.style.display = 'none';
+          // Optionally hide the whole main section or show a full-page error
+          document.querySelector('main').style.visibility = 'hidden';
+      }
+    </script>
+
+    <!-- Custom Patron Script (ensure this runs AFTER Firebase init) -->
+    <script src="patron.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+// --- START OF script.js ---
+
+// Wait for the HTML document to be fully loaded before running script logic
+document.addEventListener('DOMContentLoaded', () => {
+
+    console.log("DOM fully loaded and parsed"); // Add this line for confirmation
+
+    // --- Get DOM Elements ---
+    // (Keep all your getElementById calls here)
+    const loginForm = document.getElementById('login'); // Should find it now
+    const registerForm = document.getElementById('register'); // Should find it now
+    const loginEmailInput = document.getElementById('login-email');
+    const loginPasswordInput = document.getElementById('login-password');
+    const registerBreweryNameInput = document.getElementById('register-brewery-name');
+    const registerLocationInput = document.getElementById('register-location');
+    const registerGmbInput = document.getElementById('register-gmb');
+    const registerEmailInput = document.getElementById('register-email');
+    const registerPasswordInput = document.getElementById('register-password');
+    const errorMessageDiv = document.getElementById('error-message'); // Should find it now
+    const showRegisterLink = document.getElementById('show-register'); // Should find it now
+    const showLoginLink = document.getElementById('show-login'); // Should find it now
+    const loginSection = document.getElementById('login-form'); // Should find it now
+    const registerSection = document.getElementById('register-form'); // Should find it now
+
+    // --- Add Event Listeners ---
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Clear previous errors
+            clearAuthError();
+            // Get values at submission time
+            const email = loginEmailInput ? loginEmailInput.value : null;
+            const password = loginPasswordInput ? loginPasswordInput.value : null;
+
+            if (!email || !password) {
+                 displayAuthError("Please enter both email and password.");
+                 return;
+            }
+
+            console.log(`Attempting login for: ${email}`); // Log attempt
+
+            // Use 'auth' and 'db' which are globally available from the inline script in index.html
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log("User logged in successfully:", userCredential.user.uid, userCredential.user.email);
+                    // Optional: Reset form after successful login? Usually not needed on redirect.
+                    // if (loginForm) loginForm.reset(); // Check if loginForm exists before reset
+                    window.location.href = 'dashboard.html'; // Redirect
+                })
+                .catch((error) => {
+                    console.error("Login Error:", error);
+                    // Display mapped error message
+                    displayAuthError(error.code); // Pass error code for better mapping
+                    // console.log(`Login failed: ${error.message} ${loginForm ? 'Form available' : 'Form NOT available'}`); // Debugging line
+                    // The loginForm.reset error suggests loginForm might be null here too? Very odd if listener attached.
+                    // Let's remove reset for now as redirect happens anyway.
+                });
+        });
+    } else {
+        console.error("Login form element not found!");
+    }
+
+    if (registerForm) {
+         registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearAuthError();
+            // Get values at submission time
+            const email = registerEmailInput ? registerEmailInput.value : null;
+            const password = registerPasswordInput ? registerPasswordInput.value : null;
+            const breweryName = registerBreweryNameInput ? registerBreweryNameInput.value : null;
+            const location = registerLocationInput ? registerLocationInput.value : null;
+            const gmbLink = registerGmbInput ? registerGmbInput.value : ''; // Default to empty string
+
+            if (!email || !password || !breweryName || !location) {
+                 displayAuthError("Please fill in all required registration fields.");
+                 return;
+            }
+            if (password.length < 6) {
+                displayAuthError("Password must be at least 6 characters long.");
+                return;
+            }
+
+            console.log(`Attempting registration for: ${email}`);
+
+            auth.createUserWithEmailAndPassword(email, password)
+                 .then((userCredential) => {
+                     const user = userCredential.user;
+                     console.log('User registered:', user.uid);
+                     // Now save brewery details to Firestore
+                     // Use 'db' declared globally by index.html inline script
+                     return db.collection('breweries').doc(user.uid).set({
+                         breweryName: breweryName,
+                         location: location,
+                         gmbLink: gmbLink,
+                         email: user.email, // Use the email from the auth user
+                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                     });
+                 })
+                .then(() => {
+                     console.log('Brewery details saved to Firestore.');
+                      // if (registerForm) registerForm.reset(); // Reset form
+                     window.location.href = 'dashboard.html'; // Redirect
+                 })
+                 .catch((error) => {
+                     console.error("Registration or Firestore Error:", error);
+                     displayAuthError(error.code); // Pass error code
+                 });
+         });
+    } else {
+         console.error("Register form element not found!");
+    }
+
+    // --- Toggle Forms ---
+    if (showRegisterLink && showLoginLink && loginSection && registerSection) {
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginSection.style.display = 'none';
+            registerSection.style.display = 'block';
+            clearAuthError();
+            // Optional: Clear form fields when toggling
+             if (loginForm) loginForm.reset();
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerSection.style.display = 'none';
+            loginSection.style.display = 'block';
+            clearAuthError();
+             // Optional: Clear form fields when toggling
+             if (registerForm) registerForm.reset();
+        });
+    } else {
+        // Log which elements specifically weren't found
+        if (!showRegisterLink) console.error("Show Register Link not found");
+        if (!showLoginLink) console.error("Show Login Link not found");
+        if (!loginSection) console.error("Login Section not found");
+        if (!registerSection) console.error("Register Section not found");
+    }
+
+    // --- Error Handling Functions ---
+    function displayAuthError(errorCodeOrMessage) {
+        let message = errorCodeOrMessage; // Default to the raw message/code
+         console.log("Displaying error for code/message:", errorCodeOrMessage); // Debugging
+        if (errorMessageDiv) {
+            // Map common error codes to user-friendly messages
+            switch (errorCodeOrMessage) {
+                 case 'auth/invalid-email':
+                     message = 'Please enter a valid email address.';
+                     break;
+                 case 'auth/user-not-found':
+                 case 'auth/wrong-password':
+                 case 'auth/invalid-credential': // Catch this modern code too
+                     message = 'Incorrect email or password. Please try again.';
+                     break;
+                 case 'auth/email-already-in-use':
+                    message = 'This email address is already registered. Please login or use a different email.';
+                    break;
+                 case 'auth/weak-password':
+                     message = 'Password is too weak. Please use at least 6 characters.';
+                     break;
+                 case 'auth/missing-password':
+                     message = 'Please enter your password.';
+                     break;
+                 // Add more mappings as needed
+                 default:
+                     // If it's not a recognized code, display it or a generic message
+                     // Avoid showing raw internal messages unless debugging
+                     console.error("Unhandled Auth Error Code:", errorCodeOrMessage);
+                     message = 'An unexpected error occurred. Please try again.';
+            }
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.classList.remove('hidden');
+        } else {
+            console.error("Error display element (#error-message) not found!");
+        }
+    }
+
+    function clearAuthError() {
+         if (errorMessageDiv) {
+            errorMessageDiv.textContent = '';
+            errorMessageDiv.classList.add('hidden');
+        }
+    }
+
+}); // End of DOMContentLoaded listener
+
+// --- END OF script.js ---

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title is now set dynamically by JS -->
+    <title>Print QR Codes - BrewMetrics</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Base styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Print-specific styles */
+        :root {
+            /* Adjust these base sizes as needed */
+            --qr-print-base-size: 30mm; /* Base target size for QR image */
+            --cut-gap: 5mm;
+            --item-padding: 2mm;
+            --print-margin: 8mm;
+            /* Calculate min col width for auto layout */
+            --min-col-width-auto: calc(var(--qr-print-base-size) + (2 * var(--item-padding)) + var(--cut-gap));
+        }
+
+        body {
+            background-color: white;
+            font-family: var(--font-family-body, 'Open Sans', sans-serif);
+            color: black;
+            margin: 20px; /* Screen margin */
+        }
+
+        /* H1 visible on screen AND print now, updated by JS */
+        h1 {
+             font-size: 14pt;
+             text-align: center;
+             margin-bottom: 8mm;
+             color: black;
+             font-family: var(--font-family-headings, 'Montserrat', sans-serif);
+        }
+
+        /* Instructions visible only on screen */
+        .print-instructions { display: block; text-align: center; margin-bottom: 15px;}
+
+        #qr-grid-container {
+            display: grid;
+            gap: var(--cut-gap);
+            max-width: calc(210mm - 2 * var(--print-margin)); /* A4 width approximation for screen */
+            margin: 0 auto;
+            padding: 0;
+            border: 1px solid #eee; /* Show border on screen */
+        }
+
+        /* Default grid setup for AUTO layout on screen */
+        #qr-grid-container[data-layout="auto"],
+        #qr-grid-container:not([data-layout]) /* Fallback if attribute not set */
+        {
+            grid-template-columns: repeat(auto-fill, minmax(var(--min-col-width-auto), 1fr));
+        }
+
+        /* Specific grid setups for fixed layouts (apply both screen/print initially) */
+        #qr-grid-container[data-layout="1x1"] { grid-template-columns: 1fr; max-width: 120mm; }
+        #qr-grid-container[data-layout="2x2"] { grid-template-columns: repeat(2, 1fr); }
+        #qr-grid-container[data-layout="3x3"] { grid-template-columns: repeat(3, 1fr); }
+        #qr-grid-container[data-layout="4x4"] { grid-template-columns: repeat(4, 1fr); }
+
+
+        .qr-code-item {
+            border: 1px dashed #ccc; /* Screen cutting guide */
+            padding: var(--item-padding);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* Space out content */
+            text-align: center;
+            page-break-inside: avoid;
+            box-sizing: border-box;
+            overflow: hidden;
+            aspect-ratio: 1 / 1.2; /* Default aspect ratio */
+        }
+
+        /* Specific layout adjustments for items */
+        [data-layout="1x1"] .qr-code-item { aspect-ratio: 1 / 1.1; padding: 5mm;}
+        [data-layout="3x3"] .qr-code-item { aspect-ratio: 1 / 1.3; padding: 1mm;}
+        [data-layout="4x4"] .qr-code-item { aspect-ratio: 1 / 1.4; padding: 0.5mm;}
+
+
+        .qr-code-item .qr-code-img-container {
+            width: 85%; /* Relative width */
+            max-width: calc(var(--qr-print-base-size) * 1.5); /* Max size */
+            margin-bottom: 1mm;
+            flex-grow: 1; /* Allow container to grow */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Adjust QR size based on layout */
+        [data-layout="1x1"] .qr-code-img-container { width: 90%; max-width: 90mm; }
+        [data-layout="3x3"] .qr-code-img-container { width: 80%; max-width: var(--qr-print-base-size); }
+        [data-layout="4x4"] .qr-code-img-container { width: 75%; max-width: calc(var(--qr-print-base-size) * 0.8); }
+
+
+        .qr-code-item img,
+        .qr-code-item canvas {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            object-fit: contain; /* Fit QR code within container */
+        }
+
+        .qr-code-item .brewery-name {
+            font-size: 8pt;
+            font-weight: 600;
+            color: black;
+            margin-bottom: 0.5mm;
+            line-height: 1.1;
+            word-break: break-word;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+         /* Adjust font size based on layout */
+        [data-layout="1x1"] .brewery-name { font-size: 12pt; }
+        [data-layout="3x3"] .brewery-name { font-size: 7pt; }
+        [data-layout="4x4"] .brewery-name { font-size: 6pt; }
+
+        .qr-code-item .scan-prompt {
+            font-size: 6pt;
+            color: #444;
+            margin-bottom: 0;
+            line-height: 1;
+             flex-shrink: 0; /* Prevent shrinking */
+        }
+        /* Adjust font size based on layout */
+        [data-layout="1x1"] .scan-prompt { font-size: 9pt; }
+        [data-layout="3x3"] .scan-prompt { font-size: 5pt; }
+        [data-layout="4x4"] .scan-prompt { font-size: 4pt; }
+
+        /* --- Print Media Styles --- */
+        @media print {
+            body {
+                margin: var(--print-margin);
+                width: auto; height: auto;
+            }
+
+            h1 { /* Already visible, ensure correct print size */
+                 font-size: 14pt;
+                 margin-bottom: 8mm;
+            }
+
+            /* Hide instructions and screen borders */
+            .print-instructions { display: none; }
+            #qr-grid-container { border: none; }
+            .qr-code-item { border: none; } /* No dashed border */
+
+            #qr-grid-container {
+                max-width: 100%; /* Use full printable area */
+                width: 100%;
+                height: calc(100vh - 2 * var(--print-margin) - 15mm); /* Attempt to fill page height minus margins/title */
+                gap: var(--cut-gap); /* Ensure gap */
+            }
+
+             /* Ensure fixed layouts use equal rows for better page fill */
+            #qr-grid-container[data-layout="1x1"] { grid-template-rows: 1fr; align-content: center; justify-content: center; }
+            #qr-grid-container[data-layout="2x2"] { grid-template-rows: repeat(2, 1fr); }
+            #qr-grid-container[data-layout="3x3"] { grid-template-rows: repeat(3, 1fr); }
+            #qr-grid-container[data-layout="4x4"] { grid-template-rows: repeat(4, 1fr); }
+            /* Auto layout for print - might want specific min width */
+            #qr-grid-container[data-layout="auto"] {
+                grid-template-columns: repeat(auto-fill, minmax(calc(var(--qr-print-base-size) + var(--cut-gap)), 1fr));
+                 /* Maybe define rows too? grid-auto-rows: minmax(...); */
+            }
+
+            .qr-code-item {
+                 height: 100%; /* Fill grid cell height */
+                 width: 100%; /* Fill grid cell width */
+                 padding: 1mm; /* Minimal print padding */
+                 justify-content: center; /* Better center alignment for print */
+             }
+             /* Adjustments for 1x1 print */
+             [data-layout="1x1"] .qr-code-item { max-height: 150mm; } /* Limit single item height */
+
+
+            /* QR image container sizing for print can be adjusted here if needed */
+            /* Example: Ensure QR code doesn't get too small on dense grids */
+            [data-layout="4x4"] .qr-code-item .qr-code-img-container { min-width: 15mm; min-height: 15mm;}
+
+            /* Font sizes already adjusted by layout outside @media print, review if needed */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Title is set by JS -->
+    <h1>BrewMetrics Survey QR Codes</h1>
+    <!-- Instructions shown on screen -->
+    <p class="print-instructions">Generating QR codes based on your selection. Use your browser's Print function (Ctrl+P or Cmd+P) to print or save as PDF.</p>
+
+    <div id="qr-grid-container" data-layout="auto"> <!-- Default to auto, JS will update -->
+        <!-- QR Codes will be dynamically inserted here -->
+        <p>Loading QR Codes...</p>
+    </div>
+
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+    <!-- Your NEW JS file -->
+    <script src="print_template.js" defer></script>
+
+</body>
+</html>

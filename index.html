@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewMetrics - Login</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Styles specific to dynamically hiding/showing login/register forms */
+        #register-form { display: none; } /* Hide register form by default */
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-title">BrewMetrics Brewery Portal</h1>
+
+        <div class="auth-container">
+            <div id="error-message" class="error-message hidden"></div>
+
+            <div id="login-form">
+                <h2 class="form-heading">Login</h2>
+                <form id="login">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div class="toggle-link-container">
+                    <p>Don't have an account? <a href="#" id="show-register">Register here</a></p>
+                </div>
+            </div>
+
+            <div id="register-form">
+                <h2 class="form-heading">Register Brewery</h2>
+                <form id="register">
+                    <div class="form-group">
+                        <label for="register-brewery-name">Brewery Name</label>
+                        <input type="text" id="register-brewery-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-location">Location (City, ST)</label>
+                        <input type="text" id="register-location" required placeholder="e.g., Portland, OR">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-gmb">Google My Business Review Link (Optional)</label>
+                        <input type="url" id="register-gmb" placeholder="https://...">
+                        <small class="help-text">Find this via Google Search/Maps > Your Business > Get More Reviews > Copy Link.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required autocomplete="new-password" minlength="6">
+                        <small class="help-text">Minimum 6 characters.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required autocomplete="new-password" minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <div class="toggle-link-container">
+                    <p>Already have an account? <a href="#" id="show-login">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmvUqgMlnaQFiyqlo50D66fX0Bwav3j1k",
+            authDomain: "brewmetrics-xyz-app-e8d51.firebaseapp.com",
+            projectId: "brewmetrics-xyz-app-e8d51",
+            storageBucket: "brewmetrics-xyz-app-e8d51.appspot.com",
+            messagingSenderId: "391623246374",
+            appId: "1:391623246374:web:3b8e39db5fff674befdce7",
+            measurementId: "G-MHT3H2ZVRY"
+        };
+
+        // Initialize Firebase
+        let auth, db;
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            } else {
+                firebase.app();
+            }
+            auth = firebase.auth();
+            db = firebase.firestore();
+            console.log("Firebase Initialized on Index Page!");
+        } catch (e) {
+            console.error("Error initializing Firebase:", e);
+            const errorDiv = document.getElementById('error-message');
+            if(errorDiv) {
+                errorDiv.textContent = 'Critical Error: Could not connect to Firebase services. Please check configuration or network.';
+                errorDiv.classList.remove('hidden');
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+
+    <footer id="contact-footer">
+        <div class="container footer-container">
+            <p>Contact: brewcrew@brewmetrics.com | (928)298-5415 </p>
+            <p>Follow us: https://www.instagram.com/brew.metrics.app/</p>
+            <div class="legal-links" style="text-align: center; margin-top: 15px; font-size: 0.9em; padding-top: 10px; border-top: 1px solid #eee;">
+                <a href="/privacy-policy.html" style="margin: 0 8px; color: inherit; text-decoration: none;">Privacy Policy</a> |
+                <a href="/terms-of-service.html" style="margin: 0 8px; color: inherit; text-decoration: none;">Terms of Service</a> |
+                <a href="/cookie-policy.html" style="margin: 0 8px; color: inherit; text-decoration: none;">Cookie Policy</a> |
+                <a href="/disclaimer.html" style="margin: 0 8px; color: inherit; text-decoration: none;">Disclaimer</a> |
+                <a href="/refund-cancellation-policy.html" style="margin: 0 8px; color: inherit; text-decoration: none;">Refund & Cancellation Policy</a>
+            </div>
+            <p class="copyright">© 2025 BrewMetrics</p>
+        </div>
+    </footer>
+</body>
+</html>

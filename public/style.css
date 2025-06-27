@@ -1,0 +1,874 @@
+/* --- Global Styles & Brewery Theme Variables --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600;700&display=swap'); /* Added 700 weight for Open Sans */
+
+:root {
+    /* -- Base Color Palette -- */
+    --brew-brown: #6B4F4F;
+    --brew-amber: #E09F3E;
+    --brew-gold-highlight: #FFBF00;
+    --brew-tan: #FFF8DC;
+    --brew-off-white: #F8F9FA;
+    --brew-cream: #FAF7F2;
+    --brew-dark: #343A40;
+    --brew-deep-brown: #3A2E2E;
+    --brew-muted-green: #5F7161;
+    --brew-green-accent: #4CAF50;
+    --brew-muted-red: #A44A3F;
+    --brew-red-accent: #D32F2F;
+    --brew-link-blue: #4E8D7C;
+    --brew-dark-text: #212529;
+    --brew-muted-text: #6c757d;
+
+    /* -- Taste Profile Stat Colors -- */
+    --brew-sweetness-color: #FFC107;
+    --brew-acidity-color: #CDDC39;
+    --brew-bitterness-color: #8BC34A;
+    --brew-body-color: #795548;
+    --brew-carbonation-color: #03A9F4;
+    --brew-malt-color: #FF9800;
+    --brew-hop-flavor-color: #4CAF50;
+    --brew-finish-color: #607D8B;
+    --brew-icon-default-color: var(--brew-brown);
+
+    /* -- Sidebar Legibility Variables -- */
+    --brew-sidebar-text: #E0E0E0;
+    --brew-sidebar-text-hover: #FFFFFF;
+    --brew-sidebar-icon: #A0AEC0;
+    --brew-sidebar-icon-active: var(--brew-deep-brown);
+
+    /* -- Feedback Stat Colors (General) -- */
+    --feedback-stat-color-responses: var(--brew-link-blue);
+    --feedback-stat-color-rating: var(--brew-amber);
+    --feedback-stat-color-abv: var(--brew-muted-red);
+    --feedback-stat-color-ibu: var(--brew-muted-green);
+    --feedback-stat-color-date: var(--brew-dark);
+    --feedback-stat-color-customq: var(--brew-brown);
+
+    /* -- Structural & General UI Variables -- */
+    --text-color: var(--brew-dark-text);
+    --white: #ffffff;
+    --light-grey: var(--brew-off-white);
+    --medium-grey: #ced4da;
+    --dark-grey: var(--brew-muted-text);
+    --border-color-light: #e9ecef;
+    --border-color-medium: #ced4da;
+    --danger-color: var(--brew-red-accent);
+    --success-color: var(--brew-green-accent);
+
+    /* -- Typography -- */
+    --font-family-headings: 'Montserrat', sans-serif;
+    --font-family-body: 'Open Sans', sans-serif;
+
+    /* -- UI Elements -- */
+    --border-radius: 8px; /* Slightly more rounded for a modern feel */
+    --border-radius-small: 4px;
+    --box-shadow-subtle: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --box-shadow-card: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --box-shadow-interactive: 0 6px 18px rgba(0,0,0,0.12);
+    --box-shadow-strong: 0 8px 25px rgba(0,0,0,0.15);
+
+    /* NEW: Variables for visual upgrade */
+    --card-bg: var(--white);
+    --card-border: var(--border-color-light);
+    --section-padding: 25px 30px;
+    --item-padding: 20px;
+}
+
+/* Apply font-family and box-sizing globally */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+/* --- MODIFIED BODY FOR SIDEBAR LAYOUT --- */
+body {
+    font-family: var(--font-family-body);
+    background-color: var(--brew-cream);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-headings);
+    color: var(--brew-deep-brown);
+    margin-bottom: 0.75em;
+    line-height: 1.3;
+    font-weight: 700; /* Ensure headings are bold */
+}
+
+p {
+    margin-bottom: 1em;
+    color: var(--brew-dark-text);
+}
+
+a {
+    color: var(--brew-link-blue);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+a:hover {
+    color: #3a6b5d; /* Darker teal */
+    text-decoration: underline;
+}
+
+/* =========================================== */
+/* ========== INDEX.HTML STYLES ============== */
+/* =========================================== */
+.main-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 50px auto;
+    padding: 20px;
+}
+.page-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--dark-grey);
+}
+.auth-container {
+    background-color: var(--card-bg);
+    padding: 2.5rem 3rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-card);
+    width: 100%;
+    border-top: 5px solid var(--brew-amber);
+}
+.form-heading {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--brew-deep-brown);
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--dark-grey);
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="url"],
+#dashboard-content-area .form-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color-medium);
+    border-radius: var(--border-radius-small); /* Consistent smaller radius for inputs */
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: var(--white);
+    color: var(--text-color);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
+}
+#dashboard-content-area textarea.form-input {
+    resize: vertical;
+    min-height: 80px;
+}
+.form-group input:focus,
+#dashboard-content-area .form-input:focus {
+    outline: none;
+    border-color: var(--brew-amber);
+    box-shadow: 0 0 0 3px rgba(224, 159, 62, 0.25);
+}
+.help-text,
+#dashboard-content-area small.help-text {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--dark-grey);
+    margin-top: 0.5rem;
+}
+.btn {
+    display: inline-block;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--white);
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--brew-brown);
+    border: 1px solid var(--brew-brown);
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: var(--border-radius); /* Updated border radius */
+    transition: all 0.2s ease-in-out;
+    font-family: var(--font-family-body);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--box-shadow-subtle);
+}
+.btn:hover {
+    background-color: #523d3d;
+    border-color: #523d3d;
+    box-shadow: var(--box-shadow-interactive);
+    transform: translateY(-2px); /* Enhanced hover effect */
+}
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: var(--box-shadow-subtle);
+}
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(107, 79, 79, 0.35);
+}
+.btn-primary {
+    background-color: var(--brew-amber);
+    border-color: var(--brew-amber);
+    color: var(--brew-deep-brown) !important;
+}
+.btn-primary:hover {
+    background-color: #c88c31;
+    border-color: #c88c31;
+}
+.btn-primary:focus {
+    box-shadow: 0 0 0 3px rgba(224, 159, 62, 0.3);
+}
+/* NEW: Danger button style for actions like "Deactivate" */
+.btn-danger {
+    background-color: var(--brew-muted-red);
+    border-color: var(--brew-muted-red);
+    color: var(--white) !important;
+}
+.btn-danger:hover {
+    background-color: var(--brew-red-accent);
+    border-color: var(--brew-red-accent);
+}
+.btn-danger:focus {
+    box-shadow: 0 0 0 3px rgba(164, 74, 63, 0.35);
+}
+
+.auth-container .btn-primary {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+}
+.toggle-link-container { text-align: center; margin-top: 2rem; font-size: 0.95rem; }
+.toggle-link-container p { margin-bottom: 0; }
+.toggle-link-container a { color: var(--brew-amber); text-decoration: none; font-weight: 600; }
+.toggle-link-container a:hover { color: #c88c31; }
+
+.form-message {
+    padding: 0.8rem 1.25rem; margin-top: 1rem; margin-bottom: 1rem;
+    border-radius: var(--border-radius-small); font-size: 0.9em; text-align: left;
+    border: 1px solid transparent; border-left-width: 4px;
+}
+.error-message, .form-message.error-message {
+    color: var(--danger-color); background-color: #fdecea;
+    border-color: var(--danger-color);
+}
+.success-message, .form-message.success-message {
+    color: var(--success-color); background-color: #e8f5e9;
+    border-color: var(--success-color);
+}
+.success-message::before {
+    content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900;
+    margin-right: 8px; color: var(--success-color);
+}
+.form-message.loading-message {
+    background-color: #e3f2fd; color: #1565c0; border-color: #90caf9;
+}
+.form-message.hidden { display: none !important; }
+
+
+/* ========================================================================== */
+/* === DASHBOARD SIDEBAR LAYOUT & ENHANCED THEME === */
+/* ========================================================================== */
+#loading-indicator {
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh; font-size: 1.3em; color: var(--brew-muted-text);
+    position: fixed; top: 0; left: 0; width: 100%;
+    background-color: var(--brew-cream); z-index: 2000;
+}
+#app-container { display: flex; width: 100%; flex-grow: 1; overflow: hidden; }
+#app-container.hidden { display: none !important; }
+
+#sidebar {
+    width: 280px;
+    background-color: var(--brew-deep-brown);
+    color: var(--brew-sidebar-text);
+    display: flex; flex-direction: column; height: 100vh;
+    position: fixed; left: 0; top: 0;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1); /* Enhanced shadow */
+    z-index: 1000; transition: width 0.3s ease; flex-shrink: 0;
+}
+.sidebar-header {
+    padding: 25px 20px; text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+}
+.sidebar-logo { font-size: 2.2em; margin-right: 12px; color: var(--brew-amber); }
+.sidebar-header h2 {
+    margin: 0; font-family: var(--font-family-headings); font-size: 1.7em;
+    color: var(--white) !important; font-weight: 700;
+    border-bottom: none; padding-bottom: 0;
+}
+.sidebar-header h2 i { display: none; }
+.sidebar-nav { flex-grow: 1; overflow-y: auto; padding-top: 20px; }
+.sidebar-nav .nav-link {
+    display: flex; align-items: center; padding: 14px 25px;
+    color: var(--brew-sidebar-text);
+    text-decoration: none; font-size: 1rem; font-weight: 500; /* Changed from 500 */
+    transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease, padding-left 0.2s ease;
+    border-left: 4px solid transparent;
+}
+.sidebar-nav .nav-link i {
+    color: var(--brew-sidebar-icon);
+    margin-right: 15px; width: 22px; text-align: center; font-size: 1.2em;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.sidebar-nav .nav-link:hover {
+    background-color: rgba(255,255,255,0.08);
+    color: var(--brew-sidebar-text-hover);
+    border-left-color: var(--brew-amber);
+    padding-left: 30px; /* Indent on hover */
+}
+.sidebar-nav .nav-link:hover i {
+    color: var(--brew-sidebar-text-hover);
+    transform: scale(1.1); /* Slight icon zoom */
+}
+.sidebar-nav .nav-link.active-link {
+    background-color: var(--brew-amber);
+    color: var(--brew-deep-brown);
+    font-weight: 700; /* Bolder for active */
+    border-left-color: var(--brew-gold-highlight);
+    padding-left: 25px; /* Keep padding consistent with non-hovered */
+}
+.sidebar-nav .nav-link.active-link i {
+    color: var(--brew-sidebar-icon-active);
+    transform: scale(1);
+}
+.sidebar-footer {
+    padding: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.9em; text-align: center; flex-shrink: 0;
+}
+.sidebar-footer span, .sidebar-footer strong, .sidebar-footer div {
+    color: var(--brew-sidebar-text);
+}
+.sidebar-footer span strong { color: var(--white); }
+#sidebar #logout-button { /* This is a .btn, should inherit styles */
+    background-color: var(--brew-muted-red); color: white;
+    font-size: 0.95em; width: 100%;
+    font-family: var(--font-family-headings); text-transform: uppercase; letter-spacing: 0.5px;
+    margin-top: 10px; /* Add some space if it's directly in footer */
+}
+#sidebar #logout-button:hover { background-color: var(--brew-red-accent); }
+#sidebar #logout-button i { margin-right: 8px; }
+
+#dashboard-content-area {
+    flex-grow: 1; margin-left: 280px; overflow-y: auto; padding: 0;
+    background-color: var(--brew-cream); transition: margin-left 0.3s ease;
+    display: flex; flex-direction: column; min-height: 100vh;
+}
+.dashboard-header-main {
+    background-color: var(--white); padding: 20px 35px;
+    border-bottom: 1px solid var(--card-border); box-shadow: var(--box-shadow-subtle);
+    position: sticky; top: 0; z-index: 900; flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dashboard-header-main h1 {
+    margin: 0; font-size: 2em; color: var(--brew-deep-brown) !important; font-weight: 700;
+}
+.dashboard-main-content { padding: 30px 35px; flex-grow: 1; }
+.dashboard-section {
+    background-color: var(--card-bg); border-radius: var(--border-radius);
+    margin-bottom: 30px; padding: var(--section-padding); box-shadow: var(--box-shadow-card);
+    border: 1px solid var(--card-border);
+    border-top: 5px solid var(--brew-amber);
+    display: none;
+}
+.dashboard-section.active-section { display: block; }
+.dashboard-section h2 {
+    font-family: var(--font-family-headings); color: var(--brew-deep-brown) !important;
+    margin-top: 0; margin-bottom: 25px; font-size: 1.7em;
+    border-bottom: 1px solid var(--border-color-light); padding-bottom: 15px;
+    display: flex; align-items: center; gap: 12px; font-weight: 600;
+}
+.dashboard-section h2 i { color: var(--brew-amber); font-size: 1em; }
+.section-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;
+}
+.section-header h2 { margin: 0; border-bottom: none; padding-bottom: 0; }
+
+#dashboard-content-area .form-group label { color: var(--brew-dark-text); }
+#dashboard-content-area .btn {
+    padding: 10px 20px;
+    font-family: var(--font-family-body);
+    text-transform: none;
+    letter-spacing: normal;
+}
+#dashboard-content-area .btn-primary { color: var(--brew-deep-brown) !important; }
+#dashboard-content-area .btn-small { padding: 8px 14px; font-size: 0.9em; }
+#dashboard-content-area .btn-small i { margin-right: 6px; }
+#dashboard-content-area fieldset.custom-questions-fieldset {
+    border: 1px solid var(--border-color-light); padding: 20px;
+    border-radius: var(--border-radius); margin-top: 25px; background-color: #fdfdfd;
+}
+#dashboard-content-area fieldset.custom-questions-fieldset legend {
+    font-weight: 600; padding: 0 10px; color: var(--brew-brown); font-size: 1.1em;
+}
+
+#qr-code-section { border-top-color: var(--brew-link-blue); }
+#qr-code-display { margin: 10px auto 20px auto; text-align: center; padding: 10px; background-color: var(--white); border: 1px solid var(--border-color-medium); border-radius: var(--border-radius); display: inline-block; }
+#qr-code-link-area input[readonly] { background-color: var(--brew-off-white); }
+#copy-status.success-message { margin-top: 10px; padding: 5px 10px; font-size: 0.85em; }
+
+.dashboard-footer-main {
+    text-align: center; padding: 25px; font-size: 0.9em;
+    color: var(--brew-muted-text); border-top: 1px solid var(--border-color-light);
+    margin-top: auto; flex-shrink: 0; background-color: var(--white);
+}
+
+/* --- Batch Management Section UPGRADE --- */
+#batch-management-section {
+    border-top-color: var(--brew-muted-red); /* Existing theme */
+}
+
+/* UPGRADED: Feedback Summary Item Card */
+#batch-management-section .feedback-summary-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    /* border-left: 5px solid var(--brew-link-blue); Removed in favor of top border or other accents */
+    padding: var(--item-padding);
+    margin-bottom: 25px; /* Increased spacing */
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-card);
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    position: relative; /* For potential pseudo-elements or absolute positioning */
+    overflow: hidden; /* If using pseudo-elements for borders/accents */
+}
+#batch-management-section .feedback-summary-item:hover {
+    box-shadow: var(--box-shadow-strong);
+    transform: translateY(-5px);
+}
+#batch-management-section .feedback-summary-item[data-active="false"] {
+    background-color: #f9f9f9;
+    opacity: 0.75; /* Slightly more muted */
+    border-left-color: var(--brew-muted-text); /* Keep this if desired */
+}
+#batch-management-section .feedback-summary-item[data-active="false"]:hover {
+    opacity: 0.9; /* Make it slightly more visible on hover */
+    transform: translateY(0); /* No lift for inactive items */
+    box-shadow: var(--box-shadow-card);
+}
+
+
+/* UPGRADED: Feedback Item Header */
+#batch-management-section .feedback-item-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center; /* Vertically align items */
+    margin-bottom: 20px; /* Increased spacing */
+    padding-bottom: 20px; /* Increased spacing */
+    border-bottom: 1px solid var(--border-color-light); /* Softer dashed line */
+    gap: 15px;
+}
+#batch-management-section .feedback-item-header .compare-checkbox {
+    transform: scale(1.2); /* Slightly larger checkbox */
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: var(--brew-amber); /* Theme checkbox color */
+}
+#batch-management-section .feedback-item-header .beer-name {
+    font-family: var(--font-family-headings);
+    font-weight: 700; /* Bolder name */
+    font-size: 1.6em; /* More prominent */
+    color: var(--brew-deep-brown);
+    flex-grow: 1;
+    min-width: 200px;
+}
+#batch-management-section .feedback-item-header .batch-code {
+    font-size: 0.9em; /* Slightly larger */
+    color: var(--brew-muted-text);
+    background-color: var(--brew-off-white);
+    padding: 5px 10px; /* More padding */
+    border-radius: var(--border-radius-small);
+    white-space: nowrap;
+    font-family: 'Courier New', Courier, monospace; /* Monospace for code-like feel */
+}
+#batch-management-section .status-indicator {
+    padding: 6px 12px; /* More padding */
+    font-size: 0.85em; /* Slightly larger */
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: var(--border-radius-small); /* Consistent radius */
+    letter-spacing: 0.5px;
+}
+#batch-management-section .status-indicator.active {
+    background-color: var(--brew-green-accent);
+    color: white;
+    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+}
+#batch-management-section .status-indicator.inactive {
+    background-color: var(--dark-grey);
+    color: white;
+    box-shadow: 0 2px 5px rgba(108, 117, 125, 0.3);
+}
+
+/* UPGRADED: Batch General Stats (ABV, IBU, etc.) */
+#batch-management-section .batch-general-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 25px; /* Increased gap */
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border-color-light); /* Lighter dash */
+}
+#batch-management-section .stat-item { /* This is for general stats like ABV, IBU */
+    display: flex;
+    align-items: center;
+    font-size: 0.95em; /* Slightly larger */
+    color: var(--brew-dark-text);
+    background-color: var(--brew-off-white); /* Light background for each stat */
+    padding: 8px 12px; /* Padding for pill effect */
+    border-radius: var(--border-radius-small);
+    /* border: 1px solid var(--border-color-light); Optional border */
+    box-shadow: var(--box-shadow-subtle);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#batch-management-section .stat-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-card);
+}
+#batch-management-section .stat-item i {
+    margin-right: 10px; /* More space for icon */
+    font-size: 1.2em; /* Consistent icon size */
+    width: 22px;
+    text-align: center;
+    opacity: 0.9; /* Slightly more visible */
+    color: var(--brew-brown); /* Default icon color, can be overridden */
+}
+#batch-management-section .stat-item .stat-label {
+    font-weight: 600; /* Bolder label */
+    color: var(--dark-grey);
+    margin-right: 8px; /* More space */
+}
+#batch-management-section .stat-item .stat-value {
+    font-weight: 700; /* Bolder value */
+    color: var(--brew-deep-brown); /* Darker value for contrast */
+}
+
+/* Icon specific colors for general stats in Batch Management - Retained */
+#batch-management-section .stat-item .fa-comments { color: var(--feedback-stat-color-responses); }
+#batch-management-section .stat-item .fa-star,
+#batch-management-section .stat-item .fa-star-half-alt,
+#batch-management-section .stat-item .fa-star-o { color: var(--feedback-stat-color-rating); }
+#batch-management-section .stat-item .fa-percent { color: var(--feedback-stat-color-abv); }
+#batch-management-section .stat-item .fa-leaf { color: var(--feedback-stat-color-ibu); }
+#batch-management-section .stat-item .fa-calendar-alt { color: var(--feedback-stat-color-date); }
+#batch-management-section .stat-item .fa-question-circle { color: var(--feedback-stat-color-customq);}
+
+
+/* UPGRADED: Taste Profile Details (Sweetness, Acidity, etc.) */
+#batch-management-section .taste-profile-details {
+    margin-top: 20px;
+}
+#batch-management-section .taste-profile-details h5 {
+    font-size: 1.15em; /* Slightly larger sub-heading */
+    color: var(--brew-brown);
+    margin-bottom: 15px; /* More space */
+    font-family: var(--font-family-headings); /* Heading font */
+    font-weight: 600;
+    padding-bottom: 5px;
+    /* border-bottom: 2px solid var(--brew-amber); Optional accent */
+}
+#batch-management-section .no-responses-message {
+    font-style: italic;
+    color: var(--dark-grey);
+    margin-top: 15px;
+    font-size: 0.95em;
+    padding: 10px;
+    background-color: var(--brew-off-white);
+    border-radius: var(--border-radius-small);
+}
+#batch-management-section .taste-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Wider items */
+    gap: 15px; /* Consistent gap */
+}
+#batch-management-section .taste-stat { /* This is for specific taste attributes */
+    display: flex;
+    align-items: center;
+    background-color: var(--white); /* Cleaner background */
+    padding: 10px 12px; /* More balanced padding */
+    border-radius: var(--border-radius); /* Larger radius for pills */
+    border: 1px solid var(--border-color-light);
+    font-size: 0.9em; /* Base font size for the pill */
+    box-shadow: var(--box-shadow-subtle);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden; /* For accent line */
+}
+/* NEW: Accent line for taste stats using their specific color */
+#batch-management-section .taste-stat::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px; /* Width of the accent line */
+    background-color: var(--brew-icon-default-color); /* Fallback color */
+    /* Specific colors will be set by icon classes below */
+}
+
+#batch-management-section .taste-stat:hover {
+    transform: translateY(-3px); /* Slightly more lift */
+    box-shadow: var(--box-shadow-card);
+}
+#batch-management-section .taste-stat i {
+    margin-right: 10px;
+    margin-left: 5px; /* Space after the accent line */
+    font-size: 1.5em; /* Larger, more prominent icons */
+    width: 25px; /* Ensure consistent width for alignment */
+    text-align: center;
+    /* Specific colors will be applied below, and also used for ::before */
+    z-index: 1; /* Ensure icon is above ::before */
+}
+#batch-management-section .taste-stat .stat-label {
+    font-weight: 600;
+    color: var(--brew-dark-text);
+    font-size: 0.95em;
+    line-height: 1.3; /* Adjusted line height */
+    flex-grow: 1; /* Allow label to take available space */
+    margin-right: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px; /* Adjust as needed */
+    z-index: 1;
+}
+#batch-management-section .taste-stat .stat-value {
+    font-weight: 700;
+    font-size: 1.2em; /* Prominent value */
+    color: var(--brew-deep-brown); /* Default value color */
+    margin-left: auto; /* Push value to the right */
+    padding-left: 8px;
+    z-index: 1;
+}
+#batch-management-section .taste-stat .stat-count {
+    font-size: 0.85em;
+    color: var(--dark-grey);
+    margin-left: 5px; /* Space next to value */
+    line-height: 1.3;
+    z-index: 1;
+}
+#batch-management-section .taste-stat .stat-value.na {
+    color: var(--dark-grey);
+    font-style: italic;
+    font-weight: normal;
+    font-size: 1.1em;
+}
+
+/* UPGRADED: Specific Icons & Colors for Taste Attributes (also sets ::before accent line) */
+#batch-management-section .taste-stat i.taste-icon-sweetness { color: var(--brew-sweetness-color); }
+#batch-management-section .taste-stat i.taste-icon-sweetness::before { background-color: var(--brew-sweetness-color); }
+
+#batch-management-section .taste-stat i.taste-icon-acidity { color: var(--brew-acidity-color); }
+#batch-management-section .taste-stat i.taste-icon-acidity + .stat-label + .stat-value { color: var(--brew-acidity-color); } /* Example: Value can also take color */
+#batch-management-section .taste-stat i.taste-icon-acidity::before { background-color: var(--brew-acidity-color); }
+
+
+#batch-management-section .taste-stat i.taste-icon-bitterness { color: var(--brew-bitterness-color); }
+#batch-management-section .taste-stat i.taste-icon-bitterness::before { background-color: var(--brew-bitterness-color); }
+
+#batch-management-section .taste-stat i.taste-icon-body { color: var(--brew-body-color); }
+#batch-management-section .taste-stat i.taste-icon-body::before { background-color: var(--brew-body-color); }
+
+#batch-management-section .taste-stat i.taste-icon-carbonation { color: var(--brew-carbonation-color); }
+#batch-management-section .taste-stat i.taste-icon-carbonation::before { background-color: var(--brew-carbonation-color); }
+
+#batch-management-section .taste-stat i.taste-icon-malt { color: var(--brew-malt-color); }
+#batch-management-section .taste-stat i.taste-icon-malt::before { background-color: var(--brew-malt-color); }
+
+#batch-management-section .taste-stat i.taste-icon-hop { color: var(--brew-hop-flavor-color); }
+#batch-management-section .taste-stat i.taste-icon-hop::before { background-color: var(--brew-hop-flavor-color); }
+
+#batch-management-section .taste-stat i.taste-icon-finish { color: var(--brew-finish-color); }
+#batch-management-section .taste-stat i.taste-icon-finish::before { background-color: var(--brew-finish-color); }
+
+#batch-management-section .taste-stat .fa-circle-question { color: var(--brew-icon-default-color); }
+#batch-management-section .taste-stat .fa-circle-question::before { background-color: var(--brew-icon-default-color); }
+
+
+/* UPGRADED: Feedback Item Actions */
+#batch-management-section .feedback-item-actions {
+    margin-top: 25px; /* More space */
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color-light);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px; /* Increased gap */
+    justify-content: flex-end; /* Align buttons to the right */
+}
+/* Styling for prominent action buttons like "Deactivate" */
+#batch-management-section .feedback-item-actions .btn { /* Ensure buttons here use the .btn class */
+    padding: 0.6rem 1.2rem; /* Slightly smaller for action rows */
+    font-size: 0.9rem;
+}
+/* Remove .icon-button if not used or style them as secondary actions */
+#batch-management-section .feedback-item-actions .icon-button {
+    background: none; border: none; color: var(--dark-grey); cursor: pointer;
+    font-size: 1.2em; /* Larger icon buttons */
+    padding: 8px 10px;
+    line-height: 1;
+    border-radius: var(--border-radius-small);
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+#batch-management-section .feedback-item-actions .icon-button:hover {
+    color: var(--brew-link-blue);
+    background-color: var(--brew-off-white); /* Subtle background on hover */
+}
+#batch-management-section .feedback-item-actions .icon-button i { margin-right: 0; }
+
+
+/* --- Modal, Survey, and Contact Footer Styles --- */
+.modal-overlay {
+    position: fixed; left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(20, 20, 20, 0.88); /* Darker, more immersive overlay */
+    display: flex; justify-content: center; align-items: center; z-index: 1050;
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+}
+.modal-overlay.hidden { display: none !important; }
+.modal-overlay .modal-content {
+    background: var(--card-bg); padding: 30px 35px; border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-strong); width: 90%; max-width: 550px;
+    position: relative; animation: fadeInModal 0.3s ease-out;
+    display: flex; flex-direction: column;
+    max-height: 90vh; overflow-y: auto;
+    border-top: 5px solid var(--brew-amber);
+}
+.modal-overlay .modal-content h2 {
+    margin-top: 0; color: var(--brew-deep-brown) !important; font-family: var(--font-family-headings);
+    text-align: center; margin-bottom: 25px; font-size: 1.6em;
+}
+.modal-overlay .form-actions { margin-top: 25px; display: flex; justify-content: flex-end; gap: 12px; }
+@keyframes fadeInModal { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+#survey-container { max-width: 600px; margin: 20px auto; padding: var(--section-padding); border: 1px solid var(--card-border); background-color: var(--card-bg); box-shadow: var(--box-shadow-card); border-radius: var(--border-radius); font-family: var(--font-family-body, 'Open Sans', sans-serif); }
+#survey-container h1, #survey-container h2, #survey-container h3 { font-family: var(--font-family-headings, 'Montserrat', sans-serif); }
+#loading-survey { padding: 30px; text-align: center; font-style: italic; color: var(--dark-grey); font-size: 1.1em; }
+#error-message-survey { text-align: center; margin-bottom: 20px; }
+#beer-name-intro { background-color: var(--brew-off-white); padding: 15px 20px; margin-bottom: 20px; border-left: 5px solid var(--brew-amber); border-radius: 0 var(--border-radius) var(--border-radius) 0; }
+#beer-name-intro h2 { margin-top: 0; margin-bottom: 5px; font-size: 1.4em; color: var(--brew-brown); }
+#beer-name-intro p { margin-bottom: 0; font-size: 0.95em; color: var(--text-color); }
+#question-area, #explanation-container, #overall-rating-area, #final-step-area { margin-bottom: 20px; border-top: 1px solid var(--border-color-light); padding-top: 20px; }
+#explanation-container { background-color: #fdfdfd; padding: 20px; border-left: 5px solid var(--brew-link-blue); border-radius: 0 var(--border-radius) var(--border-radius) 0; }
+#question-number { font-size: 0.85em; color: var(--dark-grey); margin-bottom: 5px; font-weight: 600; }
+#question-text, #overall-rating-area h3, #final-step-area h3 { font-size: 1.2em; font-weight: 700; margin-bottom: 15px; color: var(--brew-brown); line-height: 1.4; }
+#explanation-text { margin-bottom: 15px; line-height: 1.6; color: var(--text-color); font-size: 0.95em; }
+.ratings-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; justify-content: center; }
+.ratings-container .rating-button { padding: 8px 12px; border: 1px solid var(--medium-grey); background-color: var(--white); color: var(--text-color); cursor: pointer; border-radius: var(--border-radius-small); font-size: 0.85em; text-align: left; transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s; font-family: inherit; line-height: 1.5; flex-grow: 0; flex-shrink: 0; flex-basis: auto; min-width: 90px; text-align: center; }
+#overall-ratings-container .rating-button { text-align: center; flex-basis: 80px; padding: 8px 5px; font-size: 0.8em; }
+.ratings-container .rating-button:hover { background-color: var(--brew-off-white); border-color: #adb5bd; }
+.ratings-container .rating-button.selected { background-color: var(--brew-amber); color: var(--brew-dark-text); border-color: var(--brew-amber); font-weight: 600; box-shadow: 0 0 0 2px rgba(224, 159, 62, 0.2); }
+.ratings-container .rating-button:disabled { background-color: #e9ecef; border-color: var(--medium-grey); color: var(--dark-grey); cursor: not-allowed; opacity: 0.7; }
+#tooltip-area { margin-top: 15px; padding: 10px 12px; background-color: var(--brew-tan); border: 1px solid #eaddb9; font-size: 0.85em; color: #856404; border-radius: var(--border-radius-small); line-height: 1.5; text-align: left; }
+#tooltip-area strong { color: inherit; font-weight: 600; }
+#navigation-area { margin-top: 25px; text-align: right; border-top: 1px solid var(--border-color-light); padding-top: 15px; }
+#next-button, #finish-button, #continue-button { padding: 0.6rem 1.2rem; font-size: 0.9rem; width: auto; max-width: 100%; }
+#next-button, #finish-button { background-color: var(--brew-muted-green); border-color: var(--brew-muted-green); color: var(--white); }
+#next-button:hover, #finish-button:hover { background-color: #4a5a4e; border-color: #4a5a4e; }
+#next-button:disabled, #finish-button:disabled { background-color: #adb5bd; border-color: #adb5bd; cursor: not-allowed; opacity: 0.65; color: #6c757d; transform: none; box-shadow: none; }
+#continue-button { background-color: var(--brew-link-blue); border-color: var(--brew-link-blue); color: var(--white); }
+#continue-button:hover { background-color: #3a6b5d; border-color: #3a6b5d; }
+#overall-rating-error { margin-top: 15px; text-align: center; }
+#final-step-area { text-align: center; }
+#final-step-area .success-message { margin-top: 15px; text-align: left; }
+#final-step-area .incentive-note { font-size: 0.8em; color: var(--dark-grey); margin-top: 5px; font-style: italic; }
+#final-step-area .gmb-button { display: inline-block; padding: 8px 15px; background-color: #4285F4; color: var(--white); text-decoration: none; border-radius: var(--border-radius-small); margin-top: 10px; font-weight: 600; transition: background-color 0.2s; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.85rem; }
+#final-step-area .gmb-button:hover { background-color: #3367D6; }
+.hidden { display: none !important; }
+
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    #sidebar { width: 220px; }
+    #dashboard-content-area { margin-left: 220px; }
+    .sidebar-header h2 { font-size: 1.4em; }
+    .sidebar-nav .nav-link { padding: 10px 15px; font-size: 0.95rem; }
+    .sidebar-nav .nav-link:hover { padding-left: 20px; } /* Adjust hover indent */
+    #batch-management-section .taste-profile-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+    #batch-management-section .batch-general-stats { gap: 10px 15px; }
+}
+@media (max-width: 768px) {
+    body { overflow-y: auto; }
+    #app-container { flex-direction: column; height: auto; }
+    #sidebar {
+        width: 100%; height: auto; position: static;
+        box-shadow: none; border-bottom: 3px solid var(--brew-amber); z-index: 999;
+    }
+    .sidebar-nav { display: flex; flex-wrap: wrap; justify-content: space-around; padding-top: 0; }
+    .sidebar-nav .nav-link {
+        border-left: none; border-bottom: 4px solid transparent;
+        padding: 12px 10px; font-size: 0.9em; flex-grow: 1; text-align: center;
+    }
+    .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active-link {
+        border-left-color: transparent;
+        border-bottom-color: var(--brew-gold-highlight);
+        padding-left: 10px; /* Reset mobile indent */
+    }
+    .sidebar-footer { display: none; }
+    #dashboard-content-area { margin-left: 0; height: auto; overflow-y: visible; }
+    .dashboard-header-main { position: static; padding: 15px 20px; }
+    .dashboard-header-main h1 { font-size: 1.6em; }
+    .dashboard-main-content { padding: 20px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 12px;}
+    .export-controls { display: flex; flex-direction: column; gap: 12px; width: 100%;}
+    .export-controls .btn { width: 100%; }
+    #dashboard-content-area .form-row { flex-direction: column; gap: 1rem; }
+
+    #batch-management-section .feedback-item-header { flex-direction: column; align-items: flex-start; }
+    #batch-management-section .taste-profile-grid,
+    #batch-management-section .batch-general-stats { grid-template-columns: 1fr; } /* Stack stats */
+    #batch-management-section .feedback-item-actions { justify-content: center; }
+    #batch-management-section .feedback-item-actions .btn { flex-grow: 1; text-align: center; }
+}
+@media (max-width: 480px) {
+    .dashboard-main-content { padding: 15px; }
+    .dashboard-section h2 { font-size: 1.4em; }
+    #survey-container { margin: 10px; padding: 15px; }
+    .ratings-container { gap: 5px; }
+    .ratings-container .rating-button { font-size: 0.75em; padding: 6px 8px; min-width: 70px; }
+    #batch-management-section .taste-profile-grid { grid-template-columns: 1fr; } /* Ensure single column */
+    #batch-management-section .taste-stat { font-size: 0.85em; }
+    #batch-management-section .taste-stat i { font-size: 1.3em; }
+    #batch-management-section .taste-stat .stat-value { font-size: 1.1em; }
+}
+
+
+/* Contact footer */
+#contact-footer {
+    background-color: var(--brew-deep-brown); color: #b0bec5; padding: 30px 15px; /* Increased padding */
+    text-align: center; font-size: 0.9em; width: 100%; box-sizing: border-box; flex-shrink: 0;
+    margin-top: auto;
+    border-top: 3px solid var(--brew-amber); /* Thematic top border */
+}
+#contact-footer .container { max-width: 1100px; margin-left: auto; margin-right: auto; }
+#contact-footer p { margin-bottom: 10px; color: #cfd8dc; }
+#contact-footer a { color: var(--brew-amber); text-decoration: none; font-weight: 600; }
+#contact-footer a:hover { text-decoration: underline; color: var(--brew-gold-highlight); }
+#contact-footer .legal-links { margin-top: 15px; padding-top: 15px; border-top: 1px solid #4a3b31; }
+#contact-footer .legal-links a { margin: 0 10px; color: #90a4ae; }
+#contact-footer .copyright { margin-top: 20px; font-size: 0.85em; color: #78909c; }
