@@ -25,8 +25,8 @@ Add an AI-powered Master Brewer assistant to BrewMetrics that provides expert br
 // New service: gemini-ai-service.js
 class GeminiBrewingService {
     constructor(apiKey, projectId) {
-        this.apiKey = AIzaSyB1hvOFk-PsHvHWbAz9N5Gcd_r8DSRZVSI;
-        this.projectId = brewmetrics-xyz-app;
+        this.apiKey = process.env.GEMINI_API_KEY || '';
+        this.projectId = "brewmetrics-xyz-app";
         this.baseURL = 'https://generativelanguage.googleapis.com/v1beta';
         this.vertexURL = `https://us-central1-aiplatform.googleapis.com/v1/projects/${projectId}/locations/us-central1/publishers/google/models`;
     }
