@@ -185,6 +185,215 @@
         #top-rated-beers-list strong { color: var(--brew-dark-text, var(--brew-dark));}
         #top-rated-beers-list small { color: var(--dark-grey); font-size: 0.9em;}
         #top-rated-beers-list .avg-rating-display { color: var(--brew-amber); font-weight: bold; }
+
+        /* AI Assistant Styles */
+        .ai-status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+        
+        .ai-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #2ecc71;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .ai-chat-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+            margin-bottom: 20px;
+        }
+        
+        .ai-chat-messages {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .ai-message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+        
+        .ai-message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--brew-amber);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+        
+        .ai-message.user .ai-avatar {
+            background-color: var(--brew-link-blue);
+        }
+        
+        .ai-message-content {
+            flex: 1;
+            background-color: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+        
+        .ai-message.user .ai-message-content {
+            background-color: var(--brew-link-blue);
+            color: white;
+        }
+        
+        .ai-message-content p {
+            margin: 0 0 8px 0;
+        }
+        
+        .ai-message-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .ai-message-content ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        
+        .ai-message-content li {
+            margin-bottom: 4px;
+        }
+        
+        .ai-chat-input-container {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        #ai-prompt {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 24px;
+            font-size: 0.95em;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        #ai-prompt:focus {
+            border-color: var(--brew-link-blue);
+        }
+        
+        #ai-send {
+            width: 48px;
+            height: 48px;
+            border: none;
+            background-color: var(--brew-link-blue);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            transition: background-color 0.2s;
+        }
+        
+        #ai-send:hover:not(:disabled) {
+            background-color: #2980b9;
+        }
+        
+        #ai-send:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .ai-quick-actions {
+            margin-top: 15px;
+        }
+        
+        .ai-quick-actions h4 {
+            margin: 0 0 12px 0;
+            font-size: 1em;
+            color: var(--brew-dark);
+        }
+        
+        .quick-action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .ai-action-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--brew-amber);
+            background-color: white;
+            color: var(--brew-amber);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .ai-action-btn:hover {
+            background-color: var(--brew-amber);
+            color: white;
+        }
+        
+        .ai-message.thinking .ai-message-content {
+            background-color: #e8f4f8;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .ai-typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+        
+        .ai-typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #666;
+            animation: typing 1.4s infinite;
+        }
+        
+        .ai-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .ai-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; }
+            30% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -206,6 +415,7 @@
                 <a href="#batch-comparison-section" class="nav-link"><i class="fas fa-balance-scale"></i> Batch Comparison</a>
                 <a href="#qr-code-section" class="nav-link"><i class="fas fa-qrcode"></i> QR Code Gen</a>
                 <a href="#batch-entry-section" class="nav-link"><i class="fas fa-plus-circle"></i> Add New Batch</a>
+                <a href="#ai-assistant-section" class="nav-link"><i class="fas fa-robot"></i> AI Assistant</a>
                 <a href="#settings-section" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
             </nav>
             <div class="sidebar-footer">
@@ -340,6 +550,66 @@
                            Count: <span id="display-active-discounts-count">0</span>
                            <br><small>Update this count in 'Edit Info' based on your current campaigns.</small>
                         </p>
+                    </div>
+                </section>
+
+                <section id="ai-assistant-section" class="dashboard-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-robot"></i> Master Brewer AI Assistant</h2>
+                        <div class="ai-status-indicator">
+                            <span class="ai-status-dot"></span>
+                            <span class="ai-status-text">Ready</span>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-chat-container">
+                        <div class="ai-chat-messages" id="ai-messages">
+                            <div class="ai-message ai-welcome">
+                                <div class="ai-avatar">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="ai-message-content">
+                                    <p>Welcome! I'm your Master Brewer AI assistant with 25+ years of brewing experience. I can help you with:</p>
+                                    <ul>
+                                        <li>Recipe creation and enhancement</li>
+                                        <li>Troubleshooting brewing issues</li>
+                                        <li>Ingredient and equipment recommendations</li>
+                                        <li>Process optimization</li>
+                                    </ul>
+                                    <p>How can I help improve your brewing today?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-chat-input-container">
+                            <input 
+                                type="text" 
+                                id="ai-prompt" 
+                                placeholder="Ask me about brewing, recipes, or troubleshooting..."
+                                maxlength="500"
+                            >
+                            <button id="ai-send" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-quick-actions">
+                        <h4>Quick Actions:</h4>
+                        <div class="quick-action-buttons">
+                            <button class="ai-action-btn" data-action="generate-recipe">
+                                <i class="fas fa-magic"></i> Generate Recipe
+                            </button>
+                            <button class="ai-action-btn" data-action="enhance-recipe">
+                                <i class="fas fa-star"></i> Enhance Recipe
+                            </button>
+                            <button class="ai-action-btn" data-action="troubleshoot">
+                                <i class="fas fa-tools"></i> Troubleshoot Batch
+                            </button>
+                            <button class="ai-action-btn" data-action="recommend-products">
+                                <i class="fas fa-shopping-cart"></i> Product Recommendations
+                            </button>
+                        </div>
                     </div>
                 </section>
 
@@ -643,6 +913,7 @@
         if (copyrightYearSpan) copyrightYearSpan.textContent = currentYear;
     </script>
     <script src="analytics.js"></script>
+    <script src="gemini-brewing-prompts.js"></script>
     <script src="dashboard.js"></script>
     <footer id="contact-footer">
         <div class="container footer-container">

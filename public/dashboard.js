@@ -2141,4 +2141,194 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
         
+        // =========================================================================
+        // SECTION: AI Master Brewer Assistant
+        // =========================================================================
+        
+        class AIAssistant {
+            constructor() {
+                this.chatMessages = document.getElementById('ai-messages');
+                this.promptInput = document.getElementById('ai-prompt');
+                this.sendButton = document.getElementById('ai-send');
+                this.quickActionButtons = document.querySelectorAll('.ai-action-btn');
+                this.isProcessing = false;
+                this.chatHistory = [];
+                
+                this.initializeEventListeners();
+            }
+            
+            initializeEventListeners() {
+                // Enable/disable send button based on input
+                this.promptInput.addEventListener('input', () => {
+                    const hasText = this.promptInput.value.trim().length > 0;
+                    this.sendButton.disabled = !hasText || this.isProcessing;
+                });
+                
+                // Send message on button click
+                this.sendButton.addEventListener('click', () => {
+                    this.sendMessage();
+                });
+                
+                // Send message on Enter key
+                this.promptInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+                
+                // Quick action buttons
+                this.quickActionButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const action = button.dataset.action;
+                        this.handleQuickAction(action);
+                    });
+                });
+            }
+            
+            async sendMessage() {
+                const prompt = this.promptInput.value.trim();
+                if (!prompt || this.isProcessing) return;
+                
+                this.isProcessing = true;
+                this.sendButton.disabled = true;
+                
+                // Add user message to chat
+                this.addMessage('user', prompt);
+                
+                // Clear input
+                this.promptInput.value = '';
+                
+                // Show typing indicator
+                this.showTypingIndicator();
+                
+                try {
+                    // Call Firebase function
+                    const aiFunction = firebase.functions().httpsCallable('getAIBrewingAdvice');
+                    const result = await aiFunction({ prompt: prompt });
+                    
+                    // Remove typing indicator
+                    this.hideTypingIndicator();
+                    
+                    // Add AI response to chat
+                    this.addMessage('ai', result.data.response);
+                    
+                    // Store in history
+                    this.chatHistory.push({
+                        prompt: prompt,
+                        response: result.data.response,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                } catch (error) {
+                    console.error('AI Assistant Error:', error);
+                    this.hideTypingIndicator();
+                    this.addMessage('ai', 'Sorry, I encountered an error while processing your request. Please try again.');
+                }
+                
+                this.isProcessing = false;
+                this.sendButton.disabled = false;
+            }
+            
+            addMessage(type, content) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `ai-message ${type}`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'ai-avatar';
+                avatar.innerHTML = type === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-user-tie"></i>';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'ai-message-content';
+                
+                // Format the content (convert line breaks to paragraphs)
+                const formattedContent = this.formatMessage(content);
+                messageContent.innerHTML = formattedContent;
+                
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+                
+                this.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+            
+            formatMessage(content) {
+                // Convert line breaks to paragraphs and format lists
+                return content
+                    .split('\n\n')
+                    .map(paragraph => {
+                        if (paragraph.trim().startsWith('•') || paragraph.trim().startsWith('-')) {
+                            // Handle bullet points
+                            const items = paragraph.split('\n')
+                                .filter(item => item.trim())
+                                .map(item => `<li>${item.replace(/^[•-]\s*/, '')}</li>`)
+                                .join('');
+                            return `<ul>${items}</ul>`;
+                        } else {
+                            return `<p>${paragraph.replace(/\n/g, '<br>')}</p>`;
+                        }
+                    })
+                    .join('');
+            }
+            
+            showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'ai-message ai-typing';
+                typingDiv.id = 'ai-typing-indicator';
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'ai-avatar';
+                avatar.innerHTML = '<i class="fas fa-user-tie"></i>';
+                
+                const typingContent = document.createElement('div');
+                typingContent.className = 'ai-message-content';
+                typingContent.innerHTML = `
+                    <div class="ai-typing-indicator">
+                        <div class="ai-typing-dot"></div>
+                        <div class="ai-typing-dot"></div>
+                        <div class="ai-typing-dot"></div>
+                    </div>
+                `;
+                
+                typingDiv.appendChild(avatar);
+                typingDiv.appendChild(typingContent);
+                
+                this.chatMessages.appendChild(typingDiv);
+                this.scrollToBottom();
+            }
+            
+            hideTypingIndicator() {
+                const typingIndicator = document.getElementById('ai-typing-indicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+            
+            scrollToBottom() {
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+            
+            handleQuickAction(action) {
+                switch(action) {
+                    case 'generate-recipe':
+                        this.promptInput.value = 'Help me create a new beer recipe. I need guidance on style, ingredients, and process.';
+                        break;
+                    case 'enhance-recipe':
+                        this.promptInput.value = 'I have an existing recipe that needs improvement. Can you help me enhance it based on customer feedback?';
+                        break;
+                    case 'troubleshoot':
+                        this.promptInput.value = 'I\'m having issues with my latest batch. Can you help me troubleshoot based on customer feedback?';
+                        break;
+                    case 'recommend-products':
+                        this.promptInput.value = 'Can you recommend specific ingredients or equipment to improve my brewing setup?';
+                        break;
+                }
+                this.sendButton.disabled = false;
+                this.promptInput.focus();
+            }
+        }
+        
+        // Initialize AI Assistant
+        const aiAssistant = new AIAssistant();
+        
         }); // <-- Close DOMContentLoaded event listener
