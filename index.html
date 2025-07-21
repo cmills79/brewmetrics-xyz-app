@@ -80,45 +80,11 @@
             </div>
         </div>
     </div>
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-    <script>
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDmvUqgMlnaQFiyqlo50D66fX0Bwav3j1k",
-            authDomain: "brewmetrics-xyz-app-e8d51.firebaseapp.com",
-            projectId: "brewmetrics-xyz-app-e8d51",
-            storageBucket: "brewmetrics-xyz-app-e8d51.appspot.com",
-            messagingSenderId: "391623246374",
-            appId: "1:391623246374:web:3b8e39db5fff674befdce7",
-            measurementId: "G-MHT3H2ZVRY"
-        };
-
-        // Initialize Firebase
-        let auth, db;
-        try {
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            } else {
-                firebase.app();
-            }
-            auth = firebase.auth();
-            db = firebase.firestore();
-            console.log("Firebase Initialized on Index Page!");
-        } catch (e) {
-            console.error("Error initializing Firebase:", e);
-            const errorDiv = document.getElementById('error-message');
-            if(errorDiv) {
-                errorDiv.textContent = 'Critical Error: Could not connect to Firebase services. Please check configuration or network.';
-                errorDiv.classList.remove('hidden');
-            }
-        }
-    </script>
-
+    <!-- Firebase (Import the module, and initialize in script.js) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script> 
+    
     <script src="script.js"></script>
 
     <footer id="contact-footer">

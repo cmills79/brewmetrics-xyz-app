@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginSection = document.getElementById('login-form'); // Should find it now
     const registerSection = document.getElementById('register-form'); // Should find it now
 
+    // --- Create Loading Indicator ---
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.id = 'form-loading-indicator';
+    loadingIndicator.innerHTML = '<div class="bubbles"><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div></div>';
+    loadingIndicator.style.display = 'none'; // Initially hidden
+
     // --- Add Event Listeners ---
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
@@ -39,6 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log(`Attempting login for: ${email}`); // Log attempt
 
+            // Show loading indicator
+            loginForm.parentNode.insertBefore(loadingIndicator, loginForm); // Insert before form
+            loadingIndicator.style.display = 'block';
+            loginForm.style.display = 'none';  // Hide the form
+
             // Use 'auth' and 'db' which are globally available from the inline script in index.html
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
@@ -51,6 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error("Login Error:", error);
                     // Display mapped error message
                     displayAuthError(error.code); // Pass error code for better mapping
+                    // Hide loading indicator, show form again on error
+                    loadingIndicator.style.display = 'none';
+                    loginForm.style.display = 'block';
+
                     // console.log(`Login failed: ${error.message} ${loginForm ? 'Form available' : 'Form NOT available'}`); // Debugging line
                     // The loginForm.reset error suggests loginForm might be null here too? Very odd if listener attached.
                     // Let's remove reset for now as redirect happens anyway.
@@ -82,6 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log(`Attempting registration for: ${email}`);
 
+            // Show loading indicator
+            registerForm.parentNode.insertBefore(loadingIndicator, registerForm); // Insert before form
+            loadingIndicator.style.display = 'block';
+            registerForm.style.display = 'none'; // Hide the form
+
             auth.createUserWithEmailAndPassword(email, password)
                  .then((userCredential) => {
                      const user = userCredential.user;
@@ -104,6 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
                  .catch((error) => {
                      console.error("Registration or Firestore Error:", error);
                      displayAuthError(error.code); // Pass error code
+
+                     // Hide loading indicator, show form again on error
+                     loadingIndicator.style.display = 'none';
+                     registerForm.style.display = 'block';
                  });
          });
     } else {
@@ -136,23 +160,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!loginSection) console.error("Login Section not found");
         if (!registerSection) console.error("Register Section not found");
     }
+    
+    // --- Form Clearing Function ---
+    function clearFormFields(formElement) {
+        if (formElement) {
+            formElement.reset();
+        }
+    }
 
     // --- Error Handling Functions ---
     function displayAuthError(errorCodeOrMessage) {
         let message = errorCodeOrMessage; // Default to the raw message/code
-         console.log("Displaying error for code/message:", errorCodeOrMessage); // Debugging
+        console.log("Displaying error for code/message:", errorCodeOrMessage); // Debugging
         if (errorMessageDiv) {
             // Map common error codes to user-friendly messages
             switch (errorCodeOrMessage) {
-                 case 'auth/invalid-email':
-                     message = 'Please enter a valid email address.';
-                     break;
-                 case 'auth/user-not-found':
-                 case 'auth/wrong-password':
-                 case 'auth/invalid-credential': // Catch this modern code too
-                     message = 'Incorrect email or password. Please try again.';
-                     break;
-                 case 'auth/email-already-in-use':
+                case 'auth/invalid-email':
+                    message = 'Please enter a valid email address.';
+                    break;
+                case 'auth/user-not-found':
+                case 'auth/wrong-password':
+                case 'auth/invalid-credential': // Catch this modern code too
+                    message = 'Incorrect email or password. Please try again.';
+                    break;
+                case 'auth/email-already-in-use':
                     message = 'This email address is already registered. Please login or use a different email.';
                     break;
                  case 'auth/weak-password':
@@ -164,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  // Add more mappings as needed
                  default:
                      // If it's not a recognized code, display it or a generic message
-                     // Avoid showing raw internal messages unless debugging
+                     // Avoid showing raw internal messages to the user unless debugging
                      console.error("Unhandled Auth Error Code:", errorCodeOrMessage);
                      message = 'An unexpected error occurred. Please try again.';
             }
@@ -181,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMessageDiv.classList.add('hidden');
         }
     }
-
-}); // End of DOMContentLoaded listener
-
-// --- END OF script.js ---
+} // <-- Add this closing brace to end the DOMContentLoaded callback
+); // <-- Add this closing parenthesis and semicolon to close the event listener
+// --- END OF script.js --

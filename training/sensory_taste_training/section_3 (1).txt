@@ -1,0 +1,56 @@
+Part 3: Quality Assessment and Troubleshooting
+A key function of the BrewMetrics AI is to help brewers diagnose and correct faults. This requires a systematic framework for evaluation and a deep knowledge base connecting sensory flaws to their root causes.  
+Section 3.1: The BJCP Framework for Evaluation
+The Beer Judge Certification Program (BJCP) provides a globally recognized standard for beer evaluation, used in homebrew competitions worldwide. Understanding this framework is essential for interpreting and providing structured feedback.  
+* Scoring: Beers are judged on a 50-point scale broken down as follows:
+   * Aroma: 12 points
+   * Appearance: 3 points
+   * Flavor: 20 points
+   * Mouthfeel: 5 points
+   * Overall Impression: 10 points
+* Evaluation: Judges provide detailed written feedback for each category, assessing the beer's adherence to a specific style guideline, its technical merit, and its overall drinkability. The goal is not just to score the beer but to provide constructive, diagnostic feedback that helps the brewer improve.  
+* Scoresheet: The BJCP scoresheet is a tool that guides the judge through the evaluation process, with sections and checkboxes for various descriptors and faults.  
+Section 3.2: A Systematic Guide to Off-Flavor Troubleshooting
+Off-flavors are the most direct indicator of a flaw in the brewing process or handling. The ability to identify an off-flavor, understand its chemical origin, and trace it back to a process error is a core skill of an expert brewer and a primary function of the BrewMetrics AI.  
+Off-Flavor Descriptor
+	Chemical Compound(s)
+	Common Causes & Process Failures
+	Prevention & Correction
+	Acetaldehyde
+	Acetaldehyde
+	"Green" (immature) beer. Yeast has not finished converting acetaldehyde to ethanol. Caused by packaging too soon, removing beer from yeast prematurely, or severe yeast stress (under-pitching).  
+	Patience. Allow fermentation to complete fully and give the beer adequate conditioning time on the yeast. Ensure proper yeast pitching rates.  
+	Diacetyl
+	2,3-butanedione
+	Incomplete "clean-up" by yeast. Caused by crashing temperature too soon, removing beer from yeast too early, or yeast stress. Can also be a sign of Pediococcus contamination.  
+	Diacetyl Rest. Raise fermentation temperature by a few degrees for 2-3 days at the end of fermentation to encourage yeast to reabsorb diacetyl. Ensure healthy yeast pitch.  
+	DMS (Dimethyl Sulfide)
+	Dimethyl Sulfide
+	Insufficient boil-off or slow chilling. SMM, a precursor in malt (especially Pilsner), converts to volatile DMS when hot. A weak boil, covered kettle, or slow chilling traps DMS in the wort.  
+	Vigorous Boil & Rapid Chilling. Ensure a strong, rolling boil for at least 60-90 minutes with the kettle uncovered. Chill the wort as quickly as possible post-boil.  
+	Oxidation
+	Trans-2-Nonenal
+	Oxygen exposure after fermentation is complete. Caused by splashing during transfers (racking, bottling, kegging) or failing to purge vessels with CO2.  
+	Minimize Oxygen Contact. Practice gentle, closed transfers. Purge kegs and bottles with CO2 before filling. This flaw is irreversible.
+	Light-Struck (Skunky)
+	3-methyl-2-butene-1-thiol (MBT)
+	UV light exposure. A photochemical reaction breaks down hop iso-alpha-acids. Occurs rapidly in clear or green glass bottles.  
+	Protect from Light. Package beer in brown bottles or opaque cans. Store away from direct sunlight and fluorescent lights.
+	Phenolic (Medicinal/Plastic)
+	Chlorophenols, other phenols
+	Contamination or water chemistry. "Band-Aid" or medicinal flavors are often from chlorophenols (chlorine in water reacting with yeast). Other plastic/smoky notes can come from wild yeast contamination.  
+	Water Treatment & Sanitation. Treat brewing water with a Campden tablet or carbon filter to remove chlorine/chloramine. Ensure rigorous sanitation of all cold-side equipment.  
+	Solvent / Fusel Alcohol
+	Higher Alcohols (e.g., propanol, isoamyl alcohol), Ethyl Acetate
+	Fermentation temperature too high. Stressed yeast overproduces these harsh, "hot" tasting alcohols and solventy esters.  
+	Temperature Control. Ferment within the yeast strain's recommended temperature range using a fermentation chamber or other cooling method.  
+	Astringency
+	Tannins/Polyphenols
+	Extraction of tannins from grain husks. Caused by over-sparging, sparging with water that is too hot (>170°F) or has too high a pH, or over-milling the grain.  
+	Control Mash & Sparge. Do not over-crush grains. Keep sparge water temperature below 170°F and monitor mash pH to keep it in the 5.2-5.6 range.  
+	Sour / Acidic (Unintended)
+	Lactic Acid, Acetic Acid
+	Bacterial contamination. Spoilage from wild Lactobacillus (lactic acid) or Acetobacter (acetic acid/vinegar) due to poor sanitation.  
+	Rigorous Sanitation. Ensure all equipment that touches the beer after the boil is thoroughly cleaned and sanitized.  
+	Table 3.1: A Diagnostic Guide to Common Beer Off-Flavors. Data compiled from.
+________________

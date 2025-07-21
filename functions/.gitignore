@@ -1,2 +1,3 @@
 node_modules/
 *.local
+.env.brewmetrics-xyz-app-e8d51

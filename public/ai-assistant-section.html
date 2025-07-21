@@ -1,0 +1,29 @@
+<div id="ai-assistant-section" class="dashboard-section">
+    <div class="ai-chat-container">
+        <div class="ai-chat-header">
+            <h3><i class="fas fa-robot"></i> Master Brewer AI</h3>
+            <span class="ai-status">Online</span>
+        </div>
+        
+        <div class="ai-chat-messages" id="ai-messages">
+            <!-- Messages populated by JavaScript -->
+        </div>
+        
+        <div class="ai-chat-input">
+            <input type="text" id="ai-prompt" placeholder="Ask me about brewing, recipes, or troubleshooting...">
+            <button id="ai-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <div class="ai-quick-actions">
+        <button class="ai-action-btn" data-action="generate-recipe">
+            <i class="fas fa-magic"></i> Generate Recipe
+        </button>
+        <button class="ai-action-btn" data-action="enhance-recipe">
+            <i class="fas fa-star"></i> Enhance Recipe
+        </button>
+        <button class="ai-action-btn" data-action="troubleshoot">
+            <i class="fas fa-tools"></i> Troubleshoot Batch
+        </button>
+    </div>
+</div>

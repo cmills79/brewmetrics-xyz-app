@@ -2,6 +2,9 @@
 // Enhanced logging added to verify script loading and version.
 console.log("Executing dashboard.js - Version: May 29, 2025 (Includes setTimeout fix & enhanced logging)");
 
+// Import Firebase
+import { app, analytics } from './firebase.js'; // Adjust the path if necessary
+
 // CACHE BUSTING RECOMMENDATION:
 // To ensure the browser always loads the latest version of this script,
 // modify the script tag in your dashboard.html file to include a version parameter.
@@ -11,6 +14,73 @@ console.log("Executing dashboard.js - Version: May 29, 2025 (Includes setTimeout
 // Original file content starts below:
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Dashboard DOM loaded. (Full Integration Attempt with Advanced Analytics)");
+
+    // =========================================================================
+    // SECTION: Utility Functions
+    // =========================================================================
+    
+    /**
+     * Parse basic Markdown syntax to HTML
+     * Supports: paragraphs, line breaks, bullet lists, numbered lists, bold, italic, code blocks, inline code
+     * @param {string} content - The raw text content to parse
+     * @returns {string} - HTML formatted content
+     */
+    function parseMarkdownToHtml(content) {
+        if (!content || typeof content !== 'string') return '';
+        
+        let html = content;
+        
+        // Handle code blocks first (```code```)
+        html = html.replace(/```([^`]+)```/g, '<pre><code>$1</code></pre>');
+        
+        // Handle inline code (`code`)
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+        
+        // Handle bold text (**text**)
+        html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        
+        // Handle italic text (*text*)
+        html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        
+        // Split into paragraphs and process each
+        const paragraphs = html.split('\n\n').filter(p => p.trim());
+        
+        return paragraphs.map(paragraph => {
+            const trimmed = paragraph.trim();
+            
+            // Handle numbered lists (1. item)
+            if (/^\d+\.\s/.test(trimmed)) {
+                const items = trimmed.split('\n')
+                    .filter(item => item.trim())
+                    .map(item => {
+                        const match = item.match(/^\d+\.\s*(.+)$/);
+                        return match ? `<li>${match[1]}</li>` : `<li>${item}</li>`;
+                    })
+                    .join('');
+                return `<ol>${items}</ol>`;
+            }
+            
+            // Handle bullet lists (- or • or *)
+            if (/^[•*-]\s/.test(trimmed)) {
+                const items = trimmed.split('\n')
+                    .filter(item => item.trim())
+                    .map(item => `<li>${item.replace(/^[•*-]\s*/, '')}</li>`)
+                    .join('');
+                return `<ul>${items}</ul>`;
+            }
+            
+            // Handle headers (# ## ###)
+            const headerMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
+            if (headerMatch) {
+                const level = headerMatch[1].length;
+                const text = headerMatch[2];
+                return `<h${level}>${text}</h${level}>`;
+            }
+            
+            // Regular paragraph - replace single line breaks with <br>
+            return `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
+        }).join('');
+    }
 
     // =========================================================================
     // SECTION: Global Variables & State
@@ -141,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // CRITICAL TROUBLESHOOTING: Enable Firebase Debug Logging
     // =========================================================================
     if (firebase && typeof firebase.firestore === 'function') {
-        // Enable debug logging for Firestore
+        // Enable debug logging for Firestore (if still needed)
         firebase.firestore.setLogLevel('debug');
         console.log("TROUBLESHOOTING: Firebase Firestore debug logging enabled");
         
@@ -170,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (sidebarLogoutButton) {
             sidebarLogoutButton.addEventListener("click", async () => {
                 try {
-                    await firebase.auth().signOut();
+                    await firebase.auth().signOut(); // Or auth.signOut() if auth is properly scoped/imported
                     console.log("User signed out successfully.");
                     // Redirect to login page is handled by onAuthStateChanged
                 } catch (error) {
@@ -2253,22 +2323,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
             formatMessage(content) {
-                // Convert line breaks to paragraphs and format lists
-                return content
-                    .split('\n\n')
-                    .map(paragraph => {
-                        if (paragraph.trim().startsWith('•') || paragraph.trim().startsWith('-')) {
-                            // Handle bullet points
-                            const items = paragraph.split('\n')
-                                .filter(item => item.trim())
-                                .map(item => `<li>${item.replace(/^[•-]\s*/, '')}</li>`)
-                                .join('');
-                            return `<ul>${items}</ul>`;
-                        } else {
-                            return `<p>${paragraph.replace(/\n/g, '<br>')}</p>`;
-                        }
-                    })
-                    .join('');
+                return parseMarkdownToHtml(content);
             }
             
             showTypingIndicator() {

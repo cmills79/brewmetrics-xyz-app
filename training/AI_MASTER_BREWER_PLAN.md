@@ -425,5 +425,3 @@ GEMINI_API_KEY=your-gemini-api-key
 GOOGLE_CLOUD_PROJECT_ID=your-project-id
 VERTEX_AI_LOCATION=us-central1
 ```
-
-Would you like me to start implementing the Gemini integration or help you set up the Google Cloud configuration first?
