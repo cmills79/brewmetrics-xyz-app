@@ -451,6 +451,9 @@
                         <h2>Dashboard</h2>
                         <div class="action-buttons">
                             <button class="btn btn-export"><i class="fas fa-download"></i> Export Data</button>
+                            <button class="btn btn-secondary" onclick="window.open('recipe-designer.html', '_blank')">
+                                <i class="fas fa-flask"></i> Recipe Designer
+                            </button>
                             <button class="btn btn-new-batch"><i class="fas fa-plus"></i> New Batch</button>
                         </div>
                     </div>
@@ -641,6 +644,14 @@
 
                 <section id="batch-entry-section" class="dashboard-section">
                      <h2><i class="fa-solid fa-beer-mug-empty"></i> Add New Beer Batch for Survey</h2>
+                     <div style="background: #e3f2fd; border: 1px solid #2196f3; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
+                         <h4 style="color: #1565c0; margin-top: 0;"><i class="fas fa-star"></i> New: Professional Recipe Designer</h4>
+                         <p style="color: #1976d2; margin-bottom: 10px;">Design complete recipes with ingredient management, brewing calculations, and style guidelines - just like professional brewing software!</p>
+                         <button class="btn btn-primary" onclick="window.open('recipe-designer.html', '_blank')" style="margin-right: 10px;">
+                             <i class="fas fa-flask"></i> Open Recipe Designer
+                         </button>
+                         <small style="color: #666;">Or use the simple form below for basic batch entry</small>
+                     </div>
                      <form id="batch-entry-form">
                          <div class="form-group"><label for="beer-name">Beer Name*</label><input type="text" id="beer-name" required class="form-input"></div>
                          <div class="form-group"><label for="beer-intro">Brief Introduction / Description*</label><textarea id="beer-intro" rows="3" required placeholder="e.g., A crisp West Coast IPA with notes of citrus and pine..." class="form-input"></textarea></div>

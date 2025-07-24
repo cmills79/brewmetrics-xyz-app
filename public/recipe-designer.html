@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Designer - BrewMetrics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .recipe-designer {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .recipe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+        }
+
+        .recipe-title {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .recipe-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .recipe-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px 20px;
+            background: #ecf0f1;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .toolbar-btn {
+            padding: 8px 12px;
+            border: 1px solid #bdc3c7;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+
+        .toolbar-btn:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .toolbar-btn.active {
+            background: #2980b9;
+            color: white;
+        }
+
+        .recipe-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .recipe-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .recipe-tab:hover {
+            background: #e9ecef;
+        }
+
+        .recipe-tab.active {
+            background: white;
+            border-bottom-color: #007bff;
+            color: #007bff;
+        }
+
+        .recipe-content {
+            display: flex;
+            min-height: 600px;
+        }
+
+        .recipe-main {
+            flex: 1;
+            padding: 20px;
+            background: white;
+        }
+
+        .recipe-sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            border-left: 1px solid #e9ecef;
+            padding: 20px;
+        }
+
+        .recipe-section {
+            display: none;
+        }
+
+        .recipe-section.active {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .brewing-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .stat-target {
+            font-size: 0.8em;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+
+        .ingredient-section {
+            margin-bottom: 30px;
+        }
+
+        .ingredient-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .ingredient-list {
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .ingredient-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #f1f3f4;
+            background: white;
+        }
+
+        .ingredient-item:hover {
+            background: #f8f9fa;
+        }
+
+        .ingredient-info {
+            flex: 1;
+        }
+
+        .ingredient-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .ingredient-details {
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+
+        .ingredient-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-icon {
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .btn-icon:hover {
+            background: #f8f9fa;
+        }
+
+        .btn-add {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .slider-container {
+            margin: 15px 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e9ecef;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .slider:hover::-webkit-slider-thumb {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .current-value {
+            font-weight: bold;
+            color: #007bff;
+            margin-left: 10px;
+            float: right;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .quick-add-btn {
+            width: 100%;
+            margin-bottom: 8px;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .quick-add-btn:hover {
+            background: #f8f9fa;
+            border-color: #007bff;
+        }
+
+        .quick-add-btn i {
+            color: #6c757d;
+        }
+
+        .recipe-notes {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .recipe-notes h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .recipe-notes p {
+            color: #856404;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        /* Advanced Features Styling */
+        .water-targets-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .target-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #007bff;
+        }
+
+        .target-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .target-range {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .mash-step-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .mash-step-info {
+            flex: 1;
+        }
+
+        .mash-step-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .mash-step-details {
+            font-size: 0.85em;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+
+        .mash-step-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .mash-chart-container {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .mash-chart-container canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .hop-schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .hop-schedule-table th,
+        .hop-schedule-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .hop-schedule-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .hop-utilization-bar {
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .hop-utilization-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+
+        .salt-calculator {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .recommendation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .starter-recommendations {
+            background: #e8f5e8;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .water-profiles {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .mash-designer {
+            background: #fff3e0;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .style-selector {
+            margin: 15px 0;
+        }
+
+        .style-selector select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .salt-additions small {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .resulting-profile {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .mash-type-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mash-type-selector label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .mash-type-selector select {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="recipe-designer">
+        <!-- Header -->
+        <div class="recipe-header">
+            <h1 class="recipe-title">New Recipe</h1>
+            <div class="recipe-actions">
+                <button class="btn-icon"><i class="fas fa-undo"></i> Undo</button>
+                <button class="btn btn-secondary">Save As</button>
+                <button class="btn btn-primary">Save Changes</button>
+                <button class="btn btn-success">OK</button>
+                <button class="btn btn-danger">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="recipe-toolbar">
+            <button class="toolbar-btn"><i class="fas fa-balance-scale"></i> Scale Recipe</button>
+            <button class="toolbar-btn"><i class="fas fa-adjust"></i> Adjust Gravity</button>
+            <button class="toolbar-btn"><i class="fas fa-tint"></i> Adjust Bitterness</button>
+            <button class="toolbar-btn"><i class="fas fa-palette"></i> Adjust Color</button>
+            <button class="toolbar-btn"><i class="fas fa-print"></i> Print</button>
+            <button class="toolbar-btn"><i class="fas fa-list"></i> Brew Steps</button>
+            <button class="toolbar-btn"><i class="fas fa-cog"></i> Set as Default</button>
+            <button class="toolbar-btn"><i class="fas fa-question-circle"></i> Recipe Tutorial</button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="recipe-tabs">
+            <button class="recipe-tab active" data-tab="design">Design</button>
+            <button class="recipe-tab" data-tab="starter">Starter</button>
+            <button class="recipe-tab" data-tab="water">Water</button>
+            <button class="recipe-tab" data-tab="mash">Mash</button>
+            <button class="recipe-tab" data-tab="timer">Timer</button>
+            <button class="recipe-tab" data-tab="session">Session</button>
+            <button class="recipe-tab" data-tab="notes">Notes</button>
+            <button class="recipe-tab" data-tab="vols">Vols</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="recipe-content">
+            <div class="recipe-main">
+                <!-- Design Tab -->
+                <div class="recipe-section active" id="design-section">
+                    <!-- Hop Schedule Optimization -->
+                    <div class="hop-schedule-section">
+                        <h4><i class="fas fa-leaf"></i> Hop Schedule Optimizer</h4>
+                        <div class="hop-optimizer">
+                            <table class="hop-schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>Hop Variety</th>
+                                        <th>Amount (oz)</th>
+                                        <th>Time (min)</th>
+                                        <th>Alpha %</th>
+                                        <th>Utilization</th>
+                                        <th>IBU Contribution</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="hop-schedule-tbody">
+                                    <!-- Dynamic hop entries will be added here -->
+                                </tbody>
+                            </table>
+                            
+                            <div class="hop-analysis">
+                                <div class="brewing-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-label">Total IBUs</div>
+                                        <div class="stat-value" id="total-ibus">0.0</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-label">Bittering IBUs</div>
+                                        <div class="stat-value" id="bittering-ibus">0.0</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-label">Flavor IBUs</div>
+                                        <div class="stat-value" id="flavor-ibus">0.0</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-label">Aroma IBUs</div>
+                                        <div class="stat-value" id="aroma-ibus">0.0</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hop-recommendations">
+                                <h5>Optimization Suggestions</h5>
+                                <div id="hop-suggestions" class="recipe-notes">
+                                    <p><i class="fas fa-lightbulb"></i> Add hops to see optimization suggestions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ingredients Section -->
+                    <div class="ingredients-section">
+                        <h4><i class="fas fa-list"></i> Recipe Ingredients</h4>
+                        
+                        <!-- Fermentables -->
+                        <div class="ingredient-section">
+                            <div class="ingredient-header">
+                                <h5><i class="fas fa-seedling"></i> Fermentables</h5>
+                                <button class="btn-add" onclick="window.recipeDesigner.showAddIngredientModal('fermentable')">
+                                    <i class="fas fa-plus"></i> Add Fermentable
+                                </button>
+                            </div>
+                            <div class="ingredient-list" id="fermentables-list">
+                                <div class="ingredient-item" style="color: #6c757d; font-style: italic; text-align: center; padding: 20px;">
+                                    No fermentables added yet
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hops -->
+                        <div class="ingredient-section">
+                            <div class="ingredient-header">
+                                <h5><i class="fas fa-leaf"></i> Hops</h5>
+                                <button class="btn-add" onclick="window.recipeDesigner.showAddIngredientModal('hops')">
+                                    <i class="fas fa-plus"></i> Add Hops
+                                </button>
+                            </div>
+                            <div class="ingredient-list" id="hops-list">
+                                <div class="ingredient-item" style="color: #6c757d; font-style: italic; text-align: center; padding: 20px;">
+                                    No hops added yet
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Yeast -->
+                        <div class="ingredient-section">
+                            <div class="ingredient-header">
+                                <h5><i class="fas fa-bacteria"></i> Yeast</h5>
+                                <button class="btn-add" onclick="window.recipeDesigner.showAddIngredientModal('yeast')">
+                                    <i class="fas fa-plus"></i> Add Yeast
+                                </button>
+                            </div>
+                            <div class="ingredient-list" id="yeast-list">
+                                <div class="ingredient-item" style="color: #6c757d; font-style: italic; text-align: center; padding: 20px;">
+                                    No yeast added yet
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Basic Recipe Info -->
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="recipe-name">Name</label>
+                            <input type="text" id="recipe-name" value="New Recipe">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipe-type">Type</label>
+                            <select id="recipe-type">
+                                <option>All Grain</option>
+                                <option>Extract</option>
+                                <option>Partial Mash</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="boil-time">Boil Time</label>
+                            <input type="number" id="boil-time" value="60"> min
+                        </div>
+                        <div class="form-group">
+                            <label for="brew-date">Date</label>
+                            <input type="date" id="brew-date">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="brewer">Brewer</label>
+                            <input type="text" id="brewer">
+                        </div>
+                        <div class="form-group">
+                            <label for="batch-vol">Batch Vol</label>
+                            <input type="number" id="batch-vol" value="5.00" step="0.01"> gal
+                        </div>
+                        <div class="form-group">
+                            <label for="efficiency">Efficiency</label>
+                            <input type="number" id="efficiency" value="72.00" step="0.01"> %
+                        </div>
+                        <div class="form-group">
+                            <label for="sharing">Sharing</label>
+                            <select id="sharing">
+                                <option>Private</option>
+                                <option>Public</option>
+                                <option>Brewery Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="equipment">Equip</label>
+                            <input type="text" id="equipment" value="Pot and Cooler (5 Gal/19 L)">
+                        </div>
+                        <div class="form-group">
+                            <label for="pre-boil">Pre-Boil</label>
+                            <input type="number" id="pre-boil" value="6.52" step="0.01"> gal
+                        </div>
+                        <div class="form-group">
+                            <label for="version">Version</label>
+                            <input type="text" id="version" value="1.0">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="locked"> Locked
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Brewing Statistics -->
+                    <div class="brewing-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Est OG</div>
+                            <div class="stat-value" id="estimated-og">1.000</div>
+                            <div class="stat-target">SG</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Est IBUs</div>
+                            <div class="stat-value" id="estimated-ibus">0.0</div>
+                            <div class="stat-target">IBUs</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Color</div>
+                            <div class="stat-value" id="estimated-color">0.0</div>
+                            <div class="stat-target">SRM</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">ABV</div>
+                            <div class="stat-value" id="estimated-abv">0.0</div>
+                            <div class="stat-target">% ABV</div>
+                        </div>
+                    </div>
+
+                    <!-- Style Information -->
+                    <div class="form-group">
+                        <label for="beer-style">Style</label>
+                        <select id="beer-style">
+                            <option value="">Select Beer Style</option>
+                            <optgroup label="American Ales">
+                                <option value="American Amber Ale">American Amber Ale</option>
+                                <option value="American IPA">American IPA</option>
+                                <option value="American Pale Ale">American Pale Ale</option>
+                                <option value="American Wheat">American Wheat</option>
+                                <option value="American Brown Ale">American Brown Ale</option>
+                                <option value="American Porter">American Porter</option>
+                                <option value="American Stout">American Stout</option>
+                                <option value="Imperial IPA">Imperial IPA</option>
+                                <option value="Imperial Stout">Imperial Stout</option>
+                            </optgroup>
+                            <optgroup label="English Ales">
+                                <option value="English Bitter">English Bitter</option>
+                                <option value="English IPA">English IPA</option>
+                                <option value="English Brown Ale">English Brown Ale</option>
+                                <option value="English Porter">English Porter</option>
+                                <option value="English Barleywine">English Barleywine</option>
+                            </optgroup>
+                            <optgroup label="German Lagers">
+                                <option value="German Pilsner">German Pilsner</option>
+                                <option value="Munich Helles">Munich Helles</option>
+                                <option value="Märzen">Märzen</option>
+                                <option value="German Wheat">German Wheat</option>
+                                <option value="Maibock">Maibock</option>
+                                <option value="Doppelbock">Doppelbock</option>
+                            </optgroup>
+                            <optgroup label="Belgian Styles">
+                                <option value="Belgian Witbier">Belgian Witbier</option>
+                                <option value="Belgian Pale Ale">Belgian Pale Ale</option>
+                                <option value="Belgian Dubbel">Belgian Dubbel</option>
+                                <option value="Belgian Tripel">Belgian Tripel</option>
+                                <option value="Belgian Quadrupel">Belgian Quadrupel</option>
+                                <option value="Saison">Saison</option>
+                            </optgroup>
+                            <optgroup label="Czech & Other Lagers">
+                                <option value="Czech Pilsner">Czech Pilsner</option>
+                                <option value="Czech Dark Lager">Czech Dark Lager</option>
+                                <option value="Vienna Lager">Vienna Lager</option>
+                                <option value="Schwarzbier">Schwarzbier</option>
+                                <option value="California Common">California Common</option>
+                            </optgroup>
+                            <optgroup label="Specialty Styles">
+                                <option value="Cream Ale">Cream Ale</option>
+                                <option value="Kölsch">Kölsch</option>
+                                <option value="Altbier">Altbier</option>
+                                <option value="Irish Red Ale">Irish Red Ale</option>
+                                <option value="Scottish Ale">Scottish Ale</option>
+                            </optgroup>
+                            <optgroup label="Sour Styles">
+                                <option value="Berliner Weisse">Berliner Weisse</option>
+                                <option value="Gose">Gose</option>
+                                <option value="Lambic">Lambic</option>
+                            </optgroup>
+                            <optgroup label="Strong Ales">
+                                <option value="Old Ale">Old Ale</option>
+                                <option value="Scotch Ale">Scotch Ale</option>
+                                <option value="Baltic Porter">Baltic Porter</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <!-- Brewing Parameter Sliders -->
+                    <div class="slider-container">
+                        <label>Original Gravity</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 50%"></div>
+                        </div>
+                        <input type="range" class="slider" min="1.000" max="1.120" step="0.001" value="1.045">
+                        <div class="range-labels">
+                            <span>1.045 - 1.056 SG</span>
+                        </div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label>Bitterness</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                        <input type="range" class="slider" min="0" max="100" value="30">
+                        <div class="range-labels">
+                            <span>20.0 - 40.0 IBUs</span>
+                        </div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label>Color</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%"></div>
+                        </div>
+                        <input type="range" class="slider" min="0" max="40" value="11">
+                        <div class="range-labels">
+                            <span>11.0 - 18.0 SRM</span>
+                        </div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label>ABV</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <input type="range" class="slider" min="0" max="15" value="4.5">
+                        <div class="range-labels">
+                            <span>4.5 - 5.7% ABV</span>
+                        </div>
+                    </div>
+
+                    <!-- Additional Parameters -->
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="mash-type">Mash</label>
+                            <input type="text" id="mash-type" value="Single Infusion, Medium Body, No Mash Out">
+                        </div>
+                        <div class="form-group">
+                            <label for="carbonation">Carbonation</label>
+                            <input type="text" id="carbonation" value="Corn Sugar">
+                        </div>
+                        <div class="form-group">
+                            <label for="fermentation">Fermentation</label>
+                            <input type="text" id="fermentation" value="Ale, Two Stage">
+                        </div>
+                        <div class="form-group">
+                            <label for="carb-vols">Carb Vols</label>
+                            <input type="number" id="carb-vols" value="2.3" step="0.1"> vols
+                        </div>
+                    </div>
+
+                    <!-- Recipe Notes -->
+                    <div class="recipe-notes">
+                        <h4><i class="fas fa-lightbulb"></i> Brewing Tips</h4>
+                        <p>• Maintain mash temperature at 152°F for optimal body and fermentability</p>
+                        <p>• Consider water chemistry adjustments for your local water profile</p>
+                        <p>• Ferment at 65-68°F for clean ale character</p>
+                    </div>
+                </div>
+
+                <!-- Starter Section -->
+                <div class="recipe-section" id="starter-section">
+                    <h3><i class="fas fa-flask"></i> Yeast Starter Calculator</h3>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="starter-gravity">Starter Gravity</label>
+                            <input type="number" id="starter-gravity" value="1.040" step="0.001">
+                        </div>
+                        <div class="form-group">
+                            <label for="starter-volume">Starter Volume (L)</label>
+                            <input type="number" id="starter-volume" value="2.0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="yeast-viability">Yeast Viability (%)</label>
+                            <input type="number" id="yeast-viability" value="85" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="target-cells">Target Cells (billions)</label>
+                            <input type="number" id="target-cells" value="200" step="10" readonly>
+                        </div>
+                    </div>
+
+                    <div class="starter-recommendations">
+                        <h4>Starter Recommendations</h4>
+                        <div class="recommendation-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">Dry Malt Extract</div>
+                                <div class="stat-value" id="dme-needed">200g</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Starter Steps</div>
+                                <div class="stat-value" id="starter-steps">1</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Growth Rate</div>
+                                <div class="stat-value" id="growth-rate">1.4x</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Water Chemistry Section -->
+                <div class="recipe-section" id="water-section">
+                    <h3><i class="fas fa-tint"></i> Water Chemistry Profile</h3>
+                    
+                    <div class="water-profiles">
+                        <h4>Source Water Profile</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="calcium">Calcium (Ca²⁺) ppm</label>
+                                <input type="number" id="calcium" value="0" step="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="magnesium">Magnesium (Mg²⁺) ppm</label>
+                                <input type="number" id="magnesium" value="0" step="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="sodium">Sodium (Na⁺) ppm</label>
+                                <input type="number" id="sodium" value="0" step="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="chloride">Chloride (Cl⁻) ppm</label>
+                                <input type="number" id="chloride" value="0" step="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="sulfate">Sulfate (SO₄²⁻) ppm</label>
+                                <input type="number" id="sulfate" value="0" step="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="bicarbonate">Bicarbonate (HCO₃⁻) ppm</label>
+                                <input type="number" id="bicarbonate" value="0" step="1">
+                            </div>
+                        </div>
+
+                        <h4>Target Style Profile</h4>
+                        <div class="style-selector">
+                            <select id="water-style-profile">
+                                <option value="balanced">Balanced</option>
+                                <option value="pale-ale">Pale Ale (Burton-on-Trent)</option>
+                                <option value="pilsner">Pilsner (Pilsen)</option>
+                                <option value="munich">Munich Helles</option>
+                                <option value="dublin">Dublin Stout</option>
+                                <option value="dortmund">Dortmund Export</option>
+                            </select>
+                        </div>
+
+                        <div class="target-profile" id="target-water-profile">
+                            <h5>Target Ranges for <span id="selected-style">Balanced</span></h5>
+                            <div class="water-targets-grid">
+                                <div class="target-item">
+                                    <span class="target-label">Ca²⁺:</span>
+                                    <span class="target-range" id="target-calcium">50-150 ppm</span>
+                                </div>
+                                <div class="target-item">
+                                    <span class="target-label">SO₄²⁻:</span>
+                                    <span class="target-range" id="target-sulfate">150-300 ppm</span>
+                                </div>
+                                <div class="target-item">
+                                    <span class="target-label">Cl⁻:</span>
+                                    <span class="target-range" id="target-chloride">50-150 ppm</span>
+                                </div>
+                                <div class="target-item">
+                                    <span class="target-label">SO₄:Cl Ratio:</span>
+                                    <span class="target-range" id="target-ratio">1.5:1 - 2:1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4>Salt Additions</h4>
+                        <div class="salt-additions">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="gypsum">Gypsum (CaSO₄·2H₂O) g</label>
+                                    <input type="number" id="gypsum" value="0" step="0.1">
+                                    <small>Adds: Ca²⁺ & SO₄²⁻</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="calcium-chloride">Calcium Chloride (CaCl₂) g</label>
+                                    <input type="number" id="calcium-chloride" value="0" step="0.1">
+                                    <small>Adds: Ca²⁺ & Cl⁻</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="epsom-salt">Epsom Salt (MgSO₄·7H₂O) g</label>
+                                    <input type="number" id="epsom-salt" value="0" step="0.1">
+                                    <small>Adds: Mg²⁺ & SO₄²⁻</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="table-salt">Table Salt (NaCl) g</label>
+                                    <input type="number" id="table-salt" value="0" step="0.1">
+                                    <small>Adds: Na⁺ & Cl⁻</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="resulting-profile">
+                            <h4>Resulting Water Profile</h4>
+                            <div class="brewing-stats">
+                                <div class="stat-card">
+                                    <div class="stat-label">Total Ca²⁺</div>
+                                    <div class="stat-value" id="result-calcium">0 ppm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">Total SO₄²⁻</div>
+                                    <div class="stat-value" id="result-sulfate">0 ppm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">Total Cl⁻</div>
+                                    <div class="stat-value" id="result-chloride">0 ppm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">SO₄:Cl Ratio</div>
+                                    <div class="stat-value" id="result-ratio">1:1</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Mash Profile Section -->
+                <div class="recipe-section" id="mash-section">
+                    <h3><i class="fas fa-thermometer-half"></i> Mash Profile Designer</h3>
+                    
+                    <div class="mash-designer">
+                        <div class="mash-type-selector">
+                            <label for="mash-type-select">Mash Type:</label>
+                            <select id="mash-type-select">
+                                <option value="single-infusion">Single Infusion</option>
+                                <option value="step-mash">Step Mash</option>
+                                <option value="decoction">Decoction</option>
+                                <option value="hochkurz">Hochkurz</option>
+                            </select>
+                            <button class="btn-add" id="add-mash-step">
+                                <i class="fas fa-plus"></i> Add Step
+                            </button>
+                        </div>
+
+                        <div class="mash-steps-container">
+                            <h4>Mash Steps</h4>
+                            <div class="mash-steps-list" id="mash-steps-list">
+                                <!-- Dynamic mash steps will be added here -->
+                            </div>
+                        </div>
+
+                        <div class="mash-calculations">
+                            <h4>Mash Calculations</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="grain-weight">Total Grain Weight (lbs)</label>
+                                    <input type="number" id="grain-weight" value="10" step="0.1" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mash-ratio">Mash Ratio (qt/lb)</label>
+                                    <input type="number" id="mash-ratio" value="1.25" step="0.05">
+                                </div>
+                                <div class="form-group">
+                                    <label for="grain-temp">Grain Temperature (°F)</label>
+                                    <input type="number" id="grain-temp" value="72" step="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tun-thermal-mass">Tun Thermal Mass (°F)</label>
+                                    <input type="number" id="tun-thermal-mass" value="5" step="0.5">
+                                </div>
+                            </div>
+
+                            <div class="mash-results">
+                                <div class="brewing-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-label">Strike Water</div>
+                                        <div class="stat-value" id="strike-water">12.5 qt</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-label">Strike Temp</div>
+                                        <div class="stat-value" id="strike-temp">164°F</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-label">Sparge Water</div>
+                                        <div class="stat-value" id="sparge-water">4.5 gal</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-label">Total Water</div>
+                                        <div class="stat-value" id="total-water">7.6 gal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mash-chart-container">
+                            <h4>Mash Temperature Profile</h4>
+                            <canvas id="mash-chart" width="600" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-section" id="timer-section">
+                    <h3>Brew Timer</h3>
+                    <p>Brewing timeline and reminders will be configured here.</p>
+                </div>
+
+                <div class="recipe-section" id="session-section">
+                    <h3>Brew Session</h3>
+                    <p>Actual brewing session notes and measurements will be recorded here.</p>
+                </div>
+
+                <div class="recipe-section" id="notes-section">
+                    <h3>Recipe Notes</h3>
+                    <textarea rows="10" placeholder="Enter detailed brewing notes, modifications, and observations here..."></textarea>
+                </div>
+
+                <div class="recipe-section" id="vols-section">
+                    <h3>Volume Calculations</h3>
+                    <p>Detailed volume calculations for all stages of brewing will be shown here.</p>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="recipe-sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-seedling"></i> Quick Add</h3>
+                    <button class="quick-add-btn" data-type="fermentable">
+                        <i class="fas fa-wheat"></i> Add Fermentable
+                    </button>
+                    <button class="quick-add-btn" data-type="hops">
+                        <i class="fas fa-leaf"></i> Add Hops
+                    </button>
+                    <button class="quick-add-btn" data-type="misc">
+                        <i class="fas fa-flask"></i> Add Misc
+                    </button>
+                    <button class="quick-add-btn" data-type="yeast">
+                        <i class="fas fa-bacteria"></i> Add Yeast
+                    </button>
+                    <button class="quick-add-btn" data-type="water">
+                        <i class="fas fa-tint"></i> Add Water
+                    </button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-calculator"></i> Calculations</h3>
+                    <div class="stat-card">
+                        <div class="stat-label">Fermentable Pct</div>
+                        <div class="stat-value">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Hop IBU Adjust</div>
+                        <div class="stat-value">0.0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Update Prices</div>
+                        <div class="stat-value">$0.00</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-chart-bar"></i> Analysis</h3>
+                    <div class="form-group">
+                        <label>Bitter Ratio</label>
+                        <input type="text" value="0.000 BU:SG" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Est FG</label>
+                        <input type="text" value="1.000 SG" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Hops per BBL</label>
+                        <input type="text" value="0.00 lb/bbl" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Tot Hops</label>
+                        <input type="text" value="0.00 oz" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Fermentables</label>
+                        <input type="text" value="0.0 lb" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Tot Cost</label>
+                        <input type="text" value="$0.00" readonly>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-info-circle"></i> Help</h3>
+                    <button class="quick-add-btn" onclick="window.open('brewing-guide.html', '_blank')">
+                        <i class="fas fa-book"></i> Brewing Guide
+                    </button>
+                    <button class="quick-add-btn">
+                        <i class="fas fa-graduation-cap"></i> Design Tutorial
+                    </button>
+                    <button class="quick-add-btn">
+                        <i class="fas fa-lightbulb"></i> Design Tips
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="recipe-designer.js"></script>
+    <script src="recipe-designer-advanced.js"></script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewMetrics - Professional Brewing Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .guide-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .guide-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            border-radius: 8px;
+        }
+        
+        .guide-section {
+            margin-bottom: 40px;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .guide-section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .calculation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .calculation-table th,
+        .calculation-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .calculation-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .formula-box {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .tip-box {
+            background: #e8f5e8;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="guide-header">
+            <h1>BrewMetrics Professional Brewing Guide</h1>
+            <p>Advanced calculations and techniques for recipe design</p>
+        </div>
+
+        <div class="guide-section">
+            <h2>🍺 Essential Brewing Calculations</h2>
+            
+            <h3>Original Gravity (OG)</h3>
+            <div class="formula-box">
+                OG = 1 + (Total Gravity Points / Batch Size) / 1000<br>
+                Gravity Points = (Grain Weight × Yield × Efficiency) / 100
+            </div>
+            
+            <h3>International Bitterness Units (IBU)</h3>
+            <div class="formula-box">
+                IBU = (Hop Weight × Alpha % × Utilization × 7490) / (Batch Size × Gravity Factor)<br>
+                Utilization = 1.65 × 0.000125^(Gravity-1) × (1 - e^(-0.04 × Boil Time)) / 4.15
+            </div>
+            
+            <h3>Standard Reference Method (SRM)</h3>
+            <div class="formula-box">
+                MCU = Σ(Grain Color × Grain Weight) / Batch Size<br>
+                SRM = 1.4922 × MCU^0.6859
+            </div>
+            
+            <h3>Alcohol by Volume (ABV)</h3>
+            <div class="formula-box">
+                ABV = (OG - FG) × 131.25
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>💧 Water Chemistry</h2>
+            
+            <h3>Ion Concentrations by Style</h3>
+            <table class="calculation-table">
+                <thead>
+                    <tr>
+                        <th>Style</th>
+                        <th>Ca²⁺ (ppm)</th>
+                        <th>SO₄²⁻ (ppm)</th>
+                        <th>Cl⁻ (ppm)</th>
+                        <th>SO₄:Cl Ratio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pilsner</td>
+                        <td>10-50</td>
+                        <td>5-30</td>
+                        <td>5-20</td>
+                        <td>1:1 - 2:1</td>
+                    </tr>
+                    <tr>
+                        <td>Pale Ale</td>
+                        <td>100-300</td>
+                        <td>200-400</td>
+                        <td>50-100</td>
+                        <td>2:1 - 4:1</td>
+                    </tr>
+                    <tr>
+                        <td>IPA</td>
+                        <td>150-300</td>
+                        <td>250-500</td>
+                        <td>50-150</td>
+                        <td>2:1 - 4:1</td>
+                    </tr>
+                    <tr>
+                        <td>Stout</td>
+                        <td>100-200</td>
+                        <td>50-100</td>
+                        <td>50-100</td>
+                        <td>1:1 - 2:1</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Salt Addition Calculations (per gram in 5 gallons)</h3>
+            <table class="calculation-table">
+                <thead>
+                    <tr>
+                        <th>Salt</th>
+                        <th>Ca²⁺</th>
+                        <th>SO₄²⁻</th>
+                        <th>Cl⁻</th>
+                        <th>Mg²⁺</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gypsum (CaSO₄·2H₂O)</td>
+                        <td>+61.5 ppm</td>
+                        <td>+147.4 ppm</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Calcium Chloride (CaCl₂)</td>
+                        <td>+72.0 ppm</td>
+                        <td>-</td>
+                        <td>+127.4 ppm</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Epsom Salt (MgSO₄·7H₂O)</td>
+                        <td>-</td>
+                        <td>+103.0 ppm</td>
+                        <td>-</td>
+                        <td>+26.0 ppm</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip-box">
+                <strong>💡 Water Chemistry Tips:</strong>
+                <ul>
+                    <li>Higher sulfate enhances hop character and creates a "dry" finish</li>
+                    <li>Higher chloride enhances malt character and creates "fullness"</li>
+                    <li>Calcium aids enzyme function and yeast health (minimum 50 ppm)</li>
+                    <li>Magnesium supports yeast metabolism (10-30 ppm optimal)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>🌾 Mash Profile Design</h2>
+            
+            <h3>Strike Water Temperature Calculation</h3>
+            <div class="formula-box">
+                Strike Temp = (0.2/Mash Ratio) × (Target Temp - Grain Temp) + Target Temp + Thermal Mass
+            </div>
+            
+            <h3>Common Mash Temperatures</h3>
+            <table class="calculation-table">
+                <thead>
+                    <tr>
+                        <th>Temperature</th>
+                        <th>Enzyme Activity</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>144-149°F (62-65°C)</td>
+                        <td>Beta-amylase favored</td>
+                        <td>Highly fermentable, dry, crisp</td>
+                    </tr>
+                    <tr>
+                        <td>150-155°F (65-68°C)</td>
+                        <td>Balanced activity</td>
+                        <td>Balanced fermentability</td>
+                    </tr>
+                    <tr>
+                        <td>156-162°F (69-72°C)</td>
+                        <td>Alpha-amylase favored</td>
+                        <td>Less fermentable, fuller body</td>
+                    </tr>
+                    <tr>
+                        <td>168°F+ (76°C+)</td>
+                        <td>Enzyme denaturation</td>
+                        <td>Mash out temperature</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="warning-box">
+                <strong>⚠️ Mashing Cautions:</strong>
+                <ul>
+                    <li>Don't exceed 168°F (76°C) to avoid tannin extraction</li>
+                    <li>Maintain pH between 5.2-5.6 for optimal enzyme activity</li>
+                    <li>Allow adequate time: minimum 30 minutes at saccharification temperature</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>🍃 Hop Utilization & Scheduling</h2>
+            
+            <h3>Hop Addition Timing Guidelines</h3>
+            <table class="calculation-table">
+                <thead>
+                    <tr>
+                        <th>Addition Time</th>
+                        <th>Primary Contribution</th>
+                        <th>Utilization Range</th>
+                        <th>Typical Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>60+ minutes</td>
+                        <td>Bitterness</td>
+                        <td>25-30%</td>
+                        <td>High alpha bittering hops</td>
+                    </tr>
+                    <tr>
+                        <td>15-30 minutes</td>
+                        <td>Flavor & some bitterness</td>
+                        <td>10-15%</td>
+                        <td>Dual-purpose hops</td>
+                    </tr>
+                    <tr>
+                        <td>0-10 minutes</td>
+                        <td>Aroma</td>
+                        <td>2-5%</td>
+                        <td>Aroma/noble hops</td>
+                    </tr>
+                    <tr>
+                        <td>Whirlpool/Steep</td>
+                        <td>Aroma & flavor</td>
+                        <td>5-10%</td>
+                        <td>Temperature dependent</td>
+                    </tr>
+                    <tr>
+                        <td>Dry hop</td>
+                        <td>Aroma only</td>
+                        <td>0%</td>
+                        <td>Post-fermentation</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>IBU Distribution by Style</h3>
+            <table class="calculation-table">
+                <thead>
+                    <tr>
+                        <th>Style</th>
+                        <th>Bittering %</th>
+                        <th>Flavor %</th>
+                        <th>Aroma %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>German Lager</td>
+                        <td>80-90%</td>
+                        <td>10-15%</td>
+                        <td>5-10%</td>
+                    </tr>
+                    <tr>
+                        <td>American Pale Ale</td>
+                        <td>60-70%</td>
+                        <td>20-25%</td>
+                        <td>10-20%</td>
+                    </tr>
+                    <tr>
+                        <td>IPA</td>
+                        <td>50-60%</td>
+                        <td>25-30%</td>
+                        <td>20-30%</td>
+                    </tr>
+                    <tr>
+                        <td>New England IPA</td>
+                        <td>30-40%</td>
+                        <td>30-40%</td>
+                        <td>30-40%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip-box">
+                <strong>💡 Hop Optimization Tips:</strong>
+                <ul>
+                    <li>Use first wort hopping for smooth bitterness</li>
+                    <li>Whirlpool additions at 170-185°F extract oils without excessive bitterness</li>
+                    <li>Dry hop during active fermentation for biotransformation</li>
+                    <li>Consider hop creep in highly hopped beers (continued fermentation)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>🦠 Yeast & Fermentation</h2>
+            
+            <h3>Pitching Rate Calculations</h3>
+            <div class="formula-box">
+                Required Cells = Batch Size (L) × Gravity Points × Target Rate<br>
+                Ale Target: 0.75 million cells/mL/°P<br>
+                Lager Target: 1.5 million cells/mL/°P
+            </div>
+            
+            <h3>Starter Calculations</h3>
+            <table class="calculation-table">
+                <thead>
+                    <tr>
+                        <th>Starter Size</th>
+                        <th>Growth Rate</th>
+                        <th>DME (g/L)</th>
+                        <th>Target Gravity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1L</td>
+                        <td>1.4x</td>
+                        <td>100g</td>
+                        <td>1.040</td>
+                    </tr>
+                    <tr>
+                        <td>2L</td>
+                        <td>1.4x</td>
+                        <td>200g</td>
+                        <td>1.040</td>
+                    </tr>
+                    <tr>
+                        <td>3L+</td>
+                        <td>1.2x</td>
+                        <td>100g/L</td>
+                        <td>1.040</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="warning-box">
+                <strong>⚠️ Fermentation Guidelines:</strong>
+                <ul>
+                    <li>Maintain consistent temperature throughout fermentation</li>
+                    <li>Avoid temperature swings > 2°F during active fermentation</li>
+                    <li>Consider ramping temperature in final third of fermentation</li>
+                    <li>Allow adequate time for cleanup (diacetyl rest)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>📊 Quality Control Targets</h2>
+            
+            <h3>Brewing Efficiency Targets</h3>
+            <table class="calculation-table">
+                <thead>
+                    <tr>
+                        <th>System</th>
+                        <th>Typical Efficiency</th>
+                        <th>Good Efficiency</th>
+                        <th>Excellent Efficiency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>All Grain (Batch)</td>
+                        <td>65-70%</td>
+                        <td>70-75%</td>
+                        <td>75-80%</td>
+                    </tr>
+                    <tr>
+                        <td>All Grain (Fly Sparge)</td>
+                        <td>70-75%</td>
+                        <td>75-80%</td>
+                        <td>80-85%</td>
+                    </tr>
+                    <tr>
+                        <td>BIAB</td>
+                        <td>60-65%</td>
+                        <td>65-70%</td>
+                        <td>70-75%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip-box">
+                <strong>💡 Quality Tips:</strong>
+                <ul>
+                    <li>Track and maintain consistent efficiency</li>
+                    <li>Document all process parameters</li>
+                    <li>Use the same measurement techniques consistently</li>
+                    <li>Calibrate equipment regularly</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+            <h3>Ready to Design Your Recipe?</h3>
+            <button onclick="window.open('recipe-designer.html', '_blank')" style="padding: 15px 30px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 1.1em; cursor: pointer;">
+                🍺 Open Recipe Designer
+            </button>
+        </div>
+    </div>
+</body>
+</html>

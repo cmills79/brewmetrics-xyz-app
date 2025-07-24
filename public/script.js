@@ -3,7 +3,15 @@
 // Wait for the HTML document to be fully loaded before running script logic
 document.addEventListener('DOMContentLoaded', () => {
 
-    console.log("DOM fully loaded and parsed"); // Add this line for confirmation
+    // Initialize utilities
+    const { logger, errorHandler, loadingIndicator } = window.BrewMetricsUtils || {};
+    
+    if (!logger) {
+        console.error('BrewMetricsUtils not loaded. Please include utils.js before this script.');
+        return;
+    }
+    
+    logger.info("Authentication page loaded");
 
     // --- Get DOM Elements ---
     // (Keep all your getElementById calls here)
@@ -22,57 +30,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginSection = document.getElementById('login-form'); // Should find it now
     const registerSection = document.getElementById('register-form'); // Should find it now
 
-    // --- Create Loading Indicator ---
-    const loadingIndicator = document.createElement('div');
-    loadingIndicator.id = 'form-loading-indicator';
-    loadingIndicator.innerHTML = '<div class="bubbles"><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div></div>';
-    loadingIndicator.style.display = 'none'; // Initially hidden
-
     // --- Add Event Listeners ---
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            
             // Clear previous errors
-            clearAuthError();
+            errorHandler.clearError();
+            
             // Get values at submission time
-            const email = loginEmailInput ? loginEmailInput.value : null;
-            const password = loginPasswordInput ? loginPasswordInput.value : null;
+            const email = loginEmailInput?.value?.trim();
+            const password = loginPasswordInput?.value;
 
             if (!email || !password) {
-                 displayAuthError("Please enter both email and password.");
-                 return;
+                errorHandler.displayError("Please enter both email and password.");
+                return;
             }
 
-            console.log(`Attempting login for: ${email}`); // Log attempt
+            logger.info("Login attempt started", { email });
 
             // Show loading indicator
-            loginForm.parentNode.insertBefore(loadingIndicator, loginForm); // Insert before form
-            loadingIndicator.style.display = 'block';
-            loginForm.style.display = 'none';  // Hide the form
+            loadingIndicator.show();
+            loginForm.style.display = 'none';
 
-            // Use 'auth' and 'db' which are globally available from the inline script in index.html
+            // Use Firebase auth
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    console.log("User logged in successfully:", userCredential.user.uid, userCredential.user.email);
-                    // Optional: Reset form after successful login? Usually not needed on redirect.
-                    // if (loginForm) loginForm.reset(); // Check if loginForm exists before reset
-                    window.location.href = 'dashboard.html'; // Redirect
+                    logger.info("User logged in successfully", { 
+                        uid: userCredential.user.uid, 
+                        email: userCredential.user.email 
+                    });
+                    window.location.href = 'dashboard.html';
                 })
                 .catch((error) => {
-                    console.error("Login Error:", error);
-                    // Display mapped error message
-                    displayAuthError(error.code); // Pass error code for better mapping
-                    // Hide loading indicator, show form again on error
-                    loadingIndicator.style.display = 'none';
+                    logger.error("Login failed", error);
+                    errorHandler.handleFirebaseError(error);
+                    
+                    // Show form again on error
+                    loadingIndicator.hide();
                     loginForm.style.display = 'block';
-
-                    // console.log(`Login failed: ${error.message} ${loginForm ? 'Form available' : 'Form NOT available'}`); // Debugging line
-                    // The loginForm.reset error suggests loginForm might be null here too? Very odd if listener attached.
-                    // Let's remove reset for now as redirect happens anyway.
                 });
         });
     } else {
-        console.error("Login form element not found!");
+        logger.error("Login form element not found");
     }
 
     if (registerForm) {

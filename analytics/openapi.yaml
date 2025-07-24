@@ -1,0 +1,362 @@
+openapi: 3.0.3
+info:
+  title: BrewMetrics Analytics API
+  description: AI agent analytics tool for BrewMetrics brewery data insights
+  version: 1.0.0
+  contact:
+    name: BrewMetrics Support
+    email: support@brewmetrics.xyz
+
+servers:
+  - url: https://brewmetrics-analytics-{hash}-uc.a.run.app
+    description: Cloud Run Production Environment
+
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Check if the analytics service is running and connected to BigQuery
+      operationId: health_check
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  service:
+                    type: string
+                    example: "brewmetrics-analytics"
+
+  /recipe-analytics:
+    post:
+      summary: Get analytics for a specific recipe
+      description: "Retrieve detailed analytics data for a specific beer recipe including ratings, taste profile, and performance metrics. Use this when users ask about recipe performance, ratings, or specific statistics for a recipe."
+      operationId: get_recipe_analytics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipe_name:
+                  type: string
+                  description: "Name of the beer recipe to analyze"
+                  example: "Hazy Dayz IPA"
+                brewery_id:
+                  type: string
+                  description: "Optional brewery ID for filtering results"
+                  example: "brewery_123"
+              required:
+                - recipe_name
+      responses:
+        '200':
+          description: Recipe analytics data retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recipe:
+                    $ref: '#/components/schemas/RecipeAnalytics'
+                  query_timestamp:
+                    type: string
+                    format: date-time
+        '404':
+          description: Recipe not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Invalid request parameters
+        '500':
+          description: Internal server error
+
+  /brewery-summary:
+    post:
+      summary: Get brewery performance summary
+      description: "Retrieve overall performance metrics for a brewery including total ratings, active batches, and top recipes. Use this when users ask about overall brewery performance or comparisons."
+      operationId: get_brewery_summary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brewery_id:
+                  type: string
+                  description: "Brewery identifier"
+                  example: "brewery_123"
+              required:
+                - brewery_id
+      responses:
+        '200':
+          description: Brewery summary retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brewery_summary:
+                    $ref: '#/components/schemas/BrewerySummary'
+                  query_timestamp:
+                    type: string
+                    format: date-time
+        '404':
+          description: Brewery not found
+        '403':
+          description: Access denied to brewery data
+
+  /top-recipes:
+    post:
+      summary: Get top performing recipes
+      description: "Retrieve the highest-rated recipes, optionally filtered by brewery or beer style. Use this when users ask about popular recipes, best performers, or want recipe recommendations."
+      operationId: get_top_recipes
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brewery_id:
+                  type: string
+                  description: "Optional brewery filter"
+                  example: "brewery_123"
+                beer_style:
+                  type: string
+                  description: "Optional beer style filter"
+                  example: "IPA"
+                limit:
+                  type: integer
+                  description: "Maximum number of results (default: 10, max: 100)"
+                  minimum: 1
+                  maximum: 100
+                  default: 10
+      responses:
+        '200':
+          description: Top recipes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  top_recipes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TopRecipe'
+                  total_count:
+                    type: integer
+                  filters:
+                    type: object
+                  query_timestamp:
+                    type: string
+                    format: date-time
+
+  /taste-profile-analysis:
+    post:
+      summary: Analyze taste profile trends
+      description: "Analyze detailed taste characteristics (sweetness, bitterness, etc.) for recipes. Use this when users ask about flavor profiles, taste trends, or want detailed sensory analysis."
+      operationId: get_taste_profile_analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipe_name:
+                  type: string
+                  description: "Specific recipe to analyze"
+                  example: "Hazy Dayz IPA"
+                brewery_id:
+                  type: string
+                  description: "Brewery ID for broader analysis"
+                  example: "brewery_123"
+              anyOf:
+                - required: [recipe_name]
+                - required: [brewery_id]
+      responses:
+        '200':
+          description: Taste profile analysis completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  taste_profiles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TasteProfile'
+                  analysis_summary:
+                    type: object
+                  query_timestamp:
+                    type: string
+                    format: date-time
+
+components:
+  schemas:
+    RecipeAnalytics:
+      type: object
+      properties:
+        recipe_name:
+          type: string
+          example: "Hazy Dayz IPA"
+        beer_style:
+          type: string
+          example: "New England IPA"
+        average_rating:
+          type: number
+          format: float
+          example: 4.2
+        median_rating:
+          type: number
+          format: float
+        rating_count:
+          type: integer
+          example: 45
+        avg_sweetness:
+          type: number
+          format: float
+        avg_acidity:
+          type: number
+          format: float
+        avg_bitterness:
+          type: number
+          format: float
+        avg_body:
+          type: number
+          format: float
+        avg_carbonation:
+          type: number
+          format: float
+        avg_malt_flavors:
+          type: number
+          format: float
+        avg_hop_flavors:
+          type: number
+          format: float
+        avg_finish:
+          type: number
+          format: float
+        high_ratings_count:
+          type: integer
+          description: "Number of ratings >= 4 stars"
+        low_ratings_count:
+          type: integer
+          description: "Number of ratings <= 2 stars"
+        google_reviews_generated:
+          type: integer
+        last_feedback_date:
+          type: string
+          format: date
+        batch_active:
+          type: boolean
+
+    BrewerySummary:
+      type: object
+      properties:
+        brewery_name:
+          type: string
+          example: "Craft Beer Co"
+        total_feedback_count:
+          type: integer
+          example: 250
+        average_rating:
+          type: number
+          format: float
+          example: 4.1
+        active_batches_count:
+          type: integer
+          example: 8
+        total_batches_count:
+          type: integer
+          example: 15
+        google_reviews_generated:
+          type: integer
+        top_recipe_name:
+          type: string
+          example: "Golden Wheat"
+        top_recipe_rating:
+          type: number
+          format: float
+        recent_feedback_count:
+          type: integer
+          description: "Feedback count in last 30 days"
+        recent_average_rating:
+          type: number
+          format: float
+
+    TopRecipe:
+      type: object
+      properties:
+        recipe_name:
+          type: string
+        beer_style:
+          type: string
+        average_rating:
+          type: number
+          format: float
+        rating_count:
+          type: integer
+        brewery_id:
+          type: string
+        high_ratings_count:
+          type: integer
+        last_feedback_date:
+          type: string
+          format: date
+
+    TasteProfile:
+      type: object
+      properties:
+        recipe_name:
+          type: string
+        beer_style:
+          type: string
+        avg_sweetness:
+          type: number
+          format: float
+        avg_acidity:
+          type: number
+          format: float
+        avg_bitterness:
+          type: number
+          format: float
+        avg_body:
+          type: number
+          format: float
+        avg_carbonation:
+          type: number
+          format: float
+        avg_malt_flavors:
+          type: number
+          format: float
+        avg_hop_flavors:
+          type: number
+          format: float
+        avg_finish:
+          type: number
+          format: float
+        average_rating:
+          type: number
+          format: float
+        rating_count:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: "Error message"
+        message:
+          type: string
+          description: "Detailed error description"
