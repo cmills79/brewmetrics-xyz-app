@@ -6,8 +6,13 @@ import json
 from datetime import datetime, timedelta
 from flask import Flask, request, jsonify
 from google.cloud import bigquery
+from google.cloud import secretmanager
 from google.api_core.exceptions import GoogleAPICallError, NotFound
 import logging
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (for local development)
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -15,9 +20,23 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Configuration
-PROJECT_ID = os.getenv('GCP_PROJECT', 'brewmetrics-xyz-app-e8d51')
-DATASET_ID = 'brewmetrics_data'
+def get_secret(secret_id, project_id=None):
+    """Retrieve a secret from Google Cloud Secret Manager"""
+    if not project_id:
+        project_id = os.getenv('GCP_PROJECT', 'brewmetrics-xyz-app-e8d51')
+    
+    try:
+        client = secretmanager.SecretManagerServiceClient()
+        name = f"projects/{project_id}/secrets/{secret_id}/versions/latest"
+        response = client.access_secret_version(request={"name": name})
+        return response.payload.data.decode("UTF-8")
+    except Exception as e:
+        logger.warning(f"Could not retrieve secret {secret_id}: {e}")
+        return None
+
+# Configuration - try Secret Manager first, then environment variables, then defaults
+PROJECT_ID = get_secret('gcp-project') or os.getenv('GCP_PROJECT', 'brewmetrics-xyz-app-e8d51')
+DATASET_ID = get_secret('dataset-id') or os.getenv('DATASET_ID', 'brewmetrics_data')
 MAX_RESULTS = 100
 
 # Initialize BigQuery client

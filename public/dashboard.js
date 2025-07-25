@@ -2,8 +2,8 @@
 // Enhanced logging added to verify script loading and version.
 console.log("Executing dashboard.js - Version: May 29, 2025 (Includes setTimeout fix & enhanced logging)");
 
-// Import Firebase
-import { app, analytics } from './firebase.js'; // Adjust the path if necessary
+// Firebase is loaded via CDN scripts in dashboard.html
+// Using global firebase object instead of imports
 
 // CACHE BUSTING RECOMMENDATION:
 // To ensure the browser always loads the latest version of this script,
