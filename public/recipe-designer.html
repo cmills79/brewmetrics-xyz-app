@@ -577,11 +577,9 @@
         <div class="recipe-header">
             <h1 class="recipe-title">New Recipe</h1>
             <div class="recipe-actions">
-                <button class="btn-icon"><i class="fas fa-undo"></i> Undo</button>
-                <button class="btn btn-secondary">Save As</button>
-                <button class="btn btn-primary">Save Changes</button>
-                <button class="btn btn-success">OK</button>
-                <button class="btn btn-danger">Cancel</button>
+                <button class="btn btn-secondary" id="load-recipe-btn"><i class="fas fa-folder-open"></i> Load Recipe</button>
+                <button class="btn btn-primary" id="save-recipe-btn"><i class="fas fa-save"></i> Save Recipe</button>
+                <button class="btn btn-danger" onclick="window.location.href='dashboard.html'"><i class="fas fa-times"></i> Close</button>
             </div>
         </div>
 
@@ -616,7 +614,12 @@
                 <div class="recipe-section active" id="design-section">
                     <!-- Hop Schedule Optimization -->
                     <div class="hop-schedule-section">
-                        <h4><i class="fas fa-leaf"></i> Hop Schedule Optimizer</h4>
+                        <div class="ingredient-header">
+                            <h5><i class="fas fa-leaf"></i> Hop Schedule Optimizer</h5>
+                            <button class="btn-add" onclick="window.recipeDesigner.showAddIngredientModal('hops')">
+                                <i class="fas fa-plus"></i> Add Hops
+                            </button>
+                        </div>
                         <div class="hop-optimizer">
                             <table class="hop-schedule-table">
                                 <thead>
@@ -684,21 +687,6 @@
                             </div>
                         </div>
 
-                        <!-- Hops -->
-                        <div class="ingredient-section">
-                            <div class="ingredient-header">
-                                <h5><i class="fas fa-leaf"></i> Hops</h5>
-                                <button class="btn-add" onclick="window.recipeDesigner.showAddIngredientModal('hops')">
-                                    <i class="fas fa-plus"></i> Add Hops
-                                </button>
-                            </div>
-                            <div class="ingredient-list" id="hops-list">
-                                <div class="ingredient-item" style="color: #6c757d; font-style: italic; text-align: center; padding: 20px;">
-                                    No hops added yet
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Yeast -->
                         <div class="ingredient-section">
                             <div class="ingredient-header">
@@ -731,7 +719,14 @@
                         </div>
                         <div class="form-group">
                             <label for="boil-time">Boil Time</label>
-                            <input type="number" id="boil-time" value="60"> min
+                            <select id="boil-time-select" onchange="updateCustomInput('boil-time', this.value)">
+                                <option value="30">30 min</option>
+                                <option value="60" selected>60 min</option>
+                                <option value="90">90 min</option>
+                                <option value="120">120 min</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                            <input type="number" id="boil-time" value="60" style="display:none; margin-top:5px;"> min
                         </div>
                         <div class="form-group">
                             <label for="brew-date">Date</label>
@@ -746,11 +741,25 @@
                         </div>
                         <div class="form-group">
                             <label for="batch-vol">Batch Vol</label>
-                            <input type="number" id="batch-vol" value="5.00" step="0.01"> gal
+                            <select id="batch-vol-select" onchange="updateCustomInput('batch-vol', this.value)">
+                                <option value="1">1 Gallon</option>
+                                <option value="5" selected>5 Gallon</option>
+                                <option value="10">10 Gallon</option>
+                                <option value="31">1 BBL (31 gal)</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                            <input type="number" id="batch-vol" value="5.00" step="0.01" style="display:none; margin-top:5px;"> gal
                         </div>
                         <div class="form-group">
                             <label for="efficiency">Efficiency</label>
-                            <input type="number" id="efficiency" value="72.00" step="0.01"> %
+                            <select id="efficiency-select" onchange="updateCustomInput('efficiency', this.value)">
+                                <option value="65">Extract (100%)</option>
+                                <option value="75">BIAB (75%)</option>
+                                <option value="72" selected>All Grain (72%)</option>
+                                <option value="78">Advanced (78%)</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                            <input type="number" id="efficiency" value="72.00" step="0.01" style="display:none; margin-top:5px;"> %
                         </div>
                         <div class="form-group">
                             <label for="sharing">Sharing</label>
@@ -1282,8 +1291,50 @@
         </div>
     </div>
 
+    <div id="load-recipe-modal" class="modal-overlay hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1050;">
+        <div class="modal-content" style="background: white; padding: 25px 30px; border-radius: 8px; width: 90%; max-width: 600px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative;">
+            <button type="button" class="close-modal-button" id="close-load-modal" style="position: absolute; top: 10px; right: 15px; font-size: 1.8em; background: none; border: none; cursor: pointer;">×</button>
+            <h2>Load Recipe</h2>
+            <div id="recipe-list-container" style="max-height: 400px; overflow-y: auto; margin-top: 15px;">
+                <p>Loading saved recipes...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmvUqgMlnaQFiyqlo50D66fX0Bwav3j1k",
+            authDomain: "brewmetrics-xyz-app-e8d51.firebaseapp.com",
+            projectId: "brewmetrics-xyz-app-e8d51",
+            storageBucket: "brewmetrics-xyz-app-e8d51.appspot.com",
+            messagingSenderId: "391623246374",
+            appId: "1:391623246374:web:3b8e39db5fff674befdce7",
+            measurementId: "G-MHT3H2ZVRY"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        const functions = firebase.functions();
+    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="commercial-brewing-data.js"></script>
+    <script src="custom-input-handler.js"></script>
     <script src="recipe-designer.js"></script>
     <script src="recipe-designer-advanced.js"></script>
+    
+    <!-- AI Brewmaster Container -->
+    <div id="ai-brewmaster-container"></div>
+
+    <!-- AI Brewmaster Integration -->
+    <script src="utils.js"></script>
+    <script src="ai-brewmaster.js"></script>
+    <script src="ai-brewmaster-ui.js"></script>
 </body>
 </html>

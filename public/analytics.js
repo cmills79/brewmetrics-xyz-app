@@ -3,7 +3,7 @@
 
 class BrewMetricsAnalytics {
   constructor() {
-    this.analyticsEndpoint = null; // Will be set when analytics service is deployed
+    this.analyticsEndpoint = 'https://brewmetrics-analytics-391623246374.us-central1.run.app';
     this.cache = new Map();
     this.cacheTimeout = 5 * 60 * 1000; // 5 minutes
     
@@ -404,6 +404,77 @@ class BrewMetricsAnalytics {
       }
       throw error;
     }
+  }
+
+  /**
+   * Submit survey feedback to BigQuery for analytics
+   */
+  async submitSurveyFeedback(feedbackData) {
+    try {
+      if (!this.analyticsEndpoint) {
+        throw new Error('Analytics service endpoint not configured');
+      }
+
+      // Transform survey data for BigQuery user_feedback table
+      const bigQueryData = {
+        feedback_id: feedbackData.feedback_id || this.generateFeedbackId(),
+        brewery_id: feedbackData.brewery_id,
+        batch_id: feedbackData.batch_id,
+        recipe_id: feedbackData.recipe_id || null,
+        user_id: feedbackData.user_id || 'anonymous',
+        rating_score: feedbackData.overall_rating,
+        feedback_text: feedbackData.feedback_text || '',
+        
+        // Individual taste ratings
+        sweetness_rating: this.extractRating(feedbackData.survey_answers, 1),
+        acidity_rating: this.extractRating(feedbackData.survey_answers, 2),
+        bitterness_rating: this.extractRating(feedbackData.survey_answers, 3),
+        body_rating: this.extractRating(feedbackData.survey_answers, 4),
+        carbonation_rating: this.extractRating(feedbackData.survey_answers, 5),
+        malt_flavors_rating: this.extractRating(feedbackData.survey_answers, 6),
+        hop_flavors_rating: this.extractRating(feedbackData.survey_answers, 7),
+        finish_rating: this.extractRating(feedbackData.survey_answers, 8),
+        
+        survey_version: feedbackData.survey_version || '1.0',
+        response_time_seconds: feedbackData.response_time_seconds || null,
+        created_at: new Date().toISOString()
+      };
+
+      const response = await fetch(`${this.analyticsEndpoint}/submit-feedback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bigQueryData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Analytics submission failed: ${response.status}`);
+      }
+
+      const result = await response.json();
+      this.logger.info('Survey feedback submitted to BigQuery', { feedback_id: bigQueryData.feedback_id });
+      return result;
+
+    } catch (error) {
+      this.logger.error('Error submitting survey feedback', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Extract rating for a specific question from survey answers
+   */
+  extractRating(surveyAnswers, questionId) {
+    const answer = surveyAnswers.find(a => a.questionId === questionId);
+    return answer ? answer.answer : null;
+  }
+
+  /**
+   * Generate unique feedback ID
+   */
+  generateFeedbackId() {
+    return `feedback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 }
 

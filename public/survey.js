@@ -517,8 +517,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         db.collection('breweries').doc(breweryId).collection('batches').doc(batchId).collection('responses').add(responseData)
-            .then(() => {
-                console.log("Survey responses saved successfully!");
+            .then(async () => {
+                console.log("Survey responses saved successfully to Firestore!");
+                
+                // Also send to BigQuery for analytics
+                try {
+                    if (window.BrewMetricsAnalytics) {
+                        const analyticsData = {
+                            feedback_id: `feedback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                            brewery_id: breweryId,
+                            batch_id: batchId,
+                            recipe_id: null, // Could be added if recipe info is available
+                            user_id: 'anonymous',
+                            overall_rating: overallRating,
+                            survey_answers: surveyAnswers,
+                            feedback_text: '',
+                            survey_version: '1.0',
+                            response_time_seconds: null
+                        };
+                        
+                        await window.BrewMetricsAnalytics.submitSurveyFeedback(analyticsData);
+                        console.log("Survey data submitted to BigQuery analytics!");
+                    }
+                } catch (analyticsError) {
+                    console.warn("Failed to submit to analytics, but survey saved:", analyticsError);
+                    // Don't block the user experience if analytics fails
+                }
+                
                 if (SKIP_VIDEOS) {
                     showFinalStep();
                 } else {

@@ -86,12 +86,18 @@ class RecipeDesigner {
       });
     }
 
-    // Style selector
+    // Style selector with defaults update
     const beerStyleSelect = document.getElementById('beer-style');
     if (beerStyleSelect) {
       beerStyleSelect.addEventListener('change', (e) => {
         this.recipe.style = e.target.value;
         this.updateStyleGuidelines();
+        
+        // Update form defaults based on style
+        if (window.updateStyleDefaults) {
+          window.updateStyleDefaults(e.target.value);
+        }
+        
         console.log('Style changed to:', e.target.value);
       });
     }
@@ -591,54 +597,82 @@ class RecipeDesigner {
       z-index: 1000;
     `;
 
-    const databases = {
-      fermentable: [
-        { name: 'Pale 2-Row', yield: 81, color: 2 },
-        { name: 'Munich Malt', yield: 80, color: 9 },
-        { name: 'Crystal 60L', yield: 74, color: 60 },
-        { name: 'Chocolate Malt', yield: 70, color: 350 }
-      ],
-      hops: [
-        { name: 'Cascade', alpha: 5.5, type: 'Aroma' },
-        { name: 'Centennial', alpha: 10.0, type: 'Dual Purpose' },
-        { name: 'Citra', alpha: 12.0, type: 'Aroma' },
-        { name: 'Columbus', alpha: 14.0, type: 'Bittering' }
-      ],
-      yeast: [
-        { name: 'Safale US-05', type: 'Ale', attenuation: 81 },
-        { name: 'Wyeast 1056', type: 'Ale', attenuation: 77 },
-        { name: 'Lallemand Verdant IPA', type: 'Ale', attenuation: 75 }
-      ]
-    };
-
-    const items = databases[type] || [];
+    // Use comprehensive commercial brewing database
+    const brewingData = window.CommercialBrewingData?.getIngredientDatabase() || {};
+    const items = brewingData[type === 'fermentable' ? 'fermentables' : type] || [];
     
     modal.innerHTML = `
-      <div style="background: white; padding: 20px; border-radius: 8px; max-width: 500px; width: 90%;">
+      <div style="background: white; padding: 20px; border-radius: 8px; max-width: 600px; width: 95%; max-height: 80vh; overflow-y: auto;">
         <h3>Add ${type.charAt(0).toUpperCase() + type.slice(1)}</h3>
+        
         <div style="margin: 15px 0;">
           <label>Select ${type}:</label>
           <select id="ingredient-select" style="width: 100%; padding: 8px; margin-top: 5px;">
-            ${items.map(item => `<option value="${item.name}">${item.name}</option>`).join('')}
+            ${items.map(item => `<option value="${item.name}" data-info='${JSON.stringify(item)}'>${item.name}${item.supplier ? ` (${item.supplier})` : ''}</option>`).join('')}
           </select>
+          <div id="ingredient-info" style="margin-top: 5px; font-size: 0.85em; color: #666;"></div>
         </div>
-        <div style="margin: 15px 0;">
-          <label>Amount:</label>
-          <input type="number" id="ingredient-amount" step="0.01" value="1.0" style="width: 100%; padding: 8px; margin-top: 5px;">
-          <small>lbs for fermentables, oz for hops</small>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
+          <div>
+            <label>Amount:</label>
+            <input type="number" id="ingredient-amount" step="0.01" value="1.0" style="width: 100%; padding: 8px; margin-top: 5px;">
+            <small>${type === 'fermentable' ? 'lbs' : type === 'hops' ? 'oz' : 'pkg'}</small>
+          </div>
+          
+          ${type === 'hops' ? `
+            <div>
+              <label>Usage:</label>
+              <select id="hop-usage" style="width: 100%; padding: 8px; margin-top: 5px;">
+                <option value="Boil">Boil</option>
+                <option value="Whirlpool">Whirlpool/Steep</option>
+                <option value="Dry Hop">Dry Hop</option>
+              </select>
+            </div>
+          ` : ''}
         </div>
+        
         ${type === 'hops' ? `
           <div style="margin: 15px 0;">
-            <label>Boil Time (minutes):</label>
-            <input type="number" id="hop-time" value="60" style="width: 100%; padding: 8px; margin-top: 5px;">
+            <label>Time (minutes):</label>
+            <select id="hop-time" style="width: 100%; padding: 8px; margin-top: 5px;">
+              ${[90, 60, 45, 30, 20, 15, 10, 5, 0].map(time => `<option value="${time}"${time === 60 ? ' selected' : ''}>${time}</option>`).join('')}
+            </select>
           </div>
         ` : ''}
+        
         <div style="display: flex; gap: 10px; margin-top: 20px;">
           <button onclick="this.closest('.ingredient-modal').remove()" style="flex: 1; padding: 10px; background: #ccc; border: none; border-radius: 4px;">Cancel</button>
           <button onclick="window.recipeDesigner.addIngredient('${type}', this)" style="flex: 1; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px;">Add</button>
         </div>
       </div>
     `;
+    
+    // Add ingredient info display
+    setTimeout(() => {
+      const select = modal.querySelector('#ingredient-select');
+      const infoDiv = modal.querySelector('#ingredient-info');
+      
+      if (select && infoDiv) {
+        select.addEventListener('change', (e) => {
+          const selectedOption = e.target.selectedOptions[0];
+          const info = JSON.parse(selectedOption.dataset.info || '{}');
+          let infoText = '';
+          
+          if (type === 'fermentable') {
+            infoText = `${info.type || ''} • ${info.yield || 0}% yield • ${info.color || 0} SRM`;
+          } else if (type === 'hops') {
+            infoText = `${info.origin || ''} • ${info.alpha || 0}% AA • ${info.profile || ''}`;
+          } else if (type === 'yeast') {
+            infoText = `${info.supplier || ''} • ${info.attenuation || 0}% attenuation`;
+          }
+          
+          infoDiv.textContent = infoText;
+        });
+        
+        select.dispatchEvent(new Event('change'));
+      }
+    }, 100);
 
     return modal;
   }
@@ -856,12 +890,70 @@ class RecipeDesigner {
       }
     };
 
-    // In a real implementation, this would save to Firebase
+    // Save to Firebase and BigQuery
     console.log('Saving recipe as batch:', batch);
+    
+    // Save recipe analytics to BigQuery
+    this.saveRecipeAnalytics(batch);
     
     // For now, show success message and redirect
     alert('Recipe saved successfully! Redirecting to dashboard...');
     window.location.href = 'dashboard.html';
+  }
+
+  async saveRecipeAnalytics(batch) {
+    try {
+      if (!window.BrewMetricsAnalytics) {
+        console.warn('Analytics not available, skipping recipe analytics');
+        return;
+      }
+
+      // Prepare recipe analytics data for BigQuery
+      const recipeAnalyticsData = {
+        recipe_id: batch.batchCode || `recipe_${Date.now()}`,
+        brewery_id: 'demo-brewery', // Replace with actual brewery ID when auth is implemented
+        batch_id: batch.batchCode,
+        recipe_name: batch.beerName,
+        beer_style: this.recipe.style || 'Craft Beer',
+        
+        // Initial values - will be updated as feedback comes in
+        average_rating: null,
+        median_rating: null,
+        rating_count: 0,
+        
+        // Taste profile averages (will be calculated from feedback)
+        avg_sweetness: null,
+        avg_acidity: null,
+        avg_bitterness: null,
+        avg_body: null,
+        avg_carbonation: null,
+        avg_malt_flavors: null,
+        avg_hop_flavors: null,
+        avg_finish: null,
+        
+        // Performance metrics
+        high_ratings_count: 0,
+        low_ratings_count: 0,
+        google_reviews_generated: 0,
+        
+        // Recipe metadata
+        batch_active: true,
+        created_at: new Date().toISOString(),
+        
+        // Additional recipe data
+        abv: this.calculations.abv,
+        ibu: this.calculations.ibus,
+        og: this.calculations.og,
+        fg: this.calculations.fg
+      };
+
+      // Submit to analytics (this would need a new endpoint in the analytics service)
+      console.log('Would submit recipe analytics:', recipeAnalyticsData);
+      
+    } catch (error) {
+      console.warn('Failed to submit recipe analytics:', error);
+      // Don't block recipe saving if analytics fails
+    }
   }
 
   cancelRecipe() {

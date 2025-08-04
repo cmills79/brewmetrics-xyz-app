@@ -128,11 +128,14 @@ class AdvancedBrewingCalculations {
       tableSalt: getElementValue('table-salt')
     };
 
-    const batchSize = 5;
+    const batchSize = this.recipeDesigner.recipe.batchSize || 5;
+    const mashWaterQt = parseFloat(document.getElementById('strike-water')?.textContent) || 0;
+    const totalWaterGal = mashWaterQt > 0 ? mashWaterQt / 4 : batchSize; // Use mash water if available, else batch size
+
     const additions = {
-      calcium: (salts.gypsum * 61.5 + salts.calciumChloride * 72.0) / batchSize,
-      sulfate: (salts.gypsum * 147.4 + salts.epsomSalt * 103.0) / batchSize,
-      chloride: (salts.calciumChloride * 127.4 + salts.tableSalt * 160.4) / batchSize
+      calcium: (salts.gypsum * 61.5 + salts.calciumChloride * 72.0) / totalWaterGal,
+      sulfate: (salts.gypsum * 147.4 + salts.epsomSalt * 103.0) / totalWaterGal,
+      chloride: (salts.calciumChloride * 127.4 + salts.tableSalt * 160.4) / totalWaterGal
     };
 
     const final = {
@@ -154,6 +157,62 @@ class AdvancedBrewingCalculations {
       const element = document.getElementById(id);
       if (element) element.textContent = text;
     });
+  }
+
+  suggestWaterAdditions() {
+    console.log('Suggesting water additions based on target profile...');
+    const getElementValue = (id) => {
+        const element = document.getElementById(id);
+        return element ? parseFloat(element.value) || 0 : 0;
+    };
+
+    const source = {
+        calcium: getElementValue('calcium'),
+        sulfate: getElementValue('sulfate'),
+        chloride: getElementValue('chloride')
+    };
+
+    const target = {
+        calcium: getElementValue('target-calcium-input'),
+        sulfate: getElementValue('target-sulfate-input'),
+        chloride: getElementValue('target-chloride-input')
+    };
+
+    // If targets are 0, do nothing.
+    if (target.sulfate === 0 && target.chloride === 0) {
+        return;
+    }
+
+    const batchSize = this.recipeDesigner.recipe.batchSize || 5;
+    const mashWaterQt = parseFloat(document.getElementById('strike-water')?.textContent) || 0;
+    const totalWaterGal = mashWaterQt > 0 ? mashWaterQt / 4 : batchSize; // Use mash water if available, else batch size
+
+    // Deficits in ppm (mg/L)
+    const sulfateDeficit = Math.max(0, target.sulfate - source.sulfate);
+    const chlorideDeficit = Math.max(0, target.chloride - source.chloride);
+
+    // Salt contributions (ppm per gram in 1 gallon)
+    // Gypsum (CaSO4): 147.4 ppm SO4
+    // Calcium Chloride (CaCl2): 127.4 ppm Cl
+    
+    // Grams = (Target Deficit ppm * Gallons) / ppm_per_gram_per_gallon
+    let gypsumGrams = (sulfateDeficit * totalWaterGal) / 147.4;
+    let calciumChlorideGrams = (chlorideDeficit * totalWaterGal) / 127.4;
+
+    // Update the input fields with suggestions
+    const gypsumInput = document.getElementById('gypsum');
+    const calciumChlorideInput = document.getElementById('calcium-chloride');
+
+    if (gypsumInput) gypsumInput.value = gypsumGrams > 0 ? gypsumGrams.toFixed(1) : '0';
+    if (calciumChlorideInput) calciumChlorideInput.value = calciumChlorideGrams > 0 ? calciumChlorideGrams.toFixed(1) : '0';
+
+    // After suggesting, recalculate the final profile to show the result
+    this.calculateWaterProfile();
+  }
+
+  setupMashProfiles() {
+    const addStepBtn = document.getElementById('add-mash-step');
+    const mashTypeSelect = document.getElementById('mash-type-select');
   }
 
   setupMashProfiles() {
@@ -389,6 +448,20 @@ class AdvancedBrewingCalculations {
     ctx.restore();
   }
 
+  getWhirlpoolUtilization(temperatureF) {
+    // Very simplified model for whirlpool hop utilization based on temperature.
+    // Returns a Tinseth utilization factor.
+    if (temperatureF >= 200) {
+        return 0.10; // High end, near boiling
+    } else if (temperatureF >= 180) {
+        return 0.06; // Typical whirlpool range
+    } else if (temperatureF >= 160) {
+        return 0.03; // Low temp whirlpool / hop stand
+    }
+    return 0; // No significant isomerization below 160F
+  }
+
+
   setupHopOptimization() {
     // This will be called when hops are added
     this.updateHopSchedule();
@@ -406,21 +479,47 @@ class AdvancedBrewingCalculations {
     let aromaIBUs = 0;
 
     this.recipeDesigner.recipe.hops.forEach((hop, index) => {
-      const utilization = this.recipeDesigner.getHopUtilization(hop.time, this.recipeDesigner.calculations.og);
-      const ibuContribution = (hop.alpha * hop.amount * utilization * 7490) / (this.recipeDesigner.recipe.batchSize * 1.05);
-      
+      // Add hop.use property if it doesn't exist for backward compatibility
+      if (!hop.use) hop.use = 'Boil';
+
+      let utilization = 0;
+      let ibuContribution = 0;
+      let useDisplay = `Boil: ${hop.time} min`;
+
+      switch (hop.use) {
+        case 'Boil':
+            utilization = this.recipeDesigner.getHopUtilization(hop.time, this.recipeDesigner.calculations.og);
+            ibuContribution = (hop.alpha * hop.amount * utilization * 7490) / (this.recipeDesigner.recipe.batchSize * 1.05);
+            break;
+        case 'Whirlpool':
+            const whirlpoolTemp = hop.whirlpoolTemp || 185; // default temp
+            utilization = this.getWhirlpoolUtilization(whirlpoolTemp);
+            ibuContribution = (hop.alpha * hop.amount * utilization * 7490) / (this.recipeDesigner.recipe.batchSize * 1.05);
+            useDisplay = `Whirlpool @ ${whirlpoolTemp}°F for ${hop.whirlpoolTime || 20} min`;
+            break;
+        case 'Dry Hop':
+            utilization = 0;
+            ibuContribution = 0;
+            useDisplay = `Dry Hop: ${hop.contactTime || 4} days`;
+            break;
+        default:
+            utilization = this.recipeDesigner.getHopUtilization(hop.time, this.recipeDesigner.calculations.og);
+            ibuContribution = (hop.alpha * hop.amount * utilization * 7490) / (this.recipeDesigner.recipe.batchSize * 1.05);
+            break;
+      }
+
       totalIBUs += ibuContribution;
 
       // Categorize IBU contributions
-      if (hop.time >= 45) bitteringIBUs += ibuContribution;
-      else if (hop.time >= 15) flavorIBUs += ibuContribution;
-      else aromaIBUs += ibuContribution;
+      if (hop.use === 'Boil' && hop.time >= 45) bitteringIBUs += ibuContribution;
+      else if (hop.use === 'Boil' && hop.time >= 15) flavorIBUs += ibuContribution;
+      else aromaIBUs += ibuContribution; // Late boil (<15min) and Whirlpool hops
 
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${hop.name}</td>
-        <td>${hop.amount.toFixed(2)}</td>
-        <td>${hop.time}</td>
+        <td>${hop.amount.toFixed(2)} oz</td>
+        <td>${useDisplay}</td>
         <td>${hop.alpha.toFixed(1)}%</td>
         <td>
           <div class="hop-utilization-bar">
@@ -543,8 +642,182 @@ class EnhancedRecipeDesigner extends RecipeDesigner {
   constructor() {
     super();
     this.advancedCalc = new AdvancedBrewingCalculations(this);
+    this.currentRecipeId = null;
+
     // Make available globally for button callbacks
     window.advancedCalc = this.advancedCalc;
+
+    // Event listeners for new save/load buttons
+    const saveBtn = document.getElementById('save-recipe-btn');
+    if (saveBtn) saveBtn.addEventListener('click', () => this.saveRecipe());
+
+    const loadBtn = document.getElementById('load-recipe-btn');
+    if (loadBtn) loadBtn.addEventListener('click', () => this.showLoadRecipeModal());
+
+    const closeLoadModalBtn = document.getElementById('close-load-modal');
+    if (closeLoadModalBtn) closeLoadModalBtn.addEventListener('click', () => {
+        document.getElementById('load-recipe-modal').classList.add('hidden');
+    });
+  }
+
+  async initDesigner() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const recipeId = urlParams.get('recipeId');
+      if (recipeId) {
+          console.log('Loading recipe from URL:', recipeId);
+          // A short delay to ensure Firebase auth is ready
+          setTimeout(async () => {
+            if (window.auth && window.auth.currentUser) {
+              await this.loadRecipe(recipeId);
+            } else {
+              // Wait for auth state to change if not ready
+              const unsubscribe = window.auth.onAuthStateChanged(async user => {
+                if (user) {
+                  await this.loadRecipe(recipeId);
+                  unsubscribe(); // Stop listening after we've loaded
+                }
+              });
+            }
+          }, 500);
+      } else {
+          console.log('Starting a new recipe.');
+      }
+  }
+
+  async saveRecipe() {
+      if (!window.auth || !window.auth.currentUser) {
+          alert('You must be logged in to save a recipe.');
+          return;
+      }
+      const userId = window.auth.currentUser.uid;
+  
+      // Collect all recipe data into one object
+      const recipeToSave = {
+          ...this.recipe,
+          advanced: {
+              waterProfile: {
+                  source: {
+                      calcium: parseFloat(document.getElementById('calcium')?.value) || 0,
+                      magnesium: parseFloat(document.getElementById('magnesium')?.value) || 0,
+                      sodium: parseFloat(document.getElementById('sodium')?.value) || 0,
+                      chloride: parseFloat(document.getElementById('chloride')?.value) || 0,
+                      sulfate: parseFloat(document.getElementById('sulfate')?.value) || 0,
+                      bicarbonate: parseFloat(document.getElementById('bicarbonate')?.value) || 0,
+                  },
+                  targetStyle: document.getElementById('water-style-profile')?.value,
+                  saltAdditions: {
+                      gypsum: parseFloat(document.getElementById('gypsum')?.value) || 0,
+                      calciumChloride: parseFloat(document.getElementById('calcium-chloride')?.value) || 0,
+                      epsomSalt: parseFloat(document.getElementById('epsom-salt')?.value) || 0,
+                      tableSalt: parseFloat(document.getElementById('table-salt')?.value) || 0,
+                  }
+              },
+              mashProfile: {
+                  type: document.getElementById('mash-type-select')?.value,
+                  ratio: parseFloat(document.getElementById('mash-ratio')?.value) || 1.25,
+                  grainTemp: parseFloat(document.getElementById('grain-temp')?.value) || 72,
+                  tunThermalMass: parseFloat(document.getElementById('tun-thermal-mass')?.value) || 5,
+                  steps: this.advancedCalc.mashSteps
+              },
+              starter: {
+                  gravity: parseFloat(document.getElementById('starter-gravity')?.value) || 1.040,
+                  volume: parseFloat(document.getElementById('starter-volume')?.value) || 2.0,
+                  viability: parseFloat(document.getElementById('yeast-viability')?.value) || 85,
+              }
+          },
+          notes: document.querySelector('#notes-section textarea')?.value || '',
+          lastSaved: firebase.firestore.FieldValue.serverTimestamp(),
+          calculations: this.calculations // Save the calculated stats too
+      };
+  
+      try {
+          const recipesRef = db.collection('breweries').doc(userId).collection('recipes');
+          if (this.currentRecipeId) {
+              // Update existing recipe
+              await recipesRef.doc(this.currentRecipeId).update(recipeToSave);
+              alert('Recipe updated successfully!');
+              console.log('Recipe updated with ID:', this.currentRecipeId);
+          } else {
+              // Add new recipe
+              const docRef = await recipesRef.add(recipeToSave);
+              this.currentRecipeId = docRef.id; // Store the new ID
+              alert('Recipe saved successfully!');
+              console.log('Recipe saved with new ID:', this.currentRecipeId);
+              
+              // Update the URL to include the new recipeId for subsequent saves
+              const newUrl = new URL(window.location);
+              newUrl.searchParams.set('recipeId', this.currentRecipeId);
+              window.history.pushState({ path: newUrl.href }, '', newUrl.href);
+          }
+
+          // Send recipe analytics to BigQuery
+          await this.saveRecipeAnalytics(recipeToSave, userId);
+          
+      } catch (error) {
+          console.error('Error saving recipe:', error);
+          alert(`Failed to save recipe: ${error.message}. See console for details.`);
+      }
+  }
+
+  async saveRecipeAnalytics(recipeData, userId) {
+    try {
+      if (!window.BrewMetricsAnalytics) {
+        console.warn('Analytics not available, skipping recipe analytics');
+        return;
+      }
+
+      // Prepare advanced recipe analytics data for BigQuery
+      const recipeAnalyticsData = {
+        recipe_id: this.currentRecipeId || `recipe_${Date.now()}`,
+        brewery_id: userId, // Using user ID as brewery ID for now
+        batch_id: `batch_${this.currentRecipeId || Date.now()}`,
+        recipe_name: recipeData.name,
+        beer_style: recipeData.style || 'Craft Beer',
+        
+        // Initial values - will be updated as feedback comes in
+        average_rating: null,
+        median_rating: null,
+        rating_count: 0,
+        
+        // Taste profile averages (will be calculated from feedback)
+        avg_sweetness: null,
+        avg_acidity: null,
+        avg_bitterness: null,
+        avg_body: null,
+        avg_carbonation: null,
+        avg_malt_flavors: null,
+        avg_hop_flavors: null,
+        avg_finish: null,
+        
+        // Performance metrics
+        high_ratings_count: 0,
+        low_ratings_count: 0,
+        google_reviews_generated: 0,
+        
+        // Recipe metadata
+        batch_active: true,
+        created_at: new Date().toISOString(),
+        
+        // Advanced recipe data
+        abv: this.calculations.abv,
+        ibu: this.calculations.ibus,
+        og: this.calculations.og,
+        fg: this.calculations.fg,
+        
+        // Advanced features analytics
+        water_profile_used: recipeData.advanced?.waterProfile?.targetStyle || 'default',
+        mash_type: recipeData.advanced?.mashProfile?.type || 'single-infusion',
+        mash_steps_count: recipeData.advanced?.mashProfile?.steps?.length || 1,
+        starter_used: Boolean(recipeData.advanced?.starter?.volume > 0)
+      };
+
+      // Submit to analytics
+      console.log('Would submit advanced recipe analytics:', recipeAnalyticsData);
+      
+    } catch (error) {
+      console.warn('Failed to submit recipe analytics:', error);
+      // Don't block recipe saving if analytics fails
+    }
   }
 
   addIngredient(type, button) {

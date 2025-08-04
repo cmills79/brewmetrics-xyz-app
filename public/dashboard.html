@@ -890,6 +890,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
         const firebaseConfig = {
@@ -902,7 +903,7 @@
             measurementId: "G-MHT3H2ZVRY"
         };
 
-        let auth, db; 
+        let auth, db, functions; 
         try {
             if (!firebase.apps.length) {
                  firebase.initializeApp(firebaseConfig);
@@ -911,7 +912,8 @@
             }
             auth = firebase.auth();
             db = firebase.firestore();
-            console.log("Firebase Initialized on Dashboard Page!");
+            functions = firebase.functions();
+            console.log("Firebase Initialized on Dashboard Page with Functions!");
         } catch (e) {
             console.error("Error initializing Firebase:", e);
             const loadingDiv = document.getElementById('loading-indicator');
@@ -927,6 +929,13 @@
     <script src="utils.js"></script>
     <script src="analytics.js"></script>
     <script src="dashboard.js"></script>
+    
+    <!-- AI Brewmaster Integration -->
+    <script src="ai-brewmaster.js"></script>
+    <script src="ai-brewmaster-ui.js"></script>
+    
+    <!-- AI Brewmaster Container -->
+    <div id="ai-brewmaster-container"></div>
     <footer id="contact-footer">
         <div class="container footer-container">
             <p>Contact: brewcrew@brewmetrics.com | (928)298-5415 </p>

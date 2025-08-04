@@ -79,6 +79,7 @@
         </div> </div> <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
 
     <script>
         const firebaseConfig = {
@@ -100,7 +101,8 @@
             }
             auth = firebase.auth();
             db = firebase.firestore();
-            console.log("Firebase Initialized on Index Page!");
+            functions = firebase.functions();
+            console.log("Firebase Initialized on Index Page with Functions!");
         } catch (e) {
             console.error("Error initializing Firebase:", e);
             const errorDiv = document.getElementById('error-message');

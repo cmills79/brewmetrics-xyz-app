@@ -325,7 +325,7 @@ curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/brewery-summary \
 ## Integration Notes
 
 1. **Analytics API** is deployed on Google Cloud Run and connects to BigQuery for data
-2. **AI Functions** use Vertex AI (Gemini 2.5 Flash) for brewing advice
+2. **AI Functions** use Vertex AI (Gemini 2.5 Pro) for brewing advice
 3. All endpoints return JSON responses
 4. Timestamps are in ISO 8601 format (UTC)
 5. The analytics API requires brewery access validation

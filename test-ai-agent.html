@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .test-result { margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 3px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>AI Brewmaster Agent Tests</h1>
+    
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-functions-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    
+    <!-- AI Brewmaster -->
+    <script src="./public/ai-brewmaster.js"></script>
+    
+    <div class="test-section">
+        <h3>Test 1: Initialization Status</h3>
+        <button onclick="testInitialization()">Test Initialization</button>
+        <div id="init-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 2: Simple Brewing Question</h3>
+        <button onclick="testBrewingAdvice()">Test Brewing Advice</button>
+        <div id="advice-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 3: Recipe Recommendations</h3>
+        <button onclick="testRecipeRecommendations()">Test Recipe Recommendations</button>
+        <div id="recipe-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 4: Troubleshooting Help</h3>
+        <button onclick="testTroubleshooting()">Test Troubleshooting</button>
+        <div id="troubleshoot-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Run All Tests</h3>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <div id="all-results" class="test-result"></div>
+    </div>
+
+    <script>
+        async function testInitialization() {
+            const resultDiv = document.getElementById('init-result');
+            try {
+                // Wait for initialization
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const status = window.AIBrewmaster.getStatus();
+                resultDiv.innerHTML = `
+                    <strong>Status:</strong><br>
+                    Initialized: ${status.initialized}<br>
+                    Cache Size: ${status.cacheSize}<br>
+                    Endpoint: ${status.endpoint}
+                `;
+                resultDiv.className = 'test-result success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+                resultDiv.className = 'test-result error';
+            }
+        }
+
+        async function testBrewingAdvice() {
+            const resultDiv = document.getElementById('advice-result');
+            try {
+                resultDiv.innerHTML = 'Testing brewing advice... (this may take a moment)';
+                
+                const result = await window.AIBrewmaster.getBrewingAdvice("How do I make an IPA?");
+                resultDiv.innerHTML = `
+                    <strong>Success!</strong><br>
+                    Summary: ${result.summary?.substring(0, 200)}...<br>
+                    Results: ${result.totalResults}<br>
+                    Suggestions: ${result.suggestions?.join(', ')}
+                `;
+                resultDiv.className = 'test-result success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+                resultDiv.className = 'test-result error';
+            }
+        }
+
+        async function testRecipeRecommendations() {
+            const resultDiv = document.getElementById('recipe-result');
+            try {
+                resultDiv.innerHTML = 'Testing recipe recommendations... (this may take a moment)';
+                
+                const result = await window.AIBrewmaster.getRecipeRecommendations("IPA", {abv: 6.5, ibu: 60});
+                resultDiv.innerHTML = `
+                    <strong>Success!</strong><br>
+                    Summary: ${result.summary?.substring(0, 200)}...<br>
+                    Results: ${result.totalResults}<br>
+                    Suggestions: ${result.suggestions?.join(', ')}
+                `;
+                resultDiv.className = 'test-result success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+                resultDiv.className = 'test-result error';
+            }
+        }
+
+        async function testTroubleshooting() {
+            const resultDiv = document.getElementById('troubleshoot-result');
+            try {
+                resultDiv.innerHTML = 'Testing troubleshooting help... (this may take a moment)';
+                
+                const result = await window.AIBrewmaster.getTroubleshootingHelp("stuck fermentation");
+                resultDiv.innerHTML = `
+                    <strong>Success!</strong><br>
+                    Summary: ${result.summary?.substring(0, 200)}...<br>
+                    Results: ${result.totalResults}<br>
+                    Suggestions: ${result.suggestions?.join(', ')}
+                `;
+                resultDiv.className = 'test-result success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+                resultDiv.className = 'test-result error';
+            }
+        }
+
+        async function runAllTests() {
+            const resultDiv = document.getElementById('all-results');
+            resultDiv.innerHTML = 'Running all tests...';
+            
+            try {
+                await testInitialization();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                await testBrewingAdvice();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                await testRecipeRecommendations();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                await testTroubleshooting();
+                
+                resultDiv.innerHTML = '<strong>All tests completed!</strong> Check individual test results above.';
+                resultDiv.className = 'test-result success';
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>Error running tests:</strong> ${error.message}`;
+                resultDiv.className = 'test-result error';
+            }
+        }
+
+        // Auto-run initialization test when page loads
+        window.addEventListener('load', () => {
+            setTimeout(testInitialization, 3000);
+        });
+    </script>
+</body>
+</html>

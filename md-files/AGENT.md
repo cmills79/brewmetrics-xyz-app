@@ -12,7 +12,7 @@
 - **Frontend**: Vanilla HTML/CSS/JS in `/public` with Firebase Auth/Firestore
 - **Backend**: Firebase Cloud Functions in `/functions` using Node.js 20
 - **Database**: Firebase (implied from auth code), Neo4j integration in functions
-- **AI**: Google Vertex AI (Gemini 2.5 Flash) for brewing advice via `getAIBrewingAdvice` function
+- **AI**: Google Vertex AI (Gemini 2.5 Pro) for brewing advice via `getAIBrewingAdvice` function
 - **Hosting**: Firebase Hosting with SPA rewrites (patron_survey, survey_questions)
 - **Project**: `brewmetrics-xyz-app-e8d51` (hardcoded in functions)
 

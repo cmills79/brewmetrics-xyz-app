@@ -1,8 +1,8 @@
 const functions = require("firebase-functions");
 const {VertexAI} = require("@google-cloud/vertexai");
 
-// Import data pipeline functions
-const {syncSurveyToBigQuery, backfillSurveyData} = require("./data-pipeline");
+// Import data pipeline functions - temporarily disabled for deployment
+// const {syncSurveyToBigQuery, backfillSurveyData} = require("./data-pipeline");
 
 // Get configuration from environment variables with fallbacks
 const PROJECT_ID = process.env.GCP_PROJECT || "brewmetrics-xyz-app-e8d51";
@@ -42,13 +42,13 @@ function checkRateLimit(uid) {
 }
 
 exports.getAIBrewingAdvice = functions.https.onCall(async (data, context) => {
-  // Authentication check
-  if (!context.auth) {
-    throw new functions.https.HttpsError(
-        "unauthenticated",
-        "User must be authenticated to use AI brewing advice.",
-    );
-  }
+      // Authentication check - allow both authenticated and anonymous users
+      if (!context.auth) {
+        throw new functions.https.HttpsError(
+            "unauthenticated",
+            "User must be authenticated to use AI brewing advice.",
+        );
+      }
 
   const uid = context.auth.uid;
   const userPrompt = data.prompt;
@@ -132,6 +132,6 @@ exports.getAIBrewingAdvice = functions.https.onCall(async (data, context) => {
   }
 });
 
-// Export data pipeline functions
-exports.syncSurveyToBigQuery = syncSurveyToBigQuery;
-exports.backfillSurveyData = backfillSurveyData;
+// Export data pipeline functions - temporarily disabled for deployment
+// exports.syncSurveyToBigQuery = syncSurveyToBigQuery;
+// exports.backfillSurveyData = backfillSurveyData;

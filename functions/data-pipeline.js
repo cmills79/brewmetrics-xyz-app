@@ -2,6 +2,11 @@ const functions = require("firebase-functions");
 const {BigQuery} = require("@google-cloud/bigquery");
 const admin = require("firebase-admin");
 
+// Initialize Firebase Admin if not already initialized
+if (!admin.apps.length) {
+  admin.initializeApp();
+}
+
 // Initialize BigQuery client
 const bigquery = new BigQuery({
   projectId: process.env.GCP_PROJECT || "brewmetrics-xyz-app-e8d51",
@@ -14,18 +19,20 @@ const DATASET_ID = "brewmetrics_data";
  * Syncs data to BigQuery for analytics
  */
 exports.syncSurveyToBigQuery = functions.firestore
-    .document("survey_responses/{responseId}")
+    .document("breweries/{breweryId}/batches/{batchId}/responses/{responseId}")
     .onCreate(async (snap, context) => {
       const responseData = snap.data();
       const responseId = context.params.responseId;
+      const breweryId = context.params.breweryId;
+      const batchId = context.params.batchId;
 
       try {
         // Transform Firestore data to BigQuery schema
         const bqRow = {
           feedback_id: responseId,
-          brewery_id: responseData.breweryId || null,
-          batch_id: responseData.batchId || null,
-          recipe_id: responseData.recipeId || responseData.batchId, // Use batchId as recipe_id for now
+          brewery_id: breweryId,
+          batch_id: batchId,
+          recipe_id: responseData.recipeId || batchId, // Use batchId as recipe_id for now
           user_id: responseData.userId || null,
           rating_score: responseData.overallRating || null,
           feedback_text: responseData.comments || null,
@@ -55,12 +62,12 @@ exports.syncSurveyToBigQuery = functions.firestore
 
         functions.logger.info("Survey response synced to BigQuery", {
           responseId,
-          breweryId: responseData.breweryId,
-          batchId: responseData.batchId,
+          breweryId: breweryId,
+          batchId: batchId,
         });
 
         // Trigger analytics aggregation
-        await updateRecipeAnalytics(responseData.batchId, responseData.breweryId);
+        await updateRecipeAnalytics(batchId, breweryId);
       } catch (error) {
         functions.logger.error("Failed to sync survey to BigQuery", {
           responseId,
@@ -292,20 +299,27 @@ exports.backfillSurveyData = functions.https.onCall(async (data, context) => {
 
   try {
     const db = admin.firestore();
-    const surveySnapshot = await db.collection("survey_responses").get();
+    // Use a collection group query to get all responses from all subcollections
+    const surveySnapshot = await db.collectionGroup("responses").get();
 
     functions.logger.info(`Starting backfill of ${surveySnapshot.size} survey responses`);
 
     const bqRows = [];
     surveySnapshot.forEach((doc) => {
       const responseData = doc.data();
+      
+      // Get IDs from the document path
       const responseId = doc.id;
+      const batchRef = doc.ref.parent.parent;
+      const breweryRef = batchRef.parent.parent;
+      const batchId = batchRef.id;
+      const breweryId = breweryRef.id;
 
       const bqRow = {
         feedback_id: responseId,
-        brewery_id: responseData.breweryId || null,
-        batch_id: responseData.batchId || null,
-        recipe_id: responseData.recipeId || responseData.batchId,
+        brewery_id: breweryId,
+        batch_id: batchId,
+        recipe_id: responseData.recipeId || batchId,
         user_id: responseData.userId || null,
         rating_score: responseData.overallRating || null,
         feedback_text: responseData.comments || null,
