@@ -1,0 +1,10 @@
+  {
+    "style": "Hazy IPA",
+    "calcium_ppm": 100,
+    "magnesium_ppm": 18,
+    "sodium_ppm": 16,
+    "sulfate_ppm": 100,
+    "chloride_ppm": 200,
+    "bicarbonate_ppm": 0,
+    "target_mash_ph": "5.2-5.4"
+  }

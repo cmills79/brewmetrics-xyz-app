@@ -1,0 +1,10 @@
+ {
+    "style": "Irish Stout",
+    "calcium_ppm": 110,
+    "magnesium_ppm": 4,
+    "sodium_ppm": 12,
+    "sulfate_ppm": 53,
+    "chloride_ppm": 19,
+    "bicarbonate_ppm": 280,
+    "target_mash_ph": "5.4-5.6" 
+  }

@@ -1,0 +1,14 @@
+"The most powerful tool for shaping the fundamental balance of a beer—whether it is perceived as malty and full or hoppy and dry—is the sulfate-to-chloride ratio. This ratio can be considered a primary flavor lever, as significant as the balance between malt and hops in the grain bill. A brewer can produce two dramatically different beers from an identical recipe of grains and hops simply by inverting this ratio, for example, from 1:2 (chloride-dominant, favoring malt) to 2:1 (sulfate-dominant, favoring hops). This reframes water chemistry as an integral part of recipe design that should be considered concurrently with malt and hop selection, not as a final corrective step.",,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+Ion,Primary Biochemical Role,Primary Flavor Contribution,General Target Range (ppm),Notes & Cautions
+Calcium (Ca2+),"Lowers mash pH, enzyme stabilization, protein coagulation, yeast health/flocculation",Neutral; can contribute to a perception of crispness,50 - 150,Essential for most brewing processes. Levels >250 ppm can inhibit magnesium uptake.
+Magnesium (Mg2+),Essential yeast enzyme cofactor,Mild sour/bitter astringency,10 - 30,Malt provides a baseline. Levels >40 ppm can taste harsh and have a laxative effect.
+Sodium (Na+),None (flavor only),Accentuates malt sweetness and fullness,10 - 70 (up to 150 for malty styles),High levels (>200 ppm) are salty/sour. Creates harshness with high sulfate.
+Sulfate (SO42−​),Aids protein/starch degradation,"Accentuates hop bitterness; adds a dry, crisp finish",50 - 150 (ales); 150 - 350+ (IPAs),High levels can be astringent. The key counterpart to chloride.
+Chloride (Cl−),None (flavor only),"Accentuates malt fullness, sweetness, and a soft mouthfeel",0 - 250,The key counterpart to sulfate. Must remove chlorine/chloramine disinfectants.
+Bicarbonate (HCO3−​),Increases mash pH (provides alkalinity/buffering),Indirectly affects flavor by influencing pH and extraction,0 - 50 (pale beers); 100 - 300 (dark beers),The most critical ion for mash pH control; levels must match beer color.
+Export to Sheets,,,,

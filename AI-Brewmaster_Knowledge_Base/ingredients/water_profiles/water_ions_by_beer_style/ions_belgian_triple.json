@@ -1,0 +1,10 @@
+{
+    "style": "Belgian Tripel",
+    "calcium_ppm": 50,
+    "magnesium_ppm": 10,
+    "sodium_ppm": 16,
+    "sulfate_ppm": 70,
+    "chloride_ppm": 70,
+    "bicarbonate_ppm": 0,
+    "target_mash_ph": "5.2-5.4"
+  }

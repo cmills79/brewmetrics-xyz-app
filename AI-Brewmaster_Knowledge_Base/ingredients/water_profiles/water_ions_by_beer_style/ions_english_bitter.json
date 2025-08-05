@@ -1,0 +1,10 @@
+{
+    "style": "English Bitter",
+    "calcium_ppm": 80,
+    "magnesium_ppm": 10,
+    "sodium_ppm": 41,
+    "sulfate_ppm": 105,
+    "chloride_ppm": 103,
+    "bicarbonate_ppm": 153,
+    "target_mash_ph": "5.3-5.5"
+}

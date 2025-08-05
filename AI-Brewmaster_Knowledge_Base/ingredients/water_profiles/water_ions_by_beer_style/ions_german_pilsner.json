@@ -1,0 +1,11 @@
+
+  {
+    "style": "German Pilsner",
+    "calcium_ppm": 60,
+    "magnesium_ppm": 8,
+    "sodium_ppm": 16,
+    "sulfate_ppm": 93,
+    "chloride_ppm": 63,
+    "bicarbonate_ppm": 0,
+    "target_mash_ph": "5.2-5.4" 
+  }
