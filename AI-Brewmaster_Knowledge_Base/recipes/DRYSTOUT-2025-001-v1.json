@@ -1,0 +1,33 @@
+{
+  "recipeId": "DRYSTOUT-2025-001-v1",
+  "recipeName": "Emerald Isle Dry Stout",
+  "beerStyle": "Classic Irish-Style Dry Stout",
+  "styleId": "BA-21C",
+  "author": "AI-Brewmaster-v2.1",
+  "creationDate": "2025-07-15T11:00:00Z",
+  "versionHistory":[],
+  "targetParameters": {
+    "targetOG": 1.044,
+    "targetFG": 1.011,
+    "targetABV": 4.2,
+    "targetIBU": 40,
+    "targetSRM": 26.7
+  },
+  "batchSize": {
+    "value": 60,
+    "unit": "bbl"
+  },
+  "brewhouseEfficiency": 85,
+  "maltBill":[],
+  "hopSchedule":[],
+  "yeastProfile": {
+    "yeastId": "WLP004",
+    "pitchRate": {
+      "value": 0.5,
+      "unit": "M_cells/mL/P"
+    }
+  },
+  "waterProfileId": "BALANCED-STANDARD",
+  "processScheduleId": "DRYSTOUT-STD-FERM",
+  "notes": "Roasted barley added at end of mash for best color and flavor. Water profile: Ca=50, Mg=10, Na=16, Cl=70, SO4=70. Mash at 148F for 90-120 min. Best served on nitro/CO2 blend."
+}

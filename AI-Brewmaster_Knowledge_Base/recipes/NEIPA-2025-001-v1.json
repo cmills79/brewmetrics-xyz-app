@@ -1,0 +1,33 @@
+{
+  "recipeId": "NEIPA-2025-001-v1",
+  "recipeName": "Cosmic Haze NEIPA",
+  "beerStyle": "Juicy or Hazy India Pale Ale",
+  "styleId": "BA-21C",
+  "author": "AI-Brewmaster-v2.1",
+  "creationDate": "2025-07-15T10:00:00Z",
+  "versionHistory":[],
+  "targetParameters": {
+    "targetOG": 1.065,
+    "targetFG": 1.015,
+    "targetABV": 6.5,
+    "targetIBU": 40,
+    "targetSRM": 6.9
+  },
+  "batchSize": {
+    "value": 60,
+    "unit": "bbl"
+  },
+  "brewhouseEfficiency": 85,
+  "maltBill":[],
+  "hopSchedule":[],
+  "yeastProfile": {
+    "yeastId": "WLP066",
+    "pitchRate": {
+      "value": 0.75,
+      "unit": "M_cells/mL/P"
+    }
+  },
+  "waterProfileId": "NEIPA-SILKY",
+  "processScheduleId": "NEIPA-STD-FERM",
+  "notes": "Focus on biotransformation by adding dry hops during active fermentation. Water profile: Ca=100, Mg=18, Na=16, Cl=200, SO4=100 for silky mouthfeel. Mash at 152F for 90 min. Oxygenate to 14 ppm."
+}

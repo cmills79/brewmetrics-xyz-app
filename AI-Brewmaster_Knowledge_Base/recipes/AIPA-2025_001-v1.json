@@ -1,0 +1,140 @@
+{
+  "recipe_id": "IPA_20240805_01",
+  "recipe_name": "Galaxy Quest IPA",
+  "beer_style": {
+    "primary_style": "American IPA",
+    "bjcp_code": "21A"
+  },
+  "author": "AI_Brewmaster_v1",
+  "version": 1.0,
+  "batch_info": {
+    "batch_size_gallons": 155, 
+    "pre_boil_gallons": 175,
+    "post_boil_gallons": 160,
+    "efficiency_percent": 75.0
+  },
+  "target_parameters": {
+    "original_gravity_sg": 1.065,
+    "final_gravity_sg": 1.012,
+    "abv_percent": 6.9,
+    "ibu_tinseth": 60,
+    "srm_morey": 7.5
+  },
+  "ingredients": {
+    "fermentables": [
+      {
+        "name": "2-Row Pale Malt (US)",
+        "weight_lbs": 280,
+        "percentage": 85.0,
+        "type": "Base Malt",
+        "yield_percent": 80.0,
+        "color_lovibond": 1.8
+      },
+      {
+        "name": "Caramel/Crystal Malt (40L)",
+        "weight_lbs": 33,
+        "percentage": 10.0,
+        "type": "Specialty Malt",
+        "yield_percent": 74.0,
+        "color_lovibond": 40
+      },
+      {
+        "name": "Carapils/Dextrine",
+        "weight_lbs": 16.5,
+        "percentage": 5.0,
+        "type": "Specialty Malt",
+        "yield_percent": 72.0,
+        "color_lovibond": 1.5
+      }
+    ],
+    "hops": [
+      {
+        "name": "Warrior",
+        "alpha_acid_percent": 15.5,
+        "amount_oz": 12,
+        "use": "Boil",
+        "time_minutes": 60,
+        "notes": "Primary bittering charge."
+      },
+      {
+        "name": "Galaxy",
+        "alpha_acid_percent": 14.0,
+        "amount_oz": 24,
+        "use": "Whirlpool",
+        "time_minutes": 20,
+        "temperature_f": 175,
+        "notes": "Passionfruit and citrus aroma."
+      },
+      {
+        "name": "Citra",
+        "alpha_acid_percent": 12.5,
+        "amount_oz": 32,
+        "use": "Dry Hop",
+        "time_days": 5,
+        "notes": "Primary dry hop for grapefruit notes."
+      }
+    ],
+    "yeast": {
+      "name": "SafAle US-05",
+      "lab": "Fermentis",
+      "strain_code": "US-05",
+      "type": "Ale",
+      "form": "Dry",
+      "pitch_rate_million_cells_per_ml": 0.75,
+      "attenuation_percent": 81.0,
+      "flocculation": "Medium",
+      "optimum_temp_f": "59-72"
+    },
+    "water_chemistry": {
+      "target_profile_name": "Burton-on-Trent (modified for IPA)",
+      "starting_water_ph": 7.0,
+      "mash_ph": 5.25,
+      "ions_ppm": {
+        "calcium": 110,
+        "magnesium": 15,
+        "sodium": 25,
+        "sulfate": 300,
+        "chloride": 55
+      },
+      "additions": [
+        {"name": "Gypsum (CaSO4)", "amount_grams_per_gallon": 2.5},
+        {"name": "Calcium Chloride (CaCl2)", "amount_grams_per_gallon": 0.5},
+        {"name": "Lactic Acid", "amount_ml": 15, "step": "Mash"}
+      ]
+    },
+    "other_ingredients": []
+  },
+  "process": {
+    "mash_schedule": [
+      {
+        "name": "Saccharification Rest",
+        "temperature_f": 152,
+        "duration_minutes": 60,
+        "type": "Infusion"
+      }
+    ],
+    "boil_duration_minutes": 60,
+    "fermentation_schedule": [
+      {
+        "name": "Primary Fermentation",
+        "temperature_f": 68,
+        "duration_days": 10
+      },
+      {
+        "name": "Diacetyl Rest",
+        "temperature_f": 72,
+        "duration_days": 2,
+        "notes": "Begin when gravity is within 2-5 points of FG."
+      },
+      {
+        "name": "Cold Crash",
+        "temperature_f": 34,
+        "duration_days": 2
+      }
+    ]
+  },
+  "notes": {
+    "brewing_notes": "Pay close attention to whirlpool temperature to avoid isomerizing alpha acids and introducing unwanted bitterness.",
+    "tasting_notes": "Expected profile: Pronounced citrus and tropical fruit hop aroma, clean bitterness, medium-dry finish."
+  }
+}

@@ -1,0 +1,7 @@
+# Oxygenation: Ensuring Yeast Health for Generation Zero and Beyond
+
+Oxygen is a critical nutrient for yeast at the beginning of fermentation. It is not used for respiration in an anaerobic wort environment, but rather for the synthesis of sterols and unsaturated fatty acids. These compounds are essential components of the yeast cell membrane, allowing for membrane fluidity, nutrient transport, and the budding of healthy daughter cells.78
+Target Levels: The generally accepted target for dissolved oxygen (DO) in a standard-gravity ale wort is 8-10 parts per million (ppm). This requirement increases with gravity, and a good rule of thumb is to target 1 ppm of DO for every degree Plato of the wort.78
+Method: Achieving these levels in a commercial brewery requires the injection of pure, sterile oxygen into the cold wort stream during knockout, typically via a sintered stainless steel stone. Simple aeration with sterile air can only achieve a maximum DO of about 8 ppm under ideal conditions.79
+The Dry Yeast Exception: A crucial distinction exists for the first-generation pitch of dry yeast. The manufacturing process for active dry yeast is designed to load the cells with a surplus of sterols and other compounds needed for initial growth. As a result, oxygenation is not strictly necessary for the first pitch of a dry yeast like SafAle US-05.27 However, once that yeast is harvested and repitched as a liquid slurry, it behaves like any other liquid culture and
+requires full oxygenation for all subsequent generations.

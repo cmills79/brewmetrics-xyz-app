@@ -1,0 +1,13 @@
+Lab / Product Name,Strain ID,Format,Apparent Attenuation (%),Flocculation,Optimal Temp Range (°F / °C),Alcohol Tolerance (%),Key Flavor Descriptors / Notes
+Wyeast American Ale®,1056,Liquid,73-77%,Low-Medium,60-72°F / 16-22°C,11%,"Very clean, crisp, low fruitiness. Mild citrus at cooler temps."
+White Labs California Ale Yeast®,WLP001,Liquid,73-85%,Medium,64-73°F / 18-23°C,5-10% (Medium),"Clean, hardy, accentuates hops, quick diacetyl reabsorption."
+White Labs Dry California Ale Yeast®,WLP001,Dry,73-85%,Medium,64-73°F / 18-23°C,10-15% (High),"Same genetic strain as liquid; clean, hardy, accentuates hops."
+Fermentis SafAle™ US-05,US-05,Dry,78-82%,Medium,64-79°F / 18-26°C,9-11%,"Neutral, well-balanced, clean, crisp. Low diacetyl."
+Imperial Yeast Flagship,A07,Liquid,73-77%,Low-Medium,60-72°F / 16-22°C,12%,Extremely clean character. Often requires filtration/fining.
+Omega Yeast West Coast Ale I,OYL-004,Liquid,73-80%,Medium-Low,60-73°F / 16-23°C,11%,"Reliable, versatile, neutral. Light citrus notes under 66°F."
+Lallemand LalBrew BRY-97,BRY-97,Dry,78-84%,High,59-72°F / 15-22°C,13%,Neutral with slight ester. Promotes hop biotransformation (β-glucosidase).
+Escarpment Labs Cali Ale,-,Liquid,73-85%,Medium,61-72°F / 16-22°C,High,"Neutral, clean, hop-forward. Low biotransformation potential."
+RVA Yeast Labs Chico Ale,RVA 101,Liquid,74-81%,Medium,67-73°F / 19-23°C,11% (High),"Clean, crisp flavor with muted yeast character."
+Propagate Lab Chico Ale Var. I,MIP-100,Liquid,High,Medium-High,60-72°F / 16-22°C,High,"Reliable, clean flavors, flocculates well for easy clarification."
+Propagate Lab Chico Ale Var. III,MIP-102,Liquid,Up to 80%,High,65-75°F / 18-24°C,High,"""Big brother"" strain with wider temp range and higher alcohol tolerance."
+Berkeley Yeast FRESH™ Chico,-,Liquid,80-90%,Medium,64-72°F / 18-22°C,N/A,Engineered for ultra-low diacetyl (internal ALDC expression).

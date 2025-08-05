@@ -1,0 +1,32 @@
+Field Name,Type,Description,Example
+recipeId,String,Unique identifier for the recipe.,NEIPA-2025-003-v1
+recipeName,String,Human-readable name of the beer.,"""Cosmic Haze NEIPA"""
+beerStyle,String,Standardized beer style name.,"""Juicy or Hazy India Pale Ale"""
+styleId,String,Link to the corresponding style guide document.,BA-21C
+author,String,Creator of the recipe (human or AI agent).,AI-Brewmaster-v2.1
+creationDate,ISO 8601,Timestamp of recipe creation.,2025-07-15T10:00:00Z
+versionHistory,Array,Array of previous recipeIds.,``
+targetParameters,Object,The intended final specifications of the beer.,
+targetOG,Number,Target Original Gravity in Specific Gravity.,1.065
+targetFG,Number,Target Final Gravity in Specific Gravity.,1.014
+targetABV,Number,Target Alcohol by Volume (%).,6.7
+targetIBU,Number,Target International Bitterness Units.,45
+targetSRM,Number,Target color in Standard Reference Method.,6
+batchSize,Object,Target commercial batch volume.,"{""value"": 60, ""unit"": ""bbl""}"
+brewhouseEfficiency,Number,Expected brewhouse efficiency (%).,85
+maltBill,Array[Object],The grain composition of the recipe.,
+maltId,String,Link to the specific malt document.,SIMPSONS-GOLDEN-PROMISE
+percentage,Number,Percentage of this malt in the total grist.,75
+hopSchedule,Array[Object],The schedule of hop additions.,
+hopId,String,Link to the specific hop document.,YCH-CITRA
+amount,Object,Weight of the hop addition.,"{""value"": 1.5, ""unit"": ""kg/hL""}"
+form,String,Physical form of the hops.,"""T-90 Pellet"""
+alphaAcidPercentage,Number,Alpha acid percentage of the hop lot.,12.5
+use,String,Stage of the brewing process for the addition.,"""Whirlpool"""
+timing,Object,Specific timing and temperature for the addition.,"{""temp"": ""80°C"", ""duration"": ""25 min""}"
+yeastProfile,Object,The yeast and pitching specifications.,
+yeastId,String,Link to the specific yeast strain document.,WLP066
+pitchRate,Object,The rate at which yeast is pitched.,"{""value"": 0.75, ""unit"": ""M_cells/mL/P""}"
+waterProfileId,String,Link to the water chemistry profile document.,NEIPA-SILKY
+processScheduleId,String,Link to the mash and fermentation schedule.,NEIPA-STD-FERM
+notes,String,Free-text notes from the brewmaster.,"""Focus on biotransformation by adding dry hops during active fermentation."""

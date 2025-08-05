@@ -1,0 +1,55 @@
+{
+  "feedback_id": "FB_IPA_20240805_01_AUG2025",
+  "recipe_id": "IPA_20240805_01",
+  "recipe_name": "Galaxy Quest IPA",
+  "survey_date_range": {
+    "start": "2025-08-01",
+    "end": "2025-08-15"
+  },
+  "number_of_respondents": 85,
+  "quantitative_summary": {
+    "overall_rating_1_to_5": {
+      "average": 4.1,
+      "median": 4,
+      "mode": 4,
+      "distribution": {
+        "1_star": 2,
+        "2_star": 5,
+        "3_star": 15,
+        "4_star": 43,
+        "5_star": 20
+      }
+    },
+    "aroma_rating_1_to_5": {
+      "average": 4.3
+    },
+    "flavor_rating_1_to_5": {
+      "average": 4.2
+    },
+    "mouthfeel_rating_1_to_5": {
+      "average": 3.7
+    },
+    "hoppiness_rating_1_to_5": {
+      "average": 4.5
+    }
+  },
+  "qualitative_summary": {
+    "positive_descriptors": [
+      {"term": "fruity", "count": 52},
+      {"term": "grapefruit", "count": 41},
+      {"term": "crisp", "count": 35},
+      {"term": "dank", "count": 28},
+      {"term": "passionfruit", "count": 22}
+    ],
+    "negative_descriptors": [
+      {"term": "thin", "count": 19},
+      {"term": "slick", "count": 12},
+      {"term": "buttery", "count": 8},
+      {"term": "astringent", "count": 5}
+    ]
+  },
+  "ai_pre_analysis": {
+    "key_takeaways": "Overall positive reception with high marks for hop character. A notable minority of customers reported a 'thin' mouthfeel and a potential 'slick' or 'buttery' note, suggesting a possible minor diacetyl issue.",
+    "flags": ["MOUTHFEEL_LOW", "DIACETYL_RISK"]
+  }
+}

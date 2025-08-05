@@ -1,0 +1,5 @@
+Fermentation Type,Wort Gravity,Recommended Pitch Rate (M/mL/°P),Key Considerations
+Standard Ale,<1.060 SG (<15°P),0.75,The baseline for most ales fermented at optimal temperatures (>60°F).
+High-Gravity Ale,>1.060 SG (>15°P),1.0−1.25,Increased cell mass is needed to handle the higher osmotic pressure and alcohol levels.
+Standard Lager,<1.060 SG (<15°P),1.5,Double the ale rate is required to ensure a healthy fermentation at cold temperatures (<60°F).
+High-Gravity Lager,>1.060 SG (>15°P),1.75−2.0,"The most stressful fermentation condition, requiring the highest cell density."

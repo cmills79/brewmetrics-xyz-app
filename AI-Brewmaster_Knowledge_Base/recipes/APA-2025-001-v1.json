@@ -1,0 +1,33 @@
+{
+  "recipeId": "APA-2025-001-v1",
+  "recipeName": "Classic American Pale Ale",
+  "beerStyle": "American-Style Pale Ale",
+  "styleId": "BA-21C",
+  "author": "AI-Brewmaster-v2.1",
+  "creationDate": "2025-07-15T10:30:00Z",
+  "versionHistory":[],
+  "targetParameters": {
+    "targetOG": 1.056,
+    "targetFG": 1.010,
+    "targetABV": 6.0,
+    "targetIBU": 37,
+    "targetSRM": 5.9
+  },
+  "batchSize": {
+    "value": 60,
+    "unit": "bbl"
+  },
+  "brewhouseEfficiency": 85,
+  "maltBill":[],
+  "hopSchedule":[],
+  "yeastProfile": {
+    "yeastId": "US-05",
+    "pitchRate": {
+      "value": 0.5,
+      "unit": "M_cells/mL/P"
+    }
+  },
+  "waterProfileId": "HOPPY-STANDARD",
+  "processScheduleId": "APA-STD-FERM",
+  "notes": "All late-addition hops for smooth bitterness and massive hop flavor. Water profile: Ca=110, Mg=18, Na=16, Cl=50, SO4=275. Mash at 152F for 90 min. Oxygenate to 8-10 ppm."
+}

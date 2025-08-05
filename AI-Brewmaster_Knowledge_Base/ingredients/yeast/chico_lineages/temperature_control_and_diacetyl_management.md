@@ -1,0 +1,6 @@
+# Temperature Control and Diacetyl Management
+
+Temperature is one of the most powerful tools for steering the flavor profile of a Chico fermentation.
+Temperature Range: The optimal fermentation temperature range for most Chico variants is between 60°F and 72°F (16-22°C).1
+Flavor Modulation: Fermenting at the cooler end of this range (60-66°F / 15-19°C) can suppress ester formation to an absolute minimum and may even produce subtle, desirable citrus notes.1 Fermenting warmer (68-72°F / 20-22°C) ensures a very neutral profile and a vigorous, rapid fermentation, but pushing temperatures too high can risk the production of unwanted esters and fusel alcohols.
+Diacetyl Management: For any Chico strain that has not been bioengineered to prevent diacetyl, a diacetyl rest is a critical quality control step. After the beer reaches its terminal gravity, the temperature should be allowed to rise or be held at 65-68°F (18-20°C) for 2-3 days. This ensures the yeast remains active and in suspension long enough to reabsorb and reduce any diacetyl that was produced, preventing buttery off-flavors in the final product.47 For breweries without access to gas chromatography to test for vicinal diketones (VDKs), this step is an essential insurance policy for beer quality.

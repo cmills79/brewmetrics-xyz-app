@@ -31,6 +31,7 @@ curl -X GET https://brewmetrics-analytics-{hash}-uc.a.run.app/health
 ```
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -47,6 +48,7 @@ curl -X GET https://brewmetrics-analytics-{hash}-uc.a.run.app/health
 Get detailed analytics for a specific beer recipe including ratings, taste profile, and performance metrics.
 
 **Request Body:**
+
 ```json
 {
   "recipe_name": "Hazy Dayz IPA",
@@ -55,6 +57,7 @@ Get detailed analytics for a specific beer recipe including ratings, taste profi
 ```
 
 **Example:**
+
 ```bash
 curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/recipe-analytics \
   -H "Content-Type: application/json" \
@@ -65,6 +68,7 @@ curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/recipe-analytics 
 ```
 
 **Response:**
+
 ```json
 {
   "recipe": {
@@ -98,6 +102,7 @@ curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/recipe-analytics 
 Get overall performance metrics for a brewery including total ratings, active batches, and top recipes.
 
 **Request Body:**
+
 ```json
 {
   "brewery_id": "brewery_123"
@@ -105,6 +110,7 @@ Get overall performance metrics for a brewery including total ratings, active ba
 ```
 
 **Response:**
+
 ```json
 {
   "brewery_summary": {
@@ -130,6 +136,7 @@ Get overall performance metrics for a brewery including total ratings, active ba
 Get the highest-rated recipes, optionally filtered by brewery or beer style.
 
 **Request Body (all optional):**
+
 ```json
 {
   "brewery_id": "brewery_123",
@@ -139,6 +146,7 @@ Get the highest-rated recipes, optionally filtered by brewery or beer style.
 ```
 
 **Response:**
+
 ```json
 {
   "top_recipes": [
@@ -169,6 +177,7 @@ Get the highest-rated recipes, optionally filtered by brewery or beer style.
 Analyze detailed taste characteristics for recipes. Requires either `recipe_name` or `brewery_id`.
 
 **Request Body:**
+
 ```json
 {
   "recipe_name": "Hazy Dayz IPA",
@@ -177,6 +186,7 @@ Analyze detailed taste characteristics for recipes. Requires either `recipe_name
 ```
 
 **Response:**
+
 ```json
 {
   "taste_profiles": [
@@ -221,6 +231,7 @@ Get AI-powered brewing advice and recommendations.
 **Rate Limit:** 10 requests per minute per user
 
 **Parameters:**
+
 ```javascript
 {
   prompt: "How do I improve the hop flavor in my IPA?"
@@ -228,6 +239,7 @@ Get AI-powered brewing advice and recommendations.
 ```
 
 **JavaScript Example:**
+
 ```javascript
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
@@ -245,6 +257,7 @@ try {
 ```
 
 **Response:**
+
 ```json
 {
   "response": "To improve hop flavor in your IPA, consider these techniques: 1) Late hop additions during the last 10-15 minutes of boil, 2) Dry hopping during fermentation, 3) Using hop varieties known for flavor like Citra, Mosaic, or Amarillo..."
@@ -280,6 +293,7 @@ try {
 ### Taste Profile Scale
 
 All taste characteristics are rated on a scale of 1-5:
+
 - **1**: Very Low/Light
 - **2**: Low/Mild  
 - **3**: Moderate/Balanced
@@ -297,6 +311,7 @@ All taste characteristics are rated on a scale of 1-5:
 ## Usage Examples
 
 ### Get Recipe Performance
+
 ```bash
 # Check how your "Summer Wheat" is performing
 curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/recipe-analytics \
@@ -305,6 +320,7 @@ curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/recipe-analytics 
 ```
 
 ### Find Top Performing IPAs
+
 ```bash
 # Get top 5 IPA recipes
 curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/top-recipes \
@@ -313,6 +329,7 @@ curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/top-recipes \
 ```
 
 ### Analyze Brewery Performance
+
 ```bash
 # Get overall brewery metrics
 curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/brewery-summary \
@@ -331,4 +348,4 @@ curl -X POST https://brewmetrics-analytics-{hash}-uc.a.run.app/brewery-summary \
 5. The analytics API requires brewery access validation
 6. AI functions require Firebase Authentication
 
-For technical support, contact: support@brewmetrics.xyz
+For technical support, contact: <support@brewmetrics.xyz>
