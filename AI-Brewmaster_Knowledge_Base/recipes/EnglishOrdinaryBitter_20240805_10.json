@@ -1,0 +1,108 @@
+{
+    "recipe_id": "EnglishOrdinaryBitter_20240805_10",
+    "recipe_name": "English Ordinary Bitter",
+    "beer_style": {
+        "primary_style": "Ordinary Bitter",
+        "bjcp_code": "11A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.036,
+        "final_gravity_sg": 1.009,
+        "abv_percent": 3.5,
+        "ibu_tinseth": 30,
+        "srm_morey": 10
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Maris Otter Pale Ale Malt",
+                "weight_lbs": 450,
+                "percentage": 85.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 3
+            },
+            {
+                "name": "British Crystal Malt (60L)",
+                "weight_lbs": 79,
+                "percentage": 15.0,
+                "type": "Specialty Malt",
+                "yield_percent": 74.0,
+                "color_lovibond": 60
+            }
+        ],
+        "hops": [
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 48,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 27 IBU"
+            },
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 3 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "West Yorkshire Ale",
+            "lab": "Wyeast",
+            "strain_code": "1469",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 75.0,
+            "flocculation": "High",
+            "optimum_temp_f": "64-72"
+        },
+        "water_chemistry": {
+            "target_profile_name": "London Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 81,
+                "magnesium": 10,
+                "sodium": 41,
+                "sulfate": 105,
+                "chloride": 103
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 154,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 64,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The quintessential English session ale. Balance is key. The water profile, with its moderate alkalinity and balanced sulfate/chloride, is typical for the style.",
+        "tasting_notes": "A sessionable ale with a good balance of malt and hop character, with restrained esters."
+    }
+}

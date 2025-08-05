@@ -1,0 +1,122 @@
+{
+    "recipe_id": "Gose_20240805_44",
+    "recipe_name": "Gose",
+    "beer_style": {
+        "primary_style": "Gose",
+        "bjcp_code": "27A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.042,
+        "final_gravity_sg": 1.008,
+        "abv_percent": 4.5,
+        "ibu_tinseth": 9,
+        "srm_morey": 3
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Wheat Malt",
+                "weight_lbs": 350,
+                "percentage": 55.0,
+                "type": "Base Malt",
+                "yield_percent": 85.0,
+                "color_lovibond": 2
+            },
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 286,
+                "percentage": 45.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Czech Saaz",
+                "alpha_acid_percent": 3.0,
+                "amount_oz": 16,
+                "use": "First Wort",
+                "time_minutes": 60,
+                "notes": "Bitterness: 9 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "German Ale",
+            "lab": "Wyeast",
+            "strain_code": "1007",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 75.0,
+            "flocculation": "Low",
+            "optimum_temp_f": "55-68"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Leipzig Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.2,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 10,
+                "sodium": 200,
+                "sulfate": 50,
+                "chloride": 100
+            },
+            "additions": []
+        },
+        "other_ingredients": [
+            {
+                "name": "Crushed Coriander",
+                "amount_lbs": 1.0,
+                "use": "End of Boil"
+            },
+            {
+                "name": "Sea Salt",
+                "amount_lbs": 1.25,
+                "use": "End of Boil"
+            },
+            {
+                "name": "Lactobacillus plantarum",
+                "amount_ml": 0,
+                "use": "Kettle Sour"
+            }
+        ]
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 149,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 15,
+        "fermentation_schedule": [
+            {
+                "name": "Kettle Souring",
+                "temperature_f": 95,
+                "duration_days": 2,
+                "notes": "Hold for 24-48 hours until desired pH (typically 3.2-3.4) is reached."
+            },
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 65,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A tart, salty, and refreshing wheat beer. Kettle souring is the modern commercial method for achieving a clean, consistent lactic sourness. The high sodium and chloride levels are characteristic of the style.",
+        "tasting_notes": "A tart, salty, and refreshing wheat beer with a clean lactic sourness."
+    }
+}

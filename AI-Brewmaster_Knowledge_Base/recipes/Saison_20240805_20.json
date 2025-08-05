@@ -1,0 +1,117 @@
+{
+    "recipe_id": "Saison_20240805_20",
+    "recipe_name": "Saison",
+    "beer_style": {
+        "primary_style": "Saison",
+        "bjcp_code": "25B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.054,
+        "final_gravity_sg": 1.004,
+        "abv_percent": 6.6,
+        "ibu_tinseth": 25,
+        "srm_morey": 4
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Belgian Pilsner Malt",
+                "weight_lbs": 600,
+                "percentage": 80.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Vienna Malt",
+                "weight_lbs": 75,
+                "percentage": 10.0,
+                "type": "Base Malt",
+                "yield_percent": 79.0,
+                "color_lovibond": 3.5
+            },
+            {
+                "name": "White Wheat Malt",
+                "weight_lbs": 75,
+                "percentage": 10.0,
+                "type": "Base Malt",
+                "yield_percent": 84.0,
+                "color_lovibond": 2
+            }
+        ],
+        "hops": [
+            {
+                "name": "Styrian Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 20 IBU"
+            },
+            {
+                "name": "Saaz",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 5 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Belgian Saison",
+            "lab": "Wyeast",
+            "strain_code": "3724",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 85.0,
+            "flocculation": "Low",
+            "optimum_temp_f": "70-95"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Dry Saison Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.2,
+            "ions_ppm": {
+                "calcium": 100,
+                "magnesium": 10,
+                "sodium": 35,
+                "sulfate": 107,
+                "chloride": 100
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 148,
+                "duration_minutes": 90,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 70,
+                "duration_days": 10,
+                "notes": "Let free-rise into the low 80s\u00b0F (27-28\u00b0C)."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "Saisons are defined by their yeast character: peppery phenols, fruity esters, and a very dry finish. Many Saison strains are Saccharomyces cerevisiae var. diastaticus and require careful handling and sanitation to prevent cross-contamination of other beers.",
+        "tasting_notes": "Peppery phenols, fruity esters, and a very dry finish."
+    }
+}

@@ -1,0 +1,119 @@
+{
+    "recipe_id": "Doppelbock_20240805_38",
+    "recipe_name": "Doppelbock",
+    "beer_style": {
+        "primary_style": "Doppelbock",
+        "bjcp_code": "9A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.086,
+        "final_gravity_sg": 1.02,
+        "abv_percent": 8.7,
+        "ibu_tinseth": 24,
+        "srm_morey": 19
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Munich Malt (10L)",
+                "weight_lbs": 1000,
+                "percentage": 75.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 200,
+                "percentage": 15.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Caramunich III Malt",
+                "weight_lbs": 133,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 70.0,
+                "color_lovibond": 70
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 24 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "German Bock Lager",
+            "lab": "White Labs",
+            "strain_code": "WLP833",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 2.0,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "48-55"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Soft Lager Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 0,
+                "sodium": 15,
+                "sulfate": 55,
+                "chloride": 65
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 155,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 44,
+                "duration_days": 14,
+                "notes": "Pitch at 44\u00b0F (7\u00b0C), allow to rise to 50\u00b0F (10\u00b0C) for primary fermentation."
+            },
+            {
+                "name": "Diacetyl rest",
+                "temperature_f": 60,
+                "duration_days": 3
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 32,
+                "duration_days": 90
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "'Liquid bread.' A very strong and intensely malty lager. A long, cold lagering period is essential to smooth out the high alcohol content and develop the complex malt flavors.",
+        "tasting_notes": "A very strong and intensely malty lager with complex malt flavors."
+    }
+}

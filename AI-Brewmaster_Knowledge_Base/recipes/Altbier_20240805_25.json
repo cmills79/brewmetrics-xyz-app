@@ -1,0 +1,135 @@
+{
+    "recipe_id": "Altbier_20240805_25",
+    "recipe_name": "Altbier",
+    "beer_style": {
+        "primary_style": "Altbier",
+        "bjcp_code": "7B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.048,
+        "final_gravity_sg": 1.011,
+        "abv_percent": 4.9,
+        "ibu_tinseth": 40,
+        "srm_morey": 15
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 400,
+                "percentage": 55.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "German Munich Malt",
+                "weight_lbs": 218,
+                "percentage": 30.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "Caramunich Malt",
+                "weight_lbs": 73,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 71.0,
+                "color_lovibond": 56
+            },
+            {
+                "name": "Carafa Special II (Dehusked)",
+                "weight_lbs": 36,
+                "percentage": 5.0,
+                "type": "Specialty Malt",
+                "yield_percent": 70.0,
+                "color_lovibond": 415
+            }
+        ],
+        "hops": [
+            {
+                "name": "Spalt",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 48,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 32 IBU"
+            },
+            {
+                "name": "Spalt",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Aroma: 8 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "German Ale",
+            "lab": "Wyeast",
+            "strain_code": "1007",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 75.0,
+            "flocculation": "Low",
+            "optimum_temp_f": "55-68"
+        },
+        "water_chemistry": {
+            "target_profile_name": "D\u00fcsseldorf Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 90,
+                "magnesium": 12,
+                "sodium": 45,
+                "sulfate": 65,
+                "chloride": 82
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 145,
+                "duration_minutes": 45,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 162,
+                "duration_minutes": 20,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 62,
+                "duration_days": 10
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 34,
+                "duration_days": 28
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A German 'old' ale, fermented cool with an ale yeast and then lagered. This process results in a very clean, crisp, malt-forward beer with a firm hop bitterness. The D\u00fcsseldorf water profile is key to its authentic character.",
+        "tasting_notes": "A clean, crisp, malt-forward beer with a firm hop bitterness."
+    }
+}

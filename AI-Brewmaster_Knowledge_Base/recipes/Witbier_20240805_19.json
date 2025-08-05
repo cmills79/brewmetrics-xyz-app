@@ -1,0 +1,134 @@
+{
+    "recipe_id": "Witbier_20240805_19",
+    "recipe_name": "Witbier",
+    "beer_style": {
+        "primary_style": "Witbier",
+        "bjcp_code": "24A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.048,
+        "final_gravity_sg": 1.01,
+        "abv_percent": 5.0,
+        "ibu_tinseth": 15,
+        "srm_morey": 3
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Belgian Pilsner Malt",
+                "weight_lbs": 330,
+                "percentage": 50.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Unmalted White Wheat",
+                "weight_lbs": 264,
+                "percentage": 40.0,
+                "type": "Adjunct",
+                "yield_percent": 75.0,
+                "color_lovibond": 2
+            },
+            {
+                "name": "Flaked Oats",
+                "weight_lbs": 66,
+                "percentage": 10.0,
+                "type": "Adjunct",
+                "yield_percent": 70.0,
+                "color_lovibond": 1
+            }
+        ],
+        "hops": [
+            {
+                "name": "Crystal",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 10 IBU"
+            },
+            {
+                "name": "Saaz",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 5 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Belgian Witbier",
+            "lab": "Wyeast",
+            "strain_code": "3944",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 75.0,
+            "flocculation": "Low",
+            "optimum_temp_f": "62-75"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Balanced Belgian Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 10,
+                "sodium": 16,
+                "sulfate": 70,
+                "chloride": 70
+            },
+            "additions": []
+        },
+        "other_ingredients": [
+            {
+                "name": "Crushed Coriander",
+                "amount_lbs": 1.5,
+                "use": "Whirlpool"
+            },
+            {
+                "name": "Bitter Orange Peel",
+                "amount_lbs": 1.0,
+                "use": "Whirlpool"
+            }
+        ]
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Protein rest",
+                "temperature_f": 122,
+                "duration_minutes": 15,
+                "type": "Step"
+            },
+            {
+                "name": "Saccharification rest",
+                "temperature_f": 152,
+                "duration_minutes": 60,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 68,
+                "duration_days": 8,
+                "notes": "Allow to free-rise to 74\u00b0F (23\u00b0C) to encourage ester and phenol production."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A refreshing, spicy, and citrusy wheat beer. The unmalted wheat and oats contribute to the characteristic haze and silky mouthfeel. Spices are added post-boil to preserve their delicate aromas. Rice hulls are highly recommended.",
+        "tasting_notes": "Refreshing, spicy, and citrusy with a characteristic haze and silky mouthfeel."
+    }
+}

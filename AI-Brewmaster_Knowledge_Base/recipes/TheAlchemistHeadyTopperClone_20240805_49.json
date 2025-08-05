@@ -1,0 +1,208 @@
+{
+    "recipe_id": "TheAlchemistHeadyTopperClone_20240805_49",
+    "recipe_name": "The Alchemist Heady Topper Clone",
+    "beer_style": {
+        "primary_style": "Imperial IPA",
+        "bjcp_code": "22A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.076,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 8.2,
+        "ibu_tinseth": 100,
+        "srm_morey": 6
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "British Pale Ale Malt (Maris Otter)",
+                "weight_lbs": 1100,
+                "percentage": 90.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 3
+            },
+            {
+                "name": "Caravienne Malt",
+                "weight_lbs": 55,
+                "percentage": 5.0,
+                "type": "Specialty Malt",
+                "yield_percent": 74.0,
+                "color_lovibond": 22
+            },
+            {
+                "name": "Turbinado Sugar",
+                "weight_lbs": 55,
+                "percentage": 5.0,
+                "type": "Sugar",
+                "yield_percent": 100.0,
+                "color_lovibond": 10
+            }
+        ],
+        "hops": [
+            {
+                "name": "Magnum",
+                "alpha_acid_percent": 14.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 30 IBU"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 35.2,
+                "use": "Boil",
+                "time_minutes": 30,
+                "notes": "Flavor: 25 IBU"
+            },
+            {
+                "name": "Cascade",
+                "alpha_acid_percent": 6.0,
+                "amount_oz": 35.2,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 170,
+                "notes": "Aroma"
+            },
+            {
+                "name": "Apollo",
+                "alpha_acid_percent": 17.0,
+                "amount_oz": 17.6,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 170,
+                "notes": "Aroma"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 35.2,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 170,
+                "notes": "Aroma"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 35.2,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 170,
+                "notes": "Aroma"
+            },
+            {
+                "name": "Columbus",
+                "alpha_acid_percent": 14.0,
+                "amount_oz": 17.6,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 170,
+                "notes": "Aroma"
+            },
+            {
+                "name": "Chinook",
+                "alpha_acid_percent": 12.0,
+                "amount_oz": 35.2,
+                "use": "Dry Hop",
+                "time_days": 7,
+                "notes": "Dry Hop 1"
+            },
+            {
+                "name": "Apollo",
+                "alpha_acid_percent": 17.0,
+                "amount_oz": 35.2,
+                "use": "Dry Hop",
+                "time_days": 7,
+                "notes": "Dry Hop 1"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 35.2,
+                "use": "Dry Hop",
+                "time_days": 7,
+                "notes": "Dry Hop 1"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 44,
+                "use": "Dry Hop",
+                "time_days": 5,
+                "notes": "Dry Hop 2 (in keg/brite)"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 44,
+                "use": "Dry Hop",
+                "time_days": 5,
+                "notes": "Dry Hop 2 (in keg/brite)"
+            }
+        ],
+        "yeast": {
+            "name": "Vermont Ale",
+            "lab": "The Yeast Bay",
+            "strain_code": "GY054",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "65-70"
+        },
+        "water_chemistry": {
+            "target_profile_name": "NEIPA Soft Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 100,
+                "magnesium": 18,
+                "sodium": 16,
+                "sulfate": 100,
+                "chloride": 200
+            },
+            "additions": []
+        },
+        "other_ingredients": [
+            {
+                "name": "Turbinado Sugar",
+                "amount_lbs": 55,
+                "use": "Kettle"
+            }
+        ]
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 153,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 68,
+                "duration_days": 12,
+                "notes": "Add first dry hops after terminal gravity is reached. Rack off yeast and first dry hops before the second dry hop addition."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A foundational Hazy/New England style Double IPA. The 'Conan' yeast strain is legendary for its peachy ester profile. The water profile, with a 2:1 chloride-to-sulfate ratio, is critical for the soft mouthfeel. The extensive whirlpool and multi-stage dry hopping build layers of hop aroma and flavor.",
+        "tasting_notes": "A Hazy/New England style Double IPA with a peachy ester profile and layers of hop aroma and flavor."
+    }
+}

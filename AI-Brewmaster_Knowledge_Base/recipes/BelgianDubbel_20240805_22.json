@@ -1,0 +1,121 @@
+{
+    "recipe_id": "BelgianDubbel_20240805_22",
+    "recipe_name": "Belgian Dubbel",
+    "beer_style": {
+        "primary_style": "Belgian Dubbel",
+        "bjcp_code": "26B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.068,
+        "final_gravity_sg": 1.012,
+        "abv_percent": 7.4,
+        "ibu_tinseth": 25,
+        "srm_morey": 18
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Belgian Pilsner Malt",
+                "weight_lbs": 750,
+                "percentage": 80.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Aromatic Malt",
+                "weight_lbs": 94,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 20
+            },
+            {
+                "name": "Dark Candi Syrup (D-90)",
+                "weight_lbs": 94,
+                "percentage": 10.0,
+                "type": "Sugar",
+                "yield_percent": 100.0,
+                "color_lovibond": 90
+            }
+        ],
+        "hops": [
+            {
+                "name": "Styrian Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 40,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 25 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Trappist High Gravity",
+            "lab": "Wyeast",
+            "strain_code": "3787",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "64-78"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Soft Belgian Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 41,
+                "magnesium": 8,
+                "sodium": 16,
+                "sulfate": 26,
+                "chloride": 60
+            },
+            "additions": []
+        },
+        "other_ingredients": [
+            {
+                "name": "Dark Candi Syrup (D-90)",
+                "amount_lbs": 94,
+                "use": "Kettle"
+            }
+        ]
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 149,
+                "duration_minutes": 60,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 162,
+                "duration_minutes": 15,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 66,
+                "duration_days": 8,
+                "notes": "Allow to free-rise to 72\u00b0F (22\u00b0C) over the course of fermentation."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "Characterized by dark fruit esters (raisin, plum) and spicy phenols. The dark candi syrup is essential for the authentic color and flavor profile.",
+        "tasting_notes": "Dark fruit esters (raisin, plum) and spicy phenols with a rich malt body."
+    }
+}

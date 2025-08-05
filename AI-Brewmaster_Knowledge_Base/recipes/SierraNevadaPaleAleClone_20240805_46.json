@@ -1,0 +1,124 @@
+{
+    "recipe_id": "SierraNevadaPaleAleClone_20240805_46",
+    "recipe_name": "Sierra Nevada Pale Ale Clone",
+    "beer_style": {
+        "primary_style": "American Pale Ale",
+        "bjcp_code": "18B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.053,
+        "final_gravity_sg": 1.011,
+        "abv_percent": 5.6,
+        "ibu_tinseth": 37,
+        "srm_morey": 10
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 2-Row Pale Malt",
+                "weight_lbs": 660,
+                "percentage": 88.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "Crystal Malt (60L)",
+                "weight_lbs": 90,
+                "percentage": 12.0,
+                "type": "Specialty Malt",
+                "yield_percent": 74.0,
+                "color_lovibond": 60
+            }
+        ],
+        "hops": [
+            {
+                "name": "Magnum",
+                "alpha_acid_percent": 14.0,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 18 IBU"
+            },
+            {
+                "name": "Perle",
+                "alpha_acid_percent": 7.0,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 9 IBU"
+            },
+            {
+                "name": "Cascade",
+                "alpha_acid_percent": 6.0,
+                "amount_oz": 64,
+                "use": "Boil",
+                "time_minutes": 30,
+                "notes": "Flavor: 10 IBU"
+            },
+            {
+                "name": "Cascade",
+                "alpha_acid_percent": 6.0,
+                "amount_oz": 64,
+                "use": "Whirlpool",
+                "time_minutes": 0,
+                "notes": "Aroma"
+            }
+        ],
+        "yeast": {
+            "name": "California Ale Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP001",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "68-73"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Hoppy Pale Ale Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 100,
+                "magnesium": 15,
+                "sodium": 10,
+                "sulfate": 150,
+                "chloride": 50
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 155,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 68,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "Based on published clone recipes for the iconic American Pale Ale. The use of whole cone Cascade hops is traditional, but pellets are a suitable substitute. The water profile accentuates a crisp hop finish.",
+        "tasting_notes": "A classic American Pale Ale with a crisp hop finish and citrusy hop notes."
+    }
+}

@@ -1,0 +1,114 @@
+{
+    "recipe_id": "Maibock_HellesBock_20240805_39",
+    "recipe_name": "Maibock / Helles Bock",
+    "beer_style": {
+        "primary_style": "Helles Bock",
+        "bjcp_code": "4B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.068,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 7.1,
+        "ibu_tinseth": 30,
+        "srm_morey": 8
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 700,
+                "percentage": 70.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "German Vienna Malt",
+                "weight_lbs": 300,
+                "percentage": 30.0,
+                "type": "Base Malt",
+                "yield_percent": 79.0,
+                "color_lovibond": 3.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Magnum",
+                "alpha_acid_percent": 14.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 25 IBU"
+            },
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Aroma: 5 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Bavarian Lager",
+            "lab": "Wyeast",
+            "strain_code": "2206",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "48-58"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Soft Lager Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 21,
+                "magnesium": 5,
+                "sodium": 18,
+                "sulfate": 21,
+                "chloride": 16
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 152,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 50,
+                "duration_days": 10,
+                "notes": "with a slow rise over the first few days."
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 34,
+                "duration_days": 42
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A paler, hoppier version of a bock, traditionally released in May. The soft water profile is important to avoid a harsh hop bitterness.",
+        "tasting_notes": "A paler, hoppier bock with a clean lager character."
+    }
+}

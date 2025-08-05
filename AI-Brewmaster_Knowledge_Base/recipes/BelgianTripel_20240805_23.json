@@ -1,0 +1,121 @@
+{
+    "recipe_id": "BelgianTripel_20240805_23",
+    "recipe_name": "Belgian Tripel (Westmalle Clone)",
+    "beer_style": {
+        "primary_style": "Belgian Tripel",
+        "bjcp_code": "26C"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.08,
+        "final_gravity_sg": 1.01,
+        "abv_percent": 9.2,
+        "ibu_tinseth": 38,
+        "srm_morey": 6
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Belgian Pilsner Malt",
+                "weight_lbs": 1000,
+                "percentage": 85.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Clear Candi Sugar / Sucrose",
+                "weight_lbs": 176,
+                "percentage": 15.0,
+                "type": "Sugar",
+                "yield_percent": 100.0,
+                "color_lovibond": 0
+            }
+        ],
+        "hops": [
+            {
+                "name": "Styrian Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 64,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 32 IBU"
+            },
+            {
+                "name": "Tettnanger",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Aroma: 6 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Trappist High Gravity",
+            "lab": "Wyeast",
+            "strain_code": "3787",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.25,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "64-78"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Balanced Belgian Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.2,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 10,
+                "sodium": 16,
+                "sulfate": 70,
+                "chloride": 70
+            },
+            "additions": []
+        },
+        "other_ingredients": [
+            {
+                "name": "Clear Candi Sugar / Sucrose",
+                "amount_lbs": 176,
+                "use": "Kettle"
+            }
+        ]
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Protein rest",
+                "temperature_f": 131,
+                "duration_minutes": 15,
+                "type": "Step"
+            },
+            {
+                "name": "Saccharification rest",
+                "temperature_f": 149,
+                "duration_minutes": 90,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 64,
+                "duration_days": 7,
+                "notes": "Allow the temperature to slowly rise to 70\u00b0F (21\u00b0C) over one week."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A strong, pale, and complex ale. The low mash temperature and sugar addition ensure a very dry finish, which is characteristic of the style. High carbonation is essential.",
+        "tasting_notes": "A strong, pale, and complex ale with a very dry finish and high carbonation."
+    }
+}

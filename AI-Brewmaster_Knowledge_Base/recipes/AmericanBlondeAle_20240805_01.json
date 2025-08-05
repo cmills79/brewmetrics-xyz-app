@@ -1,0 +1,121 @@
+{
+    "recipe_id": "AmericanBlondeAle_20240805_01",
+    "recipe_name": "American Blonde Ale",
+    "beer_style": {
+        "primary_style": "American Blonde Ale",
+        "bjcp_code": "18A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.048,
+        "final_gravity_sg": 1.011,
+        "abv_percent": 4.9,
+        "ibu_tinseth": 22,
+        "srm_morey": 4
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 2-Row Pale Malt",
+                "weight_lbs": 550,
+                "percentage": 85.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 65,
+                "percentage": 10.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Carapils/Dextrine Malt",
+                "weight_lbs": 32,
+                "percentage": 5.0,
+                "type": "Specialty Malt",
+                "yield_percent": 72.0,
+                "color_lovibond": 1.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Willamette",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 16 IBU"
+            },
+            {
+                "name": "Cascade",
+                "alpha_acid_percent": 6.0,
+                "amount_oz": 28,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 6 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "WLP001 California Ale Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP001",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "68-73"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Light & Crisp Ale Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 75,
+                "magnesium": 5,
+                "sodium": 10,
+                "sulfate": 50,
+                "chloride": 75
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 150,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 67,
+                "duration_days": 8
+            },
+            {
+                "name": "Cold Crash",
+                "temperature_f": 35,
+                "duration_days": 2
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A straightforward, clean ale. The blend of 2-Row and Pilsner provides a clean, slightly grainy base. The hop schedule provides balance without being assertive. For a crisper finish, lower the mash temperature to 148\u00b0F (64\u00b0C).",
+        "tasting_notes": "A clean, crisp, and refreshing ale with a light grainy malt sweetness and a balanced, low hop bitterness and flavor."
+    }
+}

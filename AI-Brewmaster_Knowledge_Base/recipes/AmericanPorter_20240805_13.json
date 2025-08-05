@@ -1,0 +1,141 @@
+{
+    "recipe_id": "AmericanPorter_20240805_13",
+    "recipe_name": "American Porter",
+    "beer_style": {
+        "primary_style": "American Porter",
+        "bjcp_code": "20A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.06,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 6.1,
+        "ibu_tinseth": 34,
+        "srm_morey": 36
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 2-Row Pale Malt",
+                "weight_lbs": 780,
+                "percentage": 80.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "British Crystal Malt (77L)",
+                "weight_lbs": 78,
+                "percentage": 8.0,
+                "type": "Specialty Malt",
+                "yield_percent": 74.0,
+                "color_lovibond": 77
+            },
+            {
+                "name": "British Chocolate Malt",
+                "weight_lbs": 73,
+                "percentage": 8.0,
+                "type": "Specialty Malt",
+                "yield_percent": 60.0,
+                "color_lovibond": 450
+            },
+            {
+                "name": "British Roasted Barley",
+                "weight_lbs": 44,
+                "percentage": 4.0,
+                "type": "Specialty Malt",
+                "yield_percent": 55.0,
+                "color_lovibond": 500
+            }
+        ],
+        "hops": [
+            {
+                "name": "Fuggles",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 24,
+                "use": "First Wort",
+                "time_minutes": 60,
+                "notes": "Bitterness: 13 IBU"
+            },
+            {
+                "name": "Amarillo",
+                "alpha_acid_percent": 8.6,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Flavor: 11 IBU"
+            },
+            {
+                "name": "Styrian Goldings",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 40,
+                "use": "Boil",
+                "time_minutes": 5,
+                "notes": "Aroma: 10 IBU"
+            },
+            {
+                "name": "Styrian Goldings",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 40,
+                "use": "Dry Hop",
+                "time_days": 3,
+                "notes": "Optional Aroma"
+            }
+        ],
+        "yeast": {
+            "name": "California Ale Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP001",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "68-73"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Deschutes Black Butte Porter-like",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 129,
+                "magnesium": 10,
+                "sodium": 16,
+                "sulfate": 136,
+                "chloride": 89
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 154,
+                "duration_minutes": 60,
+                "type": "Infusion",
+                "notes": "Add dark grains during the vorlauf (recirculation) step to minimize harshness."
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 64,
+                "duration_days": 12
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "This recipe, inspired by Gordon Strong's American Porter, uses a water profile similar to Deschutes Black Butte Porter to enhance body. Adding dark grains late in the mash is a commercial technique to extract color and flavor while reducing astringency.",
+        "tasting_notes": "A robust porter with significant roast, chocolate, and caramel flavors, balanced by American hop character."
+    }
+}

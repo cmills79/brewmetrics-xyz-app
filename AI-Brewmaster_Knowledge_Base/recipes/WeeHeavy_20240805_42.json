@@ -1,0 +1,101 @@
+{
+    "recipe_id": "WeeHeavy_20240805_42",
+    "recipe_name": "Wee Heavy (Strong Scotch Ale)",
+    "beer_style": {
+        "primary_style": "Wee Heavy",
+        "bjcp_code": "17C"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 612,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.091,
+        "final_gravity_sg": 1.025,
+        "abv_percent": 8.8,
+        "ibu_tinseth": 36,
+        "srm_morey": 20
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Golden Promise Pale Ale Malt",
+                "weight_lbs": 1200,
+                "percentage": 96.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 2.5
+            },
+            {
+                "name": "Roasted Barley",
+                "weight_lbs": 50,
+                "percentage": 4.0,
+                "type": "Specialty Malt",
+                "yield_percent": 55.0,
+                "color_lovibond": 500
+            }
+        ],
+        "hops": [
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 64,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 36 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Edinburgh Scottish Ale",
+            "lab": "White Labs",
+            "strain_code": "WLP028",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.25,
+            "attenuation_percent": 75.0,
+            "flocculation": "High",
+            "optimum_temp_f": "65-70"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Edinburgh Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 101,
+                "magnesium": 10,
+                "sodium": 46,
+                "sulfate": 74,
+                "chloride": 75
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 152,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 120,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 63,
+                "duration_days": 10,
+                "notes": "Allow to free-rise to 67\u00b0F (19\u00b0C) over the first 4 days."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A very strong, intensely malty ale. A long boil of at least 120 minutes is essential to develop the deep caramel and toffee flavors through kettle caramelization.",
+        "tasting_notes": "A very strong, intensely malty ale with deep caramel and toffee flavors."
+    }
+}

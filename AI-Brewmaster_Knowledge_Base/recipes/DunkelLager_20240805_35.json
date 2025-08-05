@@ -1,0 +1,117 @@
+{
+    "recipe_id": "DunkelLager_20240805_35",
+    "recipe_name": "Dunkel Lager",
+    "beer_style": {
+        "primary_style": "Munich Dunkel",
+        "bjcp_code": "8A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.054,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 5.2,
+        "ibu_tinseth": 25,
+        "srm_morey": 20
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Munich Malt (10L)",
+                "weight_lbs": 800,
+                "percentage": 90.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "Carafa Special II (Dehusked)",
+                "weight_lbs": 89,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 70.0,
+                "color_lovibond": 415
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 25 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Munich Lager",
+            "lab": "Wyeast",
+            "strain_code": "2308",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "48-56"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Munich Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 82,
+                "magnesium": 20,
+                "sodium": 4,
+                "sulfate": 16,
+                "chloride": 2
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 122,
+                "duration_minutes": 30,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 149,
+                "duration_minutes": 30,
+                "type": "Step"
+            },
+            {
+                "name": "Step 3",
+                "temperature_f": 158,
+                "duration_minutes": 20,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 48,
+                "duration_days": 14
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 41,
+                "duration_days": 21
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The original dark lager of Munich. The high bicarbonate Munich water profile is crucial for balancing the acidity of the dark malts. Decoction mashing develops the deep melanoidin character.",
+        "tasting_notes": "A dark lager with a deep melanoidin character and a smooth, malty finish."
+    }
+}

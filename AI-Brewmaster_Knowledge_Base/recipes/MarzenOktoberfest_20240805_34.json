@@ -1,0 +1,111 @@
+{
+    "recipe_id": "MarzenOktoberfest_20240805_34",
+    "recipe_name": "M\u00e4rzen / Oktoberfest",
+    "beer_style": {
+        "primary_style": "M\u00e4rzen",
+        "bjcp_code": "6A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.058,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 5.8,
+        "ibu_tinseth": 22,
+        "srm_morey": 11
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Vienna Malt",
+                "weight_lbs": 450,
+                "percentage": 50.0,
+                "type": "Base Malt",
+                "yield_percent": 79.0,
+                "color_lovibond": 3.5
+            },
+            {
+                "name": "German Munich Malt (10L)",
+                "weight_lbs": 450,
+                "percentage": 50.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 22 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Oktoberfest/M\u00e4rzen Lager Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP820",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "50-55"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Munich Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 45,
+                "magnesium": 7,
+                "sodium": 32,
+                "sulfate": 46,
+                "chloride": 46
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 152,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 48,
+                "duration_days": 8,
+                "notes": "Pitch at 48\u00b0F (9\u00b0C), let rise to 54\u00b0F (12\u00b0C) for 7-10 days."
+            },
+            {
+                "name": "Diacetyl rest",
+                "temperature_f": 72,
+                "duration_days": 7
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 33,
+                "duration_days": 84
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A rich, malty lager traditionally brewed in March and lagered through the summer. The simple grain bill of Vienna and Munich malts provides a deep, bready, and toasty character. A long lagering period is essential.",
+        "tasting_notes": "A rich, malty lager with a deep, bready, and toasty character."
+    }
+}

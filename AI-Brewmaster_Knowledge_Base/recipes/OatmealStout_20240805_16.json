@@ -1,0 +1,118 @@
+{
+    "recipe_id": "OatmealStout_20240805_16",
+    "recipe_name": "Oatmeal Stout",
+    "beer_style": {
+        "primary_style": "Oatmeal Stout",
+        "bjcp_code": "16B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.054,
+        "final_gravity_sg": 1.018,
+        "abv_percent": 4.7,
+        "ibu_tinseth": 30,
+        "srm_morey": 35
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Maris Otter Pale Ale Malt",
+                "weight_lbs": 600,
+                "percentage": 75.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 3
+            },
+            {
+                "name": "Flaked Oats",
+                "weight_lbs": 120,
+                "percentage": 15.0,
+                "type": "Adjunct",
+                "yield_percent": 70.0,
+                "color_lovibond": 1
+            },
+            {
+                "name": "Roasted Barley",
+                "weight_lbs": 40,
+                "percentage": 5.0,
+                "type": "Specialty Malt",
+                "yield_percent": 55.0,
+                "color_lovibond": 500
+            },
+            {
+                "name": "British Crystal Malt (80L)",
+                "weight_lbs": 40,
+                "percentage": 5.0,
+                "type": "Specialty Malt",
+                "yield_percent": 73.0,
+                "color_lovibond": 80
+            }
+        ],
+        "hops": [
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 48,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 30 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Irish Ale Yeast",
+            "lab": "Wyeast",
+            "strain_code": "1084",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 73.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "62-72"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Soft Stout Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 52,
+                "magnesium": 0,
+                "sodium": 15,
+                "sulfate": 45,
+                "chloride": 50
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 154,
+                "duration_minutes": 60,
+                "type": "Infusion",
+                "notes": "Rice hulls (approx. 5% of grist weight) are recommended to prevent a stuck sparge."
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 64,
+                "duration_days": 8,
+                "notes": "Raise to 72\u00b0F (22\u00b0C) after the first 3-5 days to ensure full attenuation."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The flaked oats provide a silky, smooth mouthfeel and full body. The mash pH should be carefully managed to avoid extracting astringency from the dark grains while preserving body.",
+        "tasting_notes": "A silky, smooth mouthfeel with a full body and notes of coffee and chocolate."
+    }
+}

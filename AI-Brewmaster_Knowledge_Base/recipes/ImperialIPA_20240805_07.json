@@ -1,0 +1,157 @@
+{
+    "recipe_id": "ImperialIPA_20240805_07",
+    "recipe_name": "Imperial IPA",
+    "beer_style": {
+        "primary_style": "Imperial IPA",
+        "bjcp_code": "22A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 555,
+        "post_boil_gallons": 488,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.085,
+        "final_gravity_sg": 1.016,
+        "abv_percent": 9.1,
+        "ibu_tinseth": 105,
+        "srm_morey": 9
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 2-Row Pale Malt",
+                "weight_lbs": 1100,
+                "percentage": 88.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "Munich Malt",
+                "weight_lbs": 100,
+                "percentage": 8.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "Dextrose (Corn Sugar)",
+                "weight_lbs": 50,
+                "percentage": 4.0,
+                "type": "Sugar",
+                "yield_percent": 100.0,
+                "color_lovibond": 0
+            }
+        ],
+        "hops": [
+            {
+                "name": "Columbus",
+                "alpha_acid_percent": 15.0,
+                "amount_oz": 80,
+                "use": "Boil",
+                "time_minutes": 90,
+                "notes": "Bitterness: 65 IBU"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 48,
+                "use": "Boil",
+                "time_minutes": 30,
+                "notes": "Flavor: 25 IBU"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 96,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 190,
+                "notes": "Aroma: 15 IBU (split)"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 96,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 190,
+                "notes": "Aroma: 15 IBU (split)"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 128,
+                "use": "Dry Hop",
+                "time_days": 7,
+                "notes": "Aroma"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 96,
+                "use": "Dry Hop",
+                "time_days": 7,
+                "notes": "Aroma"
+            }
+        ],
+        "yeast": {
+            "name": "California Ale Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP001",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.25,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "68-73"
+        },
+        "water_chemistry": {
+            "target_profile_name": "High Sulfate DIPA Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 120,
+                "magnesium": 20,
+                "sodium": 15,
+                "sulfate": 300,
+                "chloride": 75
+            },
+            "additions": []
+        },
+        "other_ingredients": [
+            {
+                "name": "Dextrose (Corn Sugar)",
+                "amount_lbs": 50,
+                "use": "Kettle"
+            }
+        ]
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 149,
+                "duration_minutes": 75,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 90,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 67,
+                "duration_days": 10,
+                "notes": "Ensure proper yeast health and oxygenation due to the high gravity wort."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A high-gravity brew that pushes the limits of hop bitterness and aroma. The dextrose addition helps to dry out the beer and boost the ABV without adding excessive body. Expect significant wort loss due to hop absorption.",
+        "tasting_notes": "A very strong, hop-forward ale with intense bitterness and aroma, a dry finish, and noticeable alcohol warmth."
+    }
+}

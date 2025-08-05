@@ -1,0 +1,129 @@
+{
+    "recipe_id": "BelgianDarkStrongAle_20240805_24",
+    "recipe_name": "Belgian Dark Strong Ale (Quadrupel)",
+    "beer_style": {
+        "primary_style": "Belgian Dark Strong Ale",
+        "bjcp_code": "26D"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.095,
+        "final_gravity_sg": 1.018,
+        "abv_percent": 10.1,
+        "ibu_tinseth": 28,
+        "srm_morey": 22
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Belgian Pilsner Malt",
+                "weight_lbs": 1000,
+                "percentage": 75.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Aromatic Malt",
+                "weight_lbs": 133,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 20
+            },
+            {
+                "name": "Dark Candi Syrup (D-180)",
+                "weight_lbs": 200,
+                "percentage": 15.0,
+                "type": "Sugar",
+                "yield_percent": 100.0,
+                "color_lovibond": 180
+            }
+        ],
+        "hops": [
+            {
+                "name": "Styrian Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 40,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 25 IBU"
+            },
+            {
+                "name": "Saaz",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 3 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Trappist High Gravity",
+            "lab": "Wyeast",
+            "strain_code": "3787",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "64-78"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Balanced Belgian Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 74,
+                "magnesium": 7,
+                "sodium": 8,
+                "sulfate": 75,
+                "chloride": 100
+            },
+            "additions": []
+        },
+        "other_ingredients": [
+            {
+                "name": "Dark Candi Syrup (D-180)",
+                "amount_lbs": 200,
+                "use": "Kettle"
+            }
+        ]
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 144,
+                "duration_minutes": 45,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 158,
+                "duration_minutes": 15,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 68,
+                "duration_days": 13,
+                "notes": "Pitch at 68\u00b0F (20\u00b0C) for 3 days, then allow to free-rise to 75\u00b0F (24\u00b0C) for 10 days."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The pinnacle of Belgian abbey ales. Rich, complex, and malty with deep notes of dark fruit, caramel, and spice. The dark candi syrup is non-negotiable for achieving the correct flavor profile.",
+        "tasting_notes": "Rich, complex, and malty with deep notes of dark fruit, caramel, and spice."
+    }
+}

@@ -1,0 +1,114 @@
+{
+    "recipe_id": "Schwarzbier_20240805_36",
+    "recipe_name": "Schwarzbier (Black Lager)",
+    "beer_style": {
+        "primary_style": "Schwarzbier",
+        "bjcp_code": "8B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.05,
+        "final_gravity_sg": 1.012,
+        "abv_percent": 5.0,
+        "ibu_tinseth": 28,
+        "srm_morey": 30
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 520,
+                "percentage": 70.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "German Munich Malt (10L)",
+                "weight_lbs": 149,
+                "percentage": 20.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "Carafa Special II (Dehusked)",
+                "weight_lbs": 74,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 70.0,
+                "color_lovibond": 415
+            }
+        ],
+        "hops": [
+            {
+                "name": "Magnum",
+                "alpha_acid_percent": 14.0,
+                "amount_oz": 40,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 28 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "German Lager Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP830",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 76.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "50-55"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Munich Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 82,
+                "magnesium": 20,
+                "sodium": 4,
+                "sulfate": 16,
+                "chloride": 2
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 152,
+                "duration_minutes": 60,
+                "type": "Infusion",
+                "notes": "Add Carafa Special during the last 15 minutes of the mash (mash capping) to minimize harshness."
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 50,
+                "duration_days": 12
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 34,
+                "duration_days": 28
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A dark lager that is surprisingly light-bodied and drinkable. The key is to get the dark color and subtle roast flavor without the associated astringency, which is achieved through mash capping with dehusked black malt and using a high-bicarbonate water profile.",
+        "tasting_notes": "A light-bodied dark lager with a subtle roast flavor and minimal astringency."
+    }
+}

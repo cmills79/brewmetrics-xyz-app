@@ -1,0 +1,111 @@
+{
+    "recipe_id": "AmericanLager_20240805_29",
+    "recipe_name": "American Lager",
+    "beer_style": {
+        "primary_style": "American Lager",
+        "bjcp_code": "1B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.045,
+        "final_gravity_sg": 1.008,
+        "abv_percent": 4.9,
+        "ibu_tinseth": 12,
+        "srm_morey": 3
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 6-Row Malt",
+                "weight_lbs": 420,
+                "percentage": 70.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "Flaked Rice",
+                "weight_lbs": 180,
+                "percentage": 30.0,
+                "type": "Adjunct",
+                "yield_percent": 80.0,
+                "color_lovibond": 0.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 12 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "American Lager Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP840",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 77.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "50-55"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Light Lager Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 0,
+                "sodium": 5,
+                "sulfate": 75,
+                "chloride": 60
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Cereal mash",
+                "temperature_f": 150,
+                "duration_minutes": 60,
+                "type": "Decoction",
+                "notes": "Cereal mash required for the flaked rice. Mash main grist (6-Row) at 150\u00b0F (66\u00b0C). Cook rice separately with a portion of the malted barley, then add to the main mash to raise temperature for saccharification."
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 50,
+                "duration_days": 7
+            },
+            {
+                "name": "Diacetyl rest",
+                "temperature_f": 55,
+                "duration_days": 3
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 34,
+                "duration_days": 24
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A very light and crisp lager defined by its high adjunct percentage. The soft water profile is critical. The goal is a clean, refreshing beer with minimal character.",
+        "tasting_notes": "A very light, crisp, and clean lager with minimal character."
+    }
+}

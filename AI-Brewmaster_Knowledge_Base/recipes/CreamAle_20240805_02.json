@@ -1,0 +1,127 @@
+{
+    "recipe_id": "CreamAle_20240805_02",
+    "recipe_name": "Cream Ale",
+    "beer_style": {
+        "primary_style": "Cream Ale",
+        "bjcp_code": "1C"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.05,
+        "final_gravity_sg": 1.008,
+        "abv_percent": 5.5,
+        "ibu_tinseth": 18,
+        "srm_morey": 3
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 6-Row Malt",
+                "weight_lbs": 480,
+                "percentage": 70.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "Flaked Corn",
+                "weight_lbs": 137,
+                "percentage": 20.0,
+                "type": "Adjunct",
+                "yield_percent": 86.0,
+                "color_lovibond": 0.5
+            },
+            {
+                "name": "Pilsner Malt",
+                "weight_lbs": 69,
+                "percentage": 10.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Liberty",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 15 IBU"
+            },
+            {
+                "name": "Liberty",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 5,
+                "notes": "Aroma: 3 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Cream Ale Yeast Blend",
+            "lab": "White Labs",
+            "strain_code": "WLP080",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "65-70"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Light American Ale Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 5,
+                "sodium": 10,
+                "sulfate": 60,
+                "chloride": 60
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 131,
+                "duration_minutes": 15,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 150,
+                "duration_minutes": 60,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 68,
+                "duration_days": 7
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 35,
+                "duration_days": 14
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The 6-Row malt provides the enzymatic power to convert the large corn adjunct addition. The step mash aids in breaking down the corn. A cereal mash for the flaked corn is recommended on systems with an adjunct cooker.",
+        "tasting_notes": "A very light-bodied, crisp, and highly drinkable beer."
+    }
+}

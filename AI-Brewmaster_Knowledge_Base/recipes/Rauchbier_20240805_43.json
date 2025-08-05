@@ -1,0 +1,111 @@
+{
+    "recipe_id": "Rauchbier_20240805_43",
+    "recipe_name": "Rauchbier (Smoked Beer)",
+    "beer_style": {
+        "primary_style": "Rauchbier",
+        "bjcp_code": "6B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.054,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 5.3,
+        "ibu_tinseth": 25,
+        "srm_morey": 18
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Weyermann Beechwood Smoked Malt",
+                "weight_lbs": 600,
+                "percentage": 80.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 2.5
+            },
+            {
+                "name": "German Munich Malt (10L)",
+                "weight_lbs": 150,
+                "percentage": 20.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            }
+        ],
+        "hops": [
+            {
+                "name": "German Tettnanger",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 25 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Bohemian Lager",
+            "lab": "Wyeast",
+            "strain_code": "2124",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "48-58"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Bamberg Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 73,
+                "magnesium": 0,
+                "sodium": 8,
+                "sulfate": 81,
+                "chloride": 52
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 144,
+                "duration_minutes": 30,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 154,
+                "duration_minutes": 20,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 52,
+                "duration_days": 14
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 30,
+                "duration_days": 52
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A M\u00e4rzen-style lager made with a large proportion of smoked malt. The key is balancing the smoke character with the rich maltiness. The smoke should be prominent but not acrid.",
+        "tasting_notes": "A lager with a prominent but not acrid smoke character, balanced with rich maltiness."
+    }
+}

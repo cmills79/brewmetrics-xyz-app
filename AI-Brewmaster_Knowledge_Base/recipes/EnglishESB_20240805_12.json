@@ -1,0 +1,132 @@
+{
+    "recipe_id": "EnglishESB_20240805_12",
+    "recipe_name": "English ESB (Extra Special Bitter)",
+    "beer_style": {
+        "primary_style": "Extra Special Bitter",
+        "bjcp_code": "11C"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.058,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 5.8,
+        "ibu_tinseth": 35,
+        "srm_morey": 13
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Maris Otter Pale Ale Malt",
+                "weight_lbs": 750,
+                "percentage": 90.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 3
+            },
+            {
+                "name": "British Crystal Malt (75L)",
+                "weight_lbs": 83,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 74.0,
+                "color_lovibond": 75
+            }
+        ],
+        "hops": [
+            {
+                "name": "Target",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 15 IBU"
+            },
+            {
+                "name": "Challenger",
+                "alpha_acid_percent": 7.5,
+                "amount_oz": 11.2,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 8 IBU"
+            },
+            {
+                "name": "Northdown",
+                "alpha_acid_percent": 8.5,
+                "amount_oz": 11.2,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Flavor: 4 IBU"
+            },
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 20.8,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Flavor: 8 IBU"
+            },
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 32,
+                "use": "Dry Hop",
+                "time_days": 4,
+                "notes": "Aroma"
+            }
+        ],
+        "yeast": {
+            "name": "London ESB Ale",
+            "lab": "Wyeast",
+            "strain_code": "1968",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 73.0,
+            "flocculation": "Very High",
+            "optimum_temp_f": "64-72"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Hoppy Lite Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 110,
+                "magnesium": 18,
+                "sodium": 16,
+                "sulfate": 100,
+                "chloride": 50
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 153,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 69,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "This recipe is a clone of Fuller's ESB. The complex hop bill and specific yeast strain are crucial for authenticity. The 'Hoppy lite' water profile accentuates the bitterness without the harshness of a high-sulfate American IPA profile.",
+        "tasting_notes": "Complex hop character with fruity esters from the yeast. Balanced bitterness."
+    }
+}

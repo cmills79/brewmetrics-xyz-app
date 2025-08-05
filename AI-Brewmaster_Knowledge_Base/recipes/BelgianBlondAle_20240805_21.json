@@ -1,0 +1,121 @@
+{
+    "recipe_id": "BelgianBlondAle_20240805_21",
+    "recipe_name": "Belgian Blond Ale",
+    "beer_style": {
+        "primary_style": "Belgian Blond Ale",
+        "bjcp_code": "25A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.065,
+        "final_gravity_sg": 1.01,
+        "abv_percent": 7.2,
+        "ibu_tinseth": 22,
+        "srm_morey": 6
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Belgian Pilsner Malt",
+                "weight_lbs": 800,
+                "percentage": 90.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Cane Sugar",
+                "weight_lbs": 89,
+                "percentage": 10.0,
+                "type": "Sugar",
+                "yield_percent": 100.0,
+                "color_lovibond": 0
+            }
+        ],
+        "hops": [
+            {
+                "name": "Styrian Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 18 IBU"
+            },
+            {
+                "name": "Saaz",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Aroma: 4 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Belgian Abbey Ale",
+            "lab": "Wyeast",
+            "strain_code": "1214",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 76.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "68-78"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Balanced Belgian Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 10,
+                "sodium": 16,
+                "sulfate": 70,
+                "chloride": 70
+            },
+            "additions": []
+        },
+        "other_ingredients": [
+            {
+                "name": "Cane Sugar",
+                "amount_lbs": 89,
+                "use": "Kettle"
+            }
+        ]
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 145,
+                "duration_minutes": 60,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 162,
+                "duration_minutes": 20,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 64,
+                "duration_days": 6,
+                "notes": "Allow to free-rise to 72\u00b0F (22\u00b0C) over 5-7 days."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A moderately strong ale with subtle Belgian yeast complexity. The sugar addition lightens the body and boosts the alcohol content, contributing to a deceptively drinkable beer.",
+        "tasting_notes": "Subtle Belgian yeast complexity with a light body and a deceptively drinkable character."
+    }
+}

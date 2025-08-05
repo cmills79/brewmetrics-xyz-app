@@ -1,0 +1,122 @@
+{
+    "recipe_id": "Bock_20240805_37",
+    "recipe_name": "Bock",
+    "beer_style": {
+        "primary_style": "Bock",
+        "bjcp_code": "4C"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.068,
+        "final_gravity_sg": 1.018,
+        "abv_percent": 6.6,
+        "ibu_tinseth": 25,
+        "srm_morey": 25
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Munich Malt (10L)",
+                "weight_lbs": 900,
+                "percentage": 90.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "Caramunich Malt",
+                "weight_lbs": 100,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 71.0,
+                "color_lovibond": 56
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 25 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Bavarian Lager",
+            "lab": "Wyeast",
+            "strain_code": "2206",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "48-58"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Munich Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 82,
+                "magnesium": 20,
+                "sodium": 4,
+                "sulfate": 16,
+                "chloride": 2
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 122,
+                "duration_minutes": 30,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 140,
+                "duration_minutes": 30,
+                "type": "Step"
+            },
+            {
+                "name": "Step 3",
+                "temperature_f": 158,
+                "duration_minutes": 30,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 50,
+                "duration_days": 14
+            },
+            {
+                "name": "Diacetyl rest",
+                "temperature_f": 60,
+                "duration_days": 3
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 34,
+                "duration_days": 49
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A strong, malty, dark German lager. The high percentage of Munich malt and decoction mash create a rich, bready, and complex malt profile.",
+        "tasting_notes": "A strong, malty, dark German lager with a rich, bready, and complex malt profile."
+    }
+}

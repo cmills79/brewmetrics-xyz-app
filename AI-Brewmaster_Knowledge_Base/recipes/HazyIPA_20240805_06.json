@@ -1,0 +1,159 @@
+{
+    "recipe_id": "HazyIPA_20240805_06",
+    "recipe_name": "Hazy IPA",
+    "beer_style": {
+        "primary_style": "Hazy IPA",
+        "bjcp_code": "21C"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.066,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 6.8,
+        "ibu_tinseth": 45,
+        "srm_morey": 5
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Maris Otter Malt",
+                "weight_lbs": 600,
+                "percentage": 70.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 3
+            },
+            {
+                "name": "Flaked Oats",
+                "weight_lbs": 129,
+                "percentage": 15.0,
+                "type": "Adjunct",
+                "yield_percent": 70.0,
+                "color_lovibond": 1
+            },
+            {
+                "name": "White Wheat Malt",
+                "weight_lbs": 129,
+                "percentage": 15.0,
+                "type": "Base Malt",
+                "yield_percent": 84.0,
+                "color_lovibond": 2
+            }
+        ],
+        "hops": [
+            {
+                "name": "Magnum",
+                "alpha_acid_percent": 14.0,
+                "amount_oz": 12,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 15 IBU"
+            },
+            {
+                "name": "Citra",
+                "alpha_acid_percent": 12.0,
+                "amount_oz": 96,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 170,
+                "notes": "Aroma: 30 IBU (split)"
+            },
+            {
+                "name": "Mosaic",
+                "alpha_acid_percent": 12.5,
+                "amount_oz": 96,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 170,
+                "notes": "Aroma: 30 IBU (split)"
+            },
+            {
+                "name": "Citra",
+                "alpha_acid_percent": 12.0,
+                "amount_oz": 96,
+                "use": "Dry Hop",
+                "time_days": 2,
+                "notes": "Day 2 of Fermentation"
+            },
+            {
+                "name": "Galaxy",
+                "alpha_acid_percent": 15.0,
+                "amount_oz": 64,
+                "use": "Dry Hop",
+                "time_days": 2,
+                "notes": "Day 2 of Fermentation"
+            },
+            {
+                "name": "Mosaic",
+                "alpha_acid_percent": 12.5,
+                "amount_oz": 96,
+                "use": "Dry Hop",
+                "time_days": 0,
+                "notes": "Post-fermentation"
+            },
+            {
+                "name": "Galaxy",
+                "alpha_acid_percent": 15.0,
+                "amount_oz": 64,
+                "use": "Dry Hop",
+                "time_days": 0,
+                "notes": "Post-fermentation"
+            }
+        ],
+        "yeast": {
+            "name": "London Ale III",
+            "lab": "Wyeast",
+            "strain_code": "1318",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 75.0,
+            "flocculation": "High",
+            "optimum_temp_f": "64-74"
+        },
+        "water_chemistry": {
+            "target_profile_name": "NEIPA Soft Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 100,
+                "magnesium": 18,
+                "sodium": 16,
+                "sulfate": 100,
+                "chloride": 200
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 154,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 68,
+                "duration_days": 10,
+                "notes": "The first dry hop addition during active fermentation is key for biotransformation."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The high chloride water, large oat and wheat additions, and low-flocculating English yeast strain all contribute to the characteristic soft mouthfeel and stable haze. Minimize oxygen exposure post-fermentation to preserve hop aroma and prevent browning.",
+        "tasting_notes": "Intense fruity hop flavors with a soft, full mouthfeel and a characteristic haze."
+    }
+}

@@ -1,0 +1,139 @@
+{
+    "recipe_id": "ViennaLager_20240805_33",
+    "recipe_name": "Vienna Lager",
+    "beer_style": {
+        "primary_style": "Vienna Lager",
+        "bjcp_code": "7A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.05,
+        "final_gravity_sg": 1.011,
+        "abv_percent": 5.1,
+        "ibu_tinseth": 25,
+        "srm_morey": 10
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Vienna Malt",
+                "weight_lbs": 400,
+                "percentage": 55.0,
+                "type": "Base Malt",
+                "yield_percent": 79.0,
+                "color_lovibond": 3.5
+            },
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 255,
+                "percentage": 35.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Dark Munich Malt",
+                "weight_lbs": 73,
+                "percentage": 10.0,
+                "type": "Base Malt",
+                "yield_percent": 75.0,
+                "color_lovibond": 20
+            }
+        ],
+        "hops": [
+            {
+                "name": "German Northern Brewer",
+                "alpha_acid_percent": 7.5,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 22 IBU"
+            },
+            {
+                "name": "Czech Saaz",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 20,
+                "notes": "Aroma: 3 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Harvest",
+            "lab": "Imperial Yeast",
+            "strain_code": "L17",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "52-57"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Vienna Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 35,
+                "magnesium": 43,
+                "sodium": 17,
+                "sulfate": 67,
+                "chloride": 21
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Protein rest",
+                "temperature_f": 125,
+                "duration_minutes": 30,
+                "type": "Step"
+            },
+            {
+                "name": "Beta-amylase rest",
+                "temperature_f": 147,
+                "duration_minutes": 30,
+                "type": "Step"
+            },
+            {
+                "name": "Alpha-amylase rest",
+                "temperature_f": 162,
+                "duration_minutes": 30,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 52,
+                "duration_days": 10,
+                "notes": "Pitch at 52\u00b0F (11\u00b0C) allow to rise to 54\u00b0F (12\u00b0C). When 2/3 attenuated, raise to 56\u00b0F (13\u00b0C)."
+            },
+            {
+                "name": "Diacetyl rest",
+                "temperature_f": 57,
+                "duration_days": 2
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 32,
+                "duration_days": 28
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "This recipe is based on the award-winning Devils Backbone Vienna Lager. The complex step mash and fermentation profile are key to developing its smooth, malty character.",
+        "tasting_notes": "A smooth, malty lager with a toasty character."
+    }
+}

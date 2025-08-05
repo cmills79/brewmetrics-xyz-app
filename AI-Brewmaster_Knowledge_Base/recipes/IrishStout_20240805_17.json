@@ -1,0 +1,108 @@
+{
+    "recipe_id": "IrishStout_20240805_17",
+    "recipe_name": "Irish Stout (Guinness Clone)",
+    "beer_style": {
+        "primary_style": "Irish Stout",
+        "bjcp_code": "15B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.042,
+        "final_gravity_sg": 1.01,
+        "abv_percent": 4.2,
+        "ibu_tinseth": 40,
+        "srm_morey": 40
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Maris Otter Pale Ale Malt",
+                "weight_lbs": 420,
+                "percentage": 70.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 3
+            },
+            {
+                "name": "Flaked Barley",
+                "weight_lbs": 120,
+                "percentage": 20.0,
+                "type": "Adjunct",
+                "yield_percent": 70.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "Roasted Barley",
+                "weight_lbs": 60,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 55.0,
+                "color_lovibond": 500
+            }
+        ],
+        "hops": [
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 72,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 40 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Irish Ale",
+            "lab": "Wyeast",
+            "strain_code": "1084",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 73.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "62-72"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Dublin Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 110,
+                "magnesium": 4,
+                "sodium": 12,
+                "sulfate": 53,
+                "chloride": 19
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 150,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 68,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The defining characteristics are the sharp, coffee-like flavor from roasted barley and the creamy head, traditionally enhanced by nitrogen gas dispense. The high bicarbonate water profile is characteristic of Dublin and helps balance the acidity of the roasted barley. A small amount of soured beer or lactic acid is sometimes added to replicate a traditional 'Guinness tang'.",
+        "tasting_notes": "Sharp, coffee-like flavor from roasted barley with a creamy head."
+    }
+}

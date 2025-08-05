@@ -1,0 +1,106 @@
+{
+    "recipe_id": "Hefeweizen_20240805_26",
+    "recipe_name": "Hefeweizen",
+    "beer_style": {
+        "primary_style": "Hefeweizen",
+        "bjcp_code": "10A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.05,
+        "final_gravity_sg": 1.012,
+        "abv_percent": 5.0,
+        "ibu_tinseth": 12,
+        "srm_morey": 4
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Wheat Malt",
+                "weight_lbs": 400,
+                "percentage": 60.0,
+                "type": "Base Malt",
+                "yield_percent": 85.0,
+                "color_lovibond": 2
+            },
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 267,
+                "percentage": 40.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 16,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 12 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Weihenstephan Weizen",
+            "lab": "Wyeast",
+            "strain_code": "3068",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 75.0,
+            "flocculation": "Low",
+            "optimum_temp_f": "64-75"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Balanced German Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 10,
+                "sodium": 16,
+                "sulfate": 70,
+                "chloride": 70
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Ferulic acid rest",
+                "temperature_f": 110,
+                "duration_minutes": 20,
+                "type": "Step"
+            },
+            {
+                "name": "Saccharification rest",
+                "temperature_f": 152,
+                "duration_minutes": 60,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 64,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The ferulic acid rest is crucial for producing 4-vinyl guaiacol, the compound responsible for the signature clove flavor. Fermentation temperature can be manipulated to favor banana (warmer) or clove (cooler) character.",
+        "tasting_notes": "A balance of banana esters and clove phenols."
+    }
+}

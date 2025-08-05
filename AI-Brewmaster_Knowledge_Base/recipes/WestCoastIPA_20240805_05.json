@@ -1,0 +1,142 @@
+{
+    "recipe_id": "WestCoastIPA_20240805_05",
+    "recipe_name": "West Coast IPA",
+    "beer_style": {
+        "primary_style": "American IPA",
+        "bjcp_code": "21A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.065,
+        "final_gravity_sg": 1.011,
+        "abv_percent": 7.1,
+        "ibu_tinseth": 65,
+        "srm_morey": 6
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 2-Row Pale Malt",
+                "weight_lbs": 800,
+                "percentage": 94.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "Carapils/Dextrine Malt",
+                "weight_lbs": 51,
+                "percentage": 6.0,
+                "type": "Specialty Malt",
+                "yield_percent": 72.0,
+                "color_lovibond": 1.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Warrior",
+                "alpha_acid_percent": 16.0,
+                "amount_oz": 48,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 40 IBU"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Flavor: 12 IBU"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 64,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 185,
+                "notes": "Aroma: 13 IBU (split)"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 64,
+                "use": "Whirlpool",
+                "time_minutes": 30,
+                "temperature_f": 185,
+                "notes": "Aroma: 13 IBU (split)"
+            },
+            {
+                "name": "Simcoe",
+                "alpha_acid_percent": 13.0,
+                "amount_oz": 96,
+                "use": "Dry Hop",
+                "time_days": 4,
+                "notes": "Aroma"
+            },
+            {
+                "name": "Citra",
+                "alpha_acid_percent": 12.0,
+                "amount_oz": 64,
+                "use": "Dry Hop",
+                "time_days": 4,
+                "notes": "Aroma"
+            }
+        ],
+        "yeast": {
+            "name": "California Ale Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP001",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "68-73"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Assertive IPA Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.2,
+            "ions_ppm": {
+                "calcium": 110,
+                "magnesium": 18,
+                "sodium": 16,
+                "sulfate": 275,
+                "chloride": 50
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 148,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 66,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A classic West Coast IPA is defined by its dryness, clarity, and assertive hop bitterness. The high sulfate water profile and low mash temperature are critical to achieving these characteristics. Ferment cool to maintain a clean yeast profile, allowing the hops to dominate.",
+        "tasting_notes": "A dry, clear IPA with a dominant, assertive hop bitterness and prominent piney and citrusy hop flavors and aromas."
+    }
+}

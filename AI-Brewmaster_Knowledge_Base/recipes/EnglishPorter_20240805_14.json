@@ -1,0 +1,124 @@
+{
+    "recipe_id": "EnglishPorter_20240805_14",
+    "recipe_name": "English Porter",
+    "beer_style": {
+        "primary_style": "English Porter",
+        "bjcp_code": "13C"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.05,
+        "final_gravity_sg": 1.012,
+        "abv_percent": 5.0,
+        "ibu_tinseth": 30,
+        "srm_morey": 28
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Maris Otter Pale Ale Malt",
+                "weight_lbs": 600,
+                "percentage": 82.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 3
+            },
+            {
+                "name": "British Brown Malt",
+                "weight_lbs": 73,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 70.0,
+                "color_lovibond": 65
+            },
+            {
+                "name": "British Crystal Malt (80L)",
+                "weight_lbs": 37,
+                "percentage": 5.0,
+                "type": "Specialty Malt",
+                "yield_percent": 73.0,
+                "color_lovibond": 80
+            },
+            {
+                "name": "British Chocolate Malt",
+                "weight_lbs": 22,
+                "percentage": 3.0,
+                "type": "Specialty Malt",
+                "yield_percent": 60.0,
+                "color_lovibond": 450
+            }
+        ],
+        "hops": [
+            {
+                "name": "Fuggle",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 40,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 22 IBU"
+            },
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Aroma: 8 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "English Ale Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP002",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 70.0,
+            "flocculation": "High",
+            "optimum_temp_f": "65-70"
+        },
+        "water_chemistry": {
+            "target_profile_name": "London Porter Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 10,
+                "sodium": 33,
+                "sulfate": 35,
+                "chloride": 45
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 154,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 66,
+                "duration_days": 12
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "Softer and more malt-focused than its American counterpart. Brown malt is a key historical ingredient, providing a nutty, coffee-like character. The water profile has moderate alkalinity to buffer the acidity of the dark malts.",
+        "tasting_notes": "A soft, malt-focused porter with nutty, coffee-like character and restrained hop presence."
+    }
+}

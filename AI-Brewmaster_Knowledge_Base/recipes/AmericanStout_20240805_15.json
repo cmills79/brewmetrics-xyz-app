@@ -1,0 +1,124 @@
+{
+    "recipe_id": "AmericanStout_20240805_15",
+    "recipe_name": "American Stout",
+    "beer_style": {
+        "primary_style": "American Stout",
+        "bjcp_code": "20B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.065,
+        "final_gravity_sg": 1.015,
+        "abv_percent": 6.6,
+        "ibu_tinseth": 50,
+        "srm_morey": 40
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 2-Row Pale Malt",
+                "weight_lbs": 850,
+                "percentage": 80.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "Roasted Barley",
+                "weight_lbs": 85,
+                "percentage": 8.0,
+                "type": "Specialty Malt",
+                "yield_percent": 55.0,
+                "color_lovibond": 500
+            },
+            {
+                "name": "Chocolate Malt",
+                "weight_lbs": 85,
+                "percentage": 8.0,
+                "type": "Specialty Malt",
+                "yield_percent": 60.0,
+                "color_lovibond": 350
+            },
+            {
+                "name": "Crystal Malt (120L)",
+                "weight_lbs": 42,
+                "percentage": 4.0,
+                "type": "Specialty Malt",
+                "yield_percent": 72.0,
+                "color_lovibond": 120
+            }
+        ],
+        "hops": [
+            {
+                "name": "Columbus",
+                "alpha_acid_percent": 15.0,
+                "amount_oz": 64,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 45 IBU"
+            },
+            {
+                "name": "Cascade",
+                "alpha_acid_percent": 6.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 5 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "California Ale Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP001",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "68-73"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Roasty Stout Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 100,
+                "magnesium": 15,
+                "sodium": 20,
+                "sulfate": 100,
+                "chloride": 75
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 154,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 67,
+                "duration_days": 12
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "Defined by a prominent roast character balanced by American hops. The water profile includes moderate alkalinity to buffer the acidic dark malts.",
+        "tasting_notes": "Prominent roast character from malt, balanced by classic American hop bitterness and aroma."
+    }
+}

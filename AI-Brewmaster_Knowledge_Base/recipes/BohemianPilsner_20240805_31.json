@@ -1,0 +1,124 @@
+{
+    "recipe_id": "BohemianPilsner_20240805_31",
+    "recipe_name": "Bohemian Pilsner (Pilsner Urquell Clone)",
+    "beer_style": {
+        "primary_style": "Bohemian Pilsner",
+        "bjcp_code": "3B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 537,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.05,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 4.7,
+        "ibu_tinseth": 40,
+        "srm_morey": 4
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Floor-Malted Bohemian Pilsner Malt",
+                "weight_lbs": 680,
+                "percentage": 100.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            }
+        ],
+        "hops": [
+            {
+                "name": "Saaz",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 48,
+                "use": "Boil",
+                "time_minutes": 75,
+                "notes": "Bitterness: 18 IBU"
+            },
+            {
+                "name": "Saaz",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 44.8,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 16 IBU"
+            },
+            {
+                "name": "Saaz",
+                "alpha_acid_percent": 3.5,
+                "amount_oz": 36.8,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 6 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Pilsner Urquell H-Strain",
+            "lab": "Wyeast",
+            "strain_code": "2001",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 72.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "48-58"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Pilsen Water (Soft)",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 7,
+                "magnesium": 3,
+                "sodium": 2,
+                "sulfate": 5,
+                "chloride": 5
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 144,
+                "duration_minutes": 20,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 154,
+                "duration_minutes": 30,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 75,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 50,
+                "duration_days": 14
+            },
+            {
+                "name": "Diacetyl rest",
+                "temperature_f": 65,
+                "duration_days": 5
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 34,
+                "duration_days": 42
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "The original pilsner. Defined by its extremely soft water profile and complex malt character derived from decoction mashing. The entire hop bill consists of Saaz, providing a spicy, floral character.",
+        "tasting_notes": "Complex malt character with a spicy, floral hop character."
+    }
+}

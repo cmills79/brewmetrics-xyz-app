@@ -1,0 +1,122 @@
+{
+    "recipe_id": "FlandersRedAle_20240805_45",
+    "recipe_name": "Flanders Red Ale",
+    "beer_style": {
+        "primary_style": "Flanders Red Ale",
+        "bjcp_code": "23B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.052,
+        "final_gravity_sg": 1.008,
+        "abv_percent": 5.8,
+        "ibu_tinseth": 15,
+        "srm_morey": 15
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Vienna Malt",
+                "weight_lbs": 450,
+                "percentage": 65.0,
+                "type": "Base Malt",
+                "yield_percent": 79.0,
+                "color_lovibond": 3.5
+            },
+            {
+                "name": "Munich Malt (10L)",
+                "weight_lbs": 138,
+                "percentage": 20.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "Special B Malt",
+                "weight_lbs": 69,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 68.0,
+                "color_lovibond": 180
+            },
+            {
+                "name": "Flaked Maize",
+                "weight_lbs": 34,
+                "percentage": 5.0,
+                "type": "Adjunct",
+                "yield_percent": 80.0,
+                "color_lovibond": 0.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 15 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Roeselare Ale Blend",
+            "lab": "Wyeast",
+            "strain_code": "3763",
+            "type": "Mixed Culture",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 85.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "68-85"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Balanced Belgian Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 10,
+                "sodium": 16,
+                "sulfate": 70,
+                "chloride": 70
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 156,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 68,
+                "duration_days": 18
+            },
+            {
+                "name": "Secondary Aging",
+                "temperature_f": 68,
+                "duration_days": 365,
+                "notes": "Rack to secondary aging vessels (barrels or stainless with oak cubes) for an extended period of 6-18 months."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A complex, sour, and fruity Belgian ale. Patience is the key ingredient. The final product is often a blend of young and old beer to achieve the desired balance of acidity and malt character.",
+        "tasting_notes": "A complex, sour, and fruity Belgian ale with a balance of acidity and malt character."
+    }
+}

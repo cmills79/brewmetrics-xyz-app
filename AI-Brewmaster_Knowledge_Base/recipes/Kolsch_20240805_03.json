@@ -1,0 +1,119 @@
+{
+    "recipe_id": "Kolsch_20240805_03",
+    "recipe_name": "K\u00f6lsch",
+    "beer_style": {
+        "primary_style": "K\u00f6lsch",
+        "bjcp_code": "5B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.046,
+        "final_gravity_sg": 1.009,
+        "abv_percent": 4.9,
+        "ibu_tinseth": 24,
+        "srm_morey": 4
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 600,
+                "percentage": 95.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "German Vienna Malt",
+                "weight_lbs": 32,
+                "percentage": 5.0,
+                "type": "Base Malt",
+                "yield_percent": 79.0,
+                "color_lovibond": 3.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 15 IBU"
+            },
+            {
+                "name": "Tettnanger",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Aroma: 9 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "German Ale/K\u00f6lsch Yeast",
+            "lab": "White Labs",
+            "strain_code": "WLP029",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 72.0,
+            "flocculation": "Medium-Low",
+            "optimum_temp_f": "65-69"
+        },
+        "water_chemistry": {
+            "target_profile_name": "K\u00f6lsch Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 10,
+                "sodium": 16,
+                "sulfate": 70,
+                "chloride": 70
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 145,
+                "duration_minutes": 20,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 154,
+                "duration_minutes": 40,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 60,
+                "duration_days": 12
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 34,
+                "duration_days": 28
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A hybrid style fermented with an ale yeast at cooler temperatures. The key is a clean fermentation and extended cold conditioning (lagering) to produce a crisp, lager-like finish.",
+        "tasting_notes": "A clean, smooth profile with subtle fruity esters and a crisp, lager-like finish."
+    }
+}

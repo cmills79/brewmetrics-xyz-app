@@ -1,0 +1,133 @@
+{
+    "recipe_id": "AmericanAmberAle_20240805_09",
+    "recipe_name": "American Amber Ale",
+    "beer_style": {
+        "primary_style": "American Amber Ale",
+        "bjcp_code": "19A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.056,
+        "final_gravity_sg": 1.013,
+        "abv_percent": 5.6,
+        "ibu_tinseth": 35,
+        "srm_morey": 14
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 2-Row Pale Malt",
+                "weight_lbs": 680,
+                "percentage": 80.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "Munich Malt (10L)",
+                "weight_lbs": 85,
+                "percentage": 10.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "Crystal Malt (60L)",
+                "weight_lbs": 68,
+                "percentage": 8.0,
+                "type": "Specialty Malt",
+                "yield_percent": 74.0,
+                "color_lovibond": 60
+            },
+            {
+                "name": "Crystal Malt (120L)",
+                "weight_lbs": 17,
+                "percentage": 2.0,
+                "type": "Specialty Malt",
+                "yield_percent": 72.0,
+                "color_lovibond": 120
+            }
+        ],
+        "hops": [
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 25 IBU"
+            },
+            {
+                "name": "Cascade",
+                "alpha_acid_percent": 6.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 8 IBU"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 32,
+                "use": "Whirlpool",
+                "time_minutes": 20,
+                "temperature_f": 180,
+                "notes": "Aroma: 2 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "SafAle US-05",
+            "lab": "Fermentis",
+            "strain_code": "US-05",
+            "type": "Ale",
+            "form": "Dry",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 81.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "59-72"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Balanced Amber Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 110,
+                "magnesium": 18,
+                "sodium": 16,
+                "sulfate": 150,
+                "chloride": 75
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 154,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 66,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A balanced style where caramel malt sweetness supports a firm hop bitterness. The water profile is balanced between sulfate and chloride to prevent either malt or hops from becoming overly dominant.",
+        "tasting_notes": "Caramel malt sweetness balanced by firm hop bitterness and citrusy hop notes."
+    }
+}

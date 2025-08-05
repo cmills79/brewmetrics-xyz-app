@@ -1,0 +1,118 @@
+{
+    "recipe_id": "HellesLager_20240805_32",
+    "recipe_name": "Helles Lager",
+    "beer_style": {
+        "primary_style": "Helles Lager",
+        "bjcp_code": "4A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.048,
+        "final_gravity_sg": 1.009,
+        "abv_percent": 5.1,
+        "ibu_tinseth": 20,
+        "srm_morey": 4
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 600,
+                "percentage": 90.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            },
+            {
+                "name": "German Vienna Malt",
+                "weight_lbs": 67,
+                "percentage": 10.0,
+                "type": "Base Malt",
+                "yield_percent": 79.0,
+                "color_lovibond": 3.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 19.2,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 15 IBU"
+            },
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 24,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Aroma: 5 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Munich Lager",
+            "lab": "Wyeast",
+            "strain_code": "2308",
+            "type": "Lager",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 75.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "48-56"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Yellow Balanced",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 50,
+                "magnesium": 7,
+                "sodium": 5,
+                "sulfate": 75,
+                "chloride": 60
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 152,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 50,
+                "duration_days": 10
+            },
+            {
+                "name": "Diacetyl rest",
+                "temperature_f": 60,
+                "duration_days": 3
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 34,
+                "duration_days": 28
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A pale, malt-focused German lager. The 'Yellow Balanced' water profile supports the malt character without being overly mineralic. The goal is a clean, refreshing, and highly drinkable beer.",
+        "tasting_notes": "A clean, refreshing, and highly drinkable beer with a pale, malt-focused character."
+    }
+}

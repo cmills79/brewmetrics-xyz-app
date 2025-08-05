@@ -1,0 +1,116 @@
+{
+    "recipe_id": "EnglishIPA_20240805_08",
+    "recipe_name": "English IPA",
+    "beer_style": {
+        "primary_style": "English IPA",
+        "bjcp_code": "12C"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.062,
+        "final_gravity_sg": 1.014,
+        "abv_percent": 6.3,
+        "ibu_tinseth": 55,
+        "srm_morey": 11
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "Maris Otter Pale Ale Malt",
+                "weight_lbs": 850,
+                "percentage": 90.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 3
+            },
+            {
+                "name": "British Crystal Malt (60L)",
+                "weight_lbs": 94,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 74.0,
+                "color_lovibond": 60
+            }
+        ],
+        "hops": [
+            {
+                "name": "Target",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 72,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 45 IBU"
+            },
+            {
+                "name": "Fuggle",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 64,
+                "use": "Boil",
+                "time_minutes": 10,
+                "notes": "Flavor: 10 IBU"
+            },
+            {
+                "name": "East Kent Goldings",
+                "alpha_acid_percent": 5.0,
+                "amount_oz": 80,
+                "use": "Dry Hop",
+                "time_days": 5,
+                "notes": "Aroma"
+            }
+        ],
+        "yeast": {
+            "name": "London ESB Ale",
+            "lab": "Wyeast",
+            "strain_code": "1968",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 73.0,
+            "flocculation": "Very High",
+            "optimum_temp_f": "64-72"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Burton-on-Trent",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 110,
+                "magnesium": 18,
+                "sodium": 16,
+                "sulfate": 275,
+                "chloride": 50
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 152,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 67,
+                "duration_days": 8
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "Distinguished from its American counterpart by the bready, biscuity character of Maris Otter malt and the earthy, floral notes of English hops. The water profile is similar to Burton-on-Trent, enhancing the perception of bitterness.",
+        "tasting_notes": "Bready and biscuity malt character with earthy and floral hop notes. A firm bitterness is present."
+    }
+}

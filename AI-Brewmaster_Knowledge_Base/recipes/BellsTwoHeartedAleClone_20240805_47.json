@@ -1,0 +1,131 @@
+{
+    "recipe_id": "BellsTwoHeartedAleClone_20240805_47",
+    "recipe_name": "Bell's Two Hearted Ale Clone",
+    "beer_style": {
+        "primary_style": "American IPA",
+        "bjcp_code": "21A"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.065,
+        "final_gravity_sg": 1.011,
+        "abv_percent": 7.1,
+        "ibu_tinseth": 60,
+        "srm_morey": 7
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "American 2-Row Pale Malt",
+                "weight_lbs": 800,
+                "percentage": 75.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 1.8
+            },
+            {
+                "name": "American Pale Ale Malt",
+                "weight_lbs": 214,
+                "percentage": 20.0,
+                "type": "Base Malt",
+                "yield_percent": 80.0,
+                "color_lovibond": 3.5
+            },
+            {
+                "name": "Crystal Malt (40L)",
+                "weight_lbs": 53,
+                "percentage": 5.0,
+                "type": "Specialty Malt",
+                "yield_percent": 75.0,
+                "color_lovibond": 40
+            }
+        ],
+        "hops": [
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 56,
+                "use": "Boil",
+                "time_minutes": 45,
+                "notes": "Bitterness: 35 IBU"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 56,
+                "use": "Boil",
+                "time_minutes": 30,
+                "notes": "Flavor: 25 IBU"
+            },
+            {
+                "name": "Centennial",
+                "alpha_acid_percent": 10.0,
+                "amount_oz": 160,
+                "use": "Dry Hop",
+                "time_days": 7,
+                "notes": "Aroma"
+            }
+        ],
+        "yeast": {
+            "name": "Bell's House Yeast",
+            "lab": "Imperial Yeast",
+            "strain_code": "A62",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 1.0,
+            "attenuation_percent": 80.0,
+            "flocculation": "Medium",
+            "optimum_temp_f": "64-72"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Assertive IPA Profile",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.4,
+            "ions_ppm": {
+                "calcium": 100,
+                "magnesium": 15,
+                "sodium": 10,
+                "sulfate": 200,
+                "chloride": 50
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 150,
+                "duration_minutes": 45,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 170,
+                "duration_minutes": 10,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 64,
+                "duration_days": 10,
+                "notes": "Dry hop one week into fermentation."
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "This iconic IPA is famous for its exclusive use of Centennial hops. The recipe is based on information released by the brewery. The specific house yeast contributes a unique ester profile, but clean American ale strains provide a very close approximation.",
+        "tasting_notes": "An IPA with a prominent Centennial hop character and a unique ester profile from the yeast."
+    }
+}

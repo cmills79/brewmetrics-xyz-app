@@ -1,0 +1,113 @@
+{
+    "recipe_id": "Dunkelweizen_20240805_27",
+    "recipe_name": "Dunkelweizen",
+    "beer_style": {
+        "primary_style": "Dunkelweizen",
+        "bjcp_code": "10B"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 522,
+        "post_boil_gallons": 480,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.052,
+        "final_gravity_sg": 1.013,
+        "abv_percent": 5.1,
+        "ibu_tinseth": 15,
+        "srm_morey": 18
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Wheat Malt",
+                "weight_lbs": 400,
+                "percentage": 55.0,
+                "type": "Base Malt",
+                "yield_percent": 85.0,
+                "color_lovibond": 2
+            },
+            {
+                "name": "German Munich Malt (10L)",
+                "weight_lbs": 255,
+                "percentage": 35.0,
+                "type": "Base Malt",
+                "yield_percent": 78.0,
+                "color_lovibond": 10
+            },
+            {
+                "name": "Carafa Special II (Dehusked)",
+                "weight_lbs": 73,
+                "percentage": 10.0,
+                "type": "Specialty Malt",
+                "yield_percent": 70.0,
+                "color_lovibond": 415
+            }
+        ],
+        "hops": [
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 19.2,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 15 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Weihenstephan Weizen",
+            "lab": "Wyeast",
+            "strain_code": "3068",
+            "type": "Ale",
+            "form": "Liquid",
+            "pitch_rate_million_cells_per_ml": 0.75,
+            "attenuation_percent": 75.0,
+            "flocculation": "Low",
+            "optimum_temp_f": "64-75"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Munich Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.5,
+            "ions_ppm": {
+                "calcium": 82,
+                "magnesium": 20,
+                "sodium": 4,
+                "sulfate": 16,
+                "chloride": 2
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Single infusion mash",
+                "temperature_f": 154,
+                "duration_minutes": 60,
+                "type": "Infusion"
+            }
+        ],
+        "boil_duration_minutes": 60,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 64,
+                "duration_days": 8
+            },
+            {
+                "name": "Secondary Fermentation",
+                "temperature_f": 32,
+                "duration_days": 14
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A darker version of a hefeweizen, with rich malt flavors of bread crust and caramel complementing the yeast-driven banana and clove. The Munich water profile provides the necessary alkalinity.",
+        "tasting_notes": "Rich malt flavors of bread crust and caramel with notes of banana and clove."
+    }
+}

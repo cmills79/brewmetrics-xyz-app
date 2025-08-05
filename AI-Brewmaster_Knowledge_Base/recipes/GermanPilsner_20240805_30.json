@@ -1,0 +1,124 @@
+{
+    "recipe_id": "GermanPilsner_20240805_30",
+    "recipe_name": "German Pilsner",
+    "beer_style": {
+        "primary_style": "German Pilsner",
+        "bjcp_code": "5D"
+    },
+    "author": "AI_Brewmaster_v1",
+    "version": 1.0,
+    "batch_info": {
+        "batch_size_gallons": 465,
+        "pre_boil_gallons": 555,
+        "post_boil_gallons": 488,
+        "efficiency_percent": 85.0
+    },
+    "target_parameters": {
+        "original_gravity_sg": 1.048,
+        "final_gravity_sg": 1.01,
+        "abv_percent": 5.0,
+        "ibu_tinseth": 35,
+        "srm_morey": 3
+    },
+    "ingredients": {
+        "fermentables": [
+            {
+                "name": "German Pilsner Malt",
+                "weight_lbs": 650,
+                "percentage": 100.0,
+                "type": "Base Malt",
+                "yield_percent": 81.0,
+                "color_lovibond": 1.5
+            }
+        ],
+        "hops": [
+            {
+                "name": "Magnum",
+                "alpha_acid_percent": 14.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 60,
+                "notes": "Bitterness: 25 IBU"
+            },
+            {
+                "name": "Hallertau Mittelfr\u00fch",
+                "alpha_acid_percent": 4.0,
+                "amount_oz": 32,
+                "use": "Boil",
+                "time_minutes": 15,
+                "notes": "Flavor: 6 IBU"
+            },
+            {
+                "name": "Tettnanger",
+                "alpha_acid_percent": 4.5,
+                "amount_oz": 40,
+                "use": "Boil",
+                "time_minutes": 5,
+                "notes": "Aroma: 4 IBU"
+            }
+        ],
+        "yeast": {
+            "name": "Saflager W-34/70",
+            "lab": "Fermentis",
+            "strain_code": "W-34/70",
+            "type": "Lager",
+            "form": "Dry",
+            "pitch_rate_million_cells_per_ml": 1.5,
+            "attenuation_percent": 83.0,
+            "flocculation": "High",
+            "optimum_temp_f": "53-59"
+        },
+        "water_chemistry": {
+            "target_profile_name": "Pilsen Water",
+            "starting_water_ph": 7.0,
+            "mash_ph": 5.3,
+            "ions_ppm": {
+                "calcium": 60,
+                "magnesium": 8,
+                "sodium": 16,
+                "sulfate": 93,
+                "chloride": 63
+            },
+            "additions": []
+        },
+        "other_ingredients": []
+    },
+    "process": {
+        "mash_schedule": [
+            {
+                "name": "Step 1",
+                "temperature_f": 144,
+                "duration_minutes": 40,
+                "type": "Step"
+            },
+            {
+                "name": "Step 2",
+                "temperature_f": 160,
+                "duration_minutes": 40,
+                "type": "Step"
+            }
+        ],
+        "boil_duration_minutes": 90,
+        "fermentation_schedule": [
+            {
+                "name": "Primary Fermentation",
+                "temperature_f": 50,
+                "duration_days": 14
+            },
+            {
+                "name": "Diacetyl rest",
+                "temperature_f": 60,
+                "duration_days": 3
+            },
+            {
+                "name": "Lager",
+                "temperature_f": 35,
+                "duration_days": 35
+            }
+        ]
+    },
+    "notes": {
+        "brewing_notes": "A crisp, bitter lager showcasing noble hops. The water profile is moderately high in sulfates to accentuate the sharp, clean bitterness. A 90-minute boil is often recommended to drive off DMS precursors from the Pilsner malt.",
+        "tasting_notes": "A crisp, bitter lager with a sharp, clean bitterness and noble hop character."
+    }
+}
