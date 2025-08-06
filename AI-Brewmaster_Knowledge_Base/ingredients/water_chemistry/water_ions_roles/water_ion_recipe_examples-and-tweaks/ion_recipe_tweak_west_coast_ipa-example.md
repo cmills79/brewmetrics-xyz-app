@@ -1,4 +1,4 @@
-# 11. Recipe Tweaks for West Coast IPA
+# 11. Recipe Tweaks for Classic West Coast IPA
 
 Proven Tweak: Increase the Sulfate to Chloride ratio even further to 6:1 or 7:1 by
  raising sulfate to 300-350 ppm while keeping chloride at 50 ppm.
