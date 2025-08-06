@@ -1,29 +1,54 @@
 # Hop Name: Chinook
 
-Country of Origin: USA (Washington)
+Hop Name: Chinook
+Lab / Manufacturer: USDA
+Strain Code: N/A
+Type: Dual-Purpose
+Form: Pellet
+Country of Origin: USA
 
-Alpha Acids: 10.5-15%
+## Technical Specifications
+
+Country of Origin: USA
+
+Alpha Acids: 12-14%
 
 Beta Acids: 3-4%
 
-Cohumulone: 27-31%
+Cohumulone: 29-34%
 
-Total Oil (ml/100g): 1-2.5
+Total Oil (ml/100g): 1.5-2.7
 
-Aroma/Flavor Descriptors:
+## Aroma/Flavor Descriptors
 
-Primary: Piney, Spicy, Grapefruit.
+Primary: Pine, Grapefruit, Spicy.
 
-Secondary: Subtle Citrus , Apricot, Berries, Resinous, Stone Fruit, Tropical Fruits.
+Secondary: Earthy, Herbal, Resinous.
 
-Notes: Developed by the USDA breeding program in Washington State and released in 1985, Chinook is a cross between Petham Golding and a USDA male. It was named after the Chinook Native American tribe. Originally introduced as a high alpha bittering variety, Chinook has more recently gained favor as a dual-purpose hop in the craft brewing community due to its distinctive spice and pine aroma characteristics. This evolution reflects a broader shift in brewing preferences, where brewers seek more complex hop contributions beyond mere bitterness, even from traditionally high-alpha strains. Its robust and dependable nature has made it a favored choice among both homebrewers and commercial brewers. The strong "piney" and "resinous" character of Chinook has solidified its role as a key component in classic West Coast IPAs, significantly influencing the regional style identity within North American brewing.
+## Notes
 
-Brewing Usage:
+Chinook is a high alpha acid hop developed in 1985 from a cross between Petham Golding and a USDA male. It is primarily used as a bittering hop but also contributes a distinctive aroma. Its robust and somewhat aggressive character makes it a favorite in American-style ales, particularly IPAs, where its pine and grapefruit notes complement other hop varieties. Chinook's dual-purpose nature and strong flavor profile have cemented its place as a foundational hop in the craft brewing industry.
 
-Role: Dual-purpose. It is an excellent bittering hop, providing a clean and economical bitterness due to its high alpha acid content. It can also be used in smaller quantities to add depth and complexity to various beer styles.
+## Brewing Usage
 
-Beer Styles: IPA, American Pale Ale, Stout, Porter. It is also well-suited for darker beers.
+Role: Dual-purpose hop, excellent for bittering with significant aromatic contributions.
 
-Commercial Examples: Two Roses Brewery Chinook Pale Ale (single hop) , Stone's Arrogant Bastard (reportedly solely Chinook) , BrewDog's Punk IPA (used with other hops).
+Beer Styles: American Pale Ale, IPA, Stout, Porter, Barleywine.
 
-Substitution Suggestions: Nugget , Columbus , Galena (for bittering) , Northern Brewer (US) , CTZ , Tomahawk , Zeus. Sticklebract is noted as an aroma substitute, though its availability may be limited.
+## Commercial Examples
+
+Sierra Nevada Celebration Ale, Bell's Two Hearted Ale (often blended), Stone IPA.
+
+Substitution Suggestions: Northern Brewer, Columbus, Nugget, Centennial.
+
+## Storage and Shelf Life
+
+Hops are best stored in a cool (32-41°F or 0-5°C), dark, and oxygen-free environment to preserve their delicate aromas and alpha acids. Vacuum-sealed packaging or nitrogen-flushed bags are ideal. When stored properly, Chinook hops can maintain their quality for 3-5 years. Once opened, hops should be used quickly or re-sealed and stored as described above.
+
+## Additional Context
+
+Chinook is a classic American hop that has been a cornerstone of the craft brewing movement for decades. Its strong, assertive character makes it a popular choice for brewers looking to impart a bold bitterness and a distinctive piney, citrusy aroma. While newer, more exotic hop varieties have emerged, Chinook remains a reliable and versatile hop that continues to be widely used in a variety of beer styles. Its ability to provide both bittering and aroma contributions makes it a valuable asset in any brewer's arsenal.
+
+## Usage and Considerations
+
+When using Chinook, brewers should consider its potent pine and grapefruit notes. It performs exceptionally well in late boil additions and dry hopping, where its aromatic compounds are best preserved. For bitter ing, it provides a clean and firm bitterness. Its versatility allows it to be used as a standalone hop or in combination with other varieties to build complex hop profiles. Brewers often pair it with other "C" hops (Cascade, Centennial, Columbus) to create a layered hop character.

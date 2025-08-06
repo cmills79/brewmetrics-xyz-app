@@ -1,32 +1,47 @@
 # Hop Profile: Columbus
 
-Hop Name: Columbus (often part of the CTZ group: Columbus, Tomahawk®, Zeus)
+## Technical Specifications
+
 Country of Origin: USA
 
 Alpha Acids: 14-18%
 
 Beta Acids: 4.5-6%
 
-Cohumulone: 28-35%
+Cohumulone: 30-35%
 
-Total Oil (ml/100g): 1.5-4.5
+Total Oil (ml/100g): 2.0-3.5
 
-Aroma/Flavor Descriptors:
+## Aroma/Flavor Descriptors
 
-Primary: Earthiness, Black Pepper, Licorice, Spice (Curry), Subtle Citrus. Herbal, Lemon Citrus.
+Primary: Pungent, Spicy, Black Pepper, Cannabis.
 
-Secondary: Floral, Pungent, Dank, Cannabis. Deep, pensive aroma.
+Secondary: Citrus (grapefruit), Pine, Earthy.
 
-Notes: Originally bred by Charles Zimmerman as part of a USDA breeding program in the 1970s, Columbus is commonly referred to as part of the CTZ group (Columbus, Tomahawk®, Zeus). The CTZ mix of hops was the number one hop in terms of production yield in the United States in 2019, with over 17 million pounds harvested. This dominance highlights the commercial importance of high-alpha bittering hops, demonstrating that efficient and clean bitterness remains a fundamental requirement for large-scale brewing, even amidst the strong focus on aroma. The "dank" or "cannabis-like" aroma descriptors for Columbus, while potentially polarizing, have found a significant niche in certain craft beer styles, particularly West Coast IPAs, illustrating how unique flavor profiles can become commercially viable and even desirable.
+## Notes
 
-Brewing Usage:
+Columbus is a high alpha acid hop variety developed in the USA, often referred to as one of the "CTZ" hops (Columbus, Tomahawk, Zeus) due to their similar genetic lineage and flavor profiles. It is primarily known for its potent bittering qualities and a distinct, pungent aroma that can range from spicy and peppery to dank and citrusy. Columbus has been a foundational hop in American craft brewing, particularly in IPAs, where its assertive character contributes a bold bitterness and a complex aroma. Its robust nature makes it a versatile hop for various stages of the brewing process.
 
-Role: A dual-purpose hop, providing both bittering and aroma. Its strong flavor and aroma make it particularly effective for late additions to the boil or for dry-hopping.
+## Brewing Usage
 
-Beer Styles: Imperial Brown Ale, Barley Wine, Imperial Stout, American Ales, Stout. Also used in IPAs.
+Role: Dual-purpose hop, highly effective for bittering with significant aromatic contributions, especially when used in late additions or dry hopping.
 
-Commercial Examples: While specific single-hop examples are not widely cited, Columbus is a key component in multi-hop beers such as Sierra Nevada Dankful IPA (used with Chinook, Mosaic, Nelson Sauvin, Zappa, Idaho 7, and Ekuanot).
+Beer Styles: American IPA, Imperial IPA, American Pale Ale, Stout, Porter, Barleywine.
 
-Substitution Suggestions: CTZ , Tomahawk , Zeus , Centennial , Chinook , Galena , Nugget , Millennium , Warrior , Bullion.
+## Commercial Examples
 
-Additional Notes: Columbus is available in lupulin powder form, including Cryo/LupuLN2, Lupomax, and Hopsteiner products, which are concentrated lupulin powders that add significant flavor in whirlpool or dry hop additions.
+Stone IPA, Dogfish Head 90 Minute IPA, Bell's Hopslam Ale.
+
+Substitution Suggestions: Chinook, Nugget, Centennial, Zeus, Tomahawk.
+
+## Storage and Shelf Life
+
+Hops are best stored in a cool (32-41°F or 0-5°C), dark, and oxygen-free environment to preserve their delicate aromas and alpha acids. Vacuum-sealed packaging or nitrogen-flushed bags are ideal. When stored properly, Columbus hops can maintain their quality for 3-5 years. Once opened, hops should be used quickly or re-sealed and stored as described above.
+
+## Additional Context
+
+Columbus is a workhorse hop in the craft brewing industry, valued for its consistent performance and powerful impact. Its "dank" or "cannabis-like" aroma, while sometimes polarizing, is highly sought after in certain hop-forward styles, contributing to the complexity and intensity of the beer. Despite the emergence of newer, more exotic hop varieties, Columbus remains a staple for brewers looking to achieve a strong, clean bitterness and a distinctive, assertive hop character. Its high oil content also makes it a good choice for dry hopping, where its aromatic compounds can be fully expressed.
+
+## Usage and Considerations
+
+When using Columbus, brewers should be mindful of its potent bittering power and its strong, sometimes aggressive, aroma. It is excellent for early boil additions for clean bitterness. For aroma and flavor, it performs well in late boil additions, whirlpool, and dry hopping, where its spicy, piney, and dank notes can shine. It can be used as a standalone hop for a bold, single-hop character or blended with other hops to create complex profiles, often complementing citrusy or fruity hops with its pungent undertones.

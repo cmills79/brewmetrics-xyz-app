@@ -1,32 +1,47 @@
 # Hop Profile: Citra
 
-Hop Name: Citra (HBC 394 cv)
+## Technical Specifications
+
 Country of Origin: USA
 
-Alpha Acids: 10-15%
+Alpha Acids: 11-13%
 
-Beta Acids: 3-4.5%
+Beta Acids: 3.5-4.5%
 
-Cohumulone: 20-24%
+Cohumulone: 22-24%
 
-Total Oil (ml/100g): 1.5-3.0
+Total Oil (ml/100g): 2.2-2.8
 
-Aroma/Flavor Descriptors:
+## Aroma/Flavor Descriptors
 
-Primary: Grapefruit, Lime, Lychee, Passion Fruit, Mango
+Primary: Strong citrus (grapefruit, lime, orange), tropical fruit (passion fruit, lychee, guava).
 
-Secondary: Gooseberry , Melon, Peach , Grassy, Fresh, Light , Sweet Notes. Can exhibit a "catty" or "dank" aroma in large, fresh additions, which is often considered desirable by some.
+Secondary: Pine, floral, slight dankness.
 
-Notes: Citra is a trademarked and patented aroma hop released in 2009 by the Hop Breeding Company. Its development was notably funded by major breweries including Sierra Nevada, Deschutes, and Widmer Brothers, indicating a direct industry response to a demand for specific hop characteristics. It boasts a very high total oil content, approximately double that of Cascade. Citra's rise has been exceptionally swift, becoming the fastest-growing U.S. hop between 2014 and 2019 and surpassing Cascade as the most grown hop variety in 2018. In 2022, Citra, alongside Mosaic, commanded nearly a third of total hop acreage, solidifying its dominant position in the market. This rapid ascent and continued market leadership underscore a significant shift in consumer preference towards bold, tropical, and citrus-forward hop profiles in North American craft beer. The potent citrus and tropical fruit character of Citra has been instrumental in revolutionizing IPAs. However, its high demand can present challenges for commercial breweries in securing consistent lots [User Query].
+## Notes
 
-Brewing Usage:
+Citra is a relatively new hop variety, released in 2007, that quickly rose to prominence in the craft brewing world. It is a proprietary hop developed by Hop Breeding Company (a joint venture between John I. Haas and Select Botanicals Group). Its unique and intense aroma profile, dominated by strong citrus and tropical fruit notes, made it an instant favorite for brewers creating hop-forward beers. Citra's impact on the craft beer scene is significant, often credited with helping to define the modern American IPA and Pale Ale styles. Its high alpha acid content also makes it suitable for bittering, though its primary value lies in its aromatic contributions.
 
-Role: Primarily Aroma and Whirlpool/Dry Hop [User Query]. While its high alpha acid content allows for bittering, this is often considered a suboptimal use given its potent aromatic potential. It functions effectively as a dual-purpose hop.
+## Brewing Usage
 
-Beer Styles: American IPA, Hazy/New England IPA, Pale Ale, American Amber Ale [User Query]. Also prominent in Double IPAs. It is often featured as a single hop to highlight its unique flavors and aromas.
+Role: Primarily an aroma hop, highly valued for late additions, whirlpool, and dry hopping to maximize its intense flavor and aroma contributions. Can also be used for bittering.
 
-Commercial Examples: Three Floyds Zombie Dust , Sierra Nevada Torpedo IPA [User Query], Toppling Goliath Pseudo Sue , Hill Farmstead Citra Single Hop Pale Ale , Verdant Fruit Car Sight Exhibition.
+Beer Styles: American IPA, Pale Ale, NEIPA (New England IPA), Session IPA, Wheat Beer, Blonde Ale.
 
-Substitution Suggestions: Mosaic , Simcoe , Galaxy (for tropical fruit notes) [User Query], Centennial (for citrus notes) , Cascade.
+## Commercial Examples
 
-Additional Notes: Citra is one of the most sought-after aroma hops in the craft beer industry [User Query]. It pairs exceptionally well with Mosaic, Galaxy, and El Dorado. Citra is available in lupulin powder form, including Cryo/LupuLN2, Lupomax, and Hopsteiner products, which are concentrated lupulin powders designed for intense flavor and aroma in whirlpool or dry hop additions.
+Sierra Nevada Hazy Little Thing IPA, Deschutes Fresh Squeezed IPA, Bell's Official Hazy IPA.
+
+Substitution Suggestions: Mosaic, Galaxy, Amarillo, Simcoe (for some citrus/pine notes).
+
+## Storage and Shelf Life
+
+Hops are best stored in a cool (32-41°F or 0-5°C), dark, and oxygen-free environment to preserve their delicate aromas and alpha acids. Vacuum-sealed packaging or nitrogen-flushed bags are ideal. When stored properly, Citra hops can maintain their quality for 3-5 years. Once opened, hops should be used quickly or re-sealed and stored as described above.
+
+## Additional Context
+
+Citra's explosive popularity is a testament to its distinctive and highly sought-after flavor profile. It is often used as a cornerstone hop in many modern IPAs, either as a standalone hop or in combination with other complementary varieties like Mosaic and Galaxy. Its ability to impart a vibrant burst of citrus and tropical fruit has made it indispensable for brewers aiming to create juicy, aromatic, and approachable hop-forward beers. Despite its relatively recent introduction, Citra has become one of the most widely grown and utilized hop varieties globally.
+
+## Usage and Considerations
+
+When using Citra, brewers should leverage its potent aromatic qualities. It excels in late boil additions (10-0 minutes), whirlpool additions, and especially dry hopping, where its volatile oils are best preserved. For bittering, it provides a clean bitterness, but its high cost and unique aroma often reserve it for flavor and aroma contributions. Brewers often pair Citra with other "fruit-forward" hops to create complex tropical and citrus profiles, or with "dank" hops to add another layer of complexity. Its versatility allows it to be the star of a single-hop IPA or a key player in a multi-hop blend.

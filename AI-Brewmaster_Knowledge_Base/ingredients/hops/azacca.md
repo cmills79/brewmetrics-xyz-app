@@ -1,29 +1,44 @@
 # Hop Name: Azacca (ADHA-483)
 
+Hop Name: Azacca
+Lab / Manufacturer: Yakima Chief Ranches
+Strain Code: ADHA-483
+Type: Dual-Purpose
+Form: Pellet
 Country of Origin: USA
 
-Alpha Acids: 14-16%
+## Technical Specifications
 
-Beta Acids: 4-5.5%
+Alpha Acid: 14-16%
+Beta Acid: 4-5%
+Total Oil: 1.5-2.0 mL
+Oil Composition:
 
-Cohumulone: 38-45%
+    - Myrcene: 60-70%
+    - Humulene: 10-15%
+    - Caryophyllene: 5-8%
+    - Farnesene: 3-5%
 
-Total Oil (ml/100g): 1.6-2.5
+## Flavor & Aroma Profile
 
-Aroma/Flavor Descriptors:
+Primary: Tropical fruit (mango, pineapple, papaya).
 
-Primary: Mango, Papaya, Orange, Grapefruit, Lemon, Pineapple, Tropical Fruit, Citrus.
+Secondary: Citrus (orange, lemon), Pine, Earthy, Spicy.
 
-Secondary: Piney, Spicy, Grassy , Orchard Fruit (pears, apples). It is known for its juicy mango, tropical fruits, and citrus character.
+## Brewing Usage
 
-Notes: Named after the Haitian god of agriculture , Azacca was bred by the American Dwarf Hop Association. It is characterized by a high myrcene fraction, contributing to its intense aromatic profile. Azacca's combination of high alpha acids and intense tropical and citrus aromas positions it as a prime example of modern dual-purpose hops that deliver both bitterness and a powerful flavor punch. This reflects a trend of brewers seeking efficiency and complexity from fewer hop additions in their recipes. The emphasis on "juicy mango" and "tropical fruits" along with its suitability for NEIPAs, underscores the continued dominance of the "hazy/juicy" trend in North American craft beer and the specific hop profiles required to achieve it.
+Role: Versatile hop used for both bittering and aroma additions in beer.
 
-Brewing Usage:
+Beer Styles: American IPA, Pale Ale, Wheat Beer, Saison.
 
-Role: A dual-purpose hop. Its excellent aromatic qualities make it a go-to hop for late and dry hop additions. It is also capable of producing sensational single-hopped beers. Whirlpooling with Azacca after flameout is recommended to maximize its juicy flavors and sweet aroma.
+## Pitch Rate Notes
 
-Beer Styles: American-Style Ale, IPA, Saison. It is particularly well-suited for IPAs , including NEIPAs , and American Pale Ales.
+Azacca is a versatile hop that can be used effectively in both single-hop and multi-hop brews. It is particularly favored in American-style ales and IPAs for its ability to impart a strong tropical fruit character. When used in combination with other hops, it can enhance the overall complexity of the beer, providing a bright and refreshing tropical backbone that complements a variety of hop profiles.
 
-Commercial Examples: Ninkasi's Megalodon Legendary IPA (used with Amarillo, Citra, El Dorado, Crystal, Nugget, and Equinox) , Sierra Nevada Brewing's Fantastic Haze (used with Chinook, Amarillo, Idaho 7, and Strata) , Sunriver Brewing's Next Level Hazy (used with Citra, Sultana, Citra Cryo, and Hallertau Blanc).
+## Additional Context
 
-Substitution Suggestions: Citra , Galaxy , Mandarina Bavaria. Also, El Dorado and Cashmere are suggested.
+Azacca's unique flavor profile and versatility make it a staple in many craft breweries. Its ability to blend well with other hops while still maintaining its distinct tropical character allows brewers to create a wide range of beer styles that appeal to diverse palates. The hop's high alpha acid content also makes it suitable for both bittering and aroma applications, providing flexibility in recipe formulation.
+
+## Usage and Considerations
+
+When using Azacca, brewers should consider its strong tropical fruit profile and how it interacts with other hops in the recipe. It is often used in late boil additions, whirlpool, and dry hopping to maximize its aromatic contributions. The hop's versatility allows it to be used in various beer styles, but it is particularly effective in beers that benefit from a pronounced tropical character. Brewers should also be mindful of the balance between Azacca and other hops to ensure a harmonious flavor profile in the final product.

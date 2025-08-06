@@ -1,30 +1,52 @@
 # Hop Profile: Willamette
 
 Hop Name: Willamette
-Country of Origin: USA (Oregon)
+Lab / Manufacturer: USDA
+Strain Code: N/A
+Type: Aroma
+Form: Pellet
+Country of Origin: USA
 
-Alpha Acids: 4-6.5%
+## Technical Specifications
 
-Beta Acids: 3.5-4.5%
+Alpha Acid: 4-6%
+Beta Acid: 3-4%
+Total Oil: 1.0-1.5 mL
+Oil Composition:
 
-Cohumulone: 30-35%
+    - Myrcene: 30-35%
+    - Humulene: 30-35%
+    - Caryophyllene: 8-10%
+    - Farnesene: 5-8%
 
-Total Oil (ml/100g): 1.0-1.5
+## Flavor & Aroma Profile
 
-Aroma/Flavor Descriptors:
+Primary: Floral, Fruity (berry, blackcurrant), Spicy.
 
-Primary: Mild, Pleasant, Slightly Spicy.
+Secondary: Woody, Herbal, Earthy.
 
-Secondary: Woody , Floral, Citrus, Piney, Sharp. It carries notes of pepper and spice, similar to its parent, Fuggle.
+Notes: Willamette is a triploid aroma type hop developed in 1976 from a cross between Fuggle and a USDA male. It is one of the most widely grown aroma hops in the United States, known for its mild, pleasant, and versatile aroma profile. It offers a delicate balance of floral, fruity, and spicy notes, making it suitable for a broad range of beer styles. Its consistent performance and agreeable character have made it a staple for many brewers.
 
-Notes: Named after Oregon's Willamette River, which flows through a key hop-growing region, Willamette was released in 1976 from the U.S.D.A. breeding program. It is a daughter of the classic English variety, Fuggle. Historically, Willamette was one of the most prevalent hops grown in the United States, accounting for nearly 20% of the hop crop at its peak. Its mild aroma and low alpha content make it a versatile choice for a range of beer styles, particularly those where a subtle, earthy, and spicy character is desired. It was notably used as a Fuggle replacement by a major U.S. brewer, highlighting its commercial utility and ability to fill a specific market need.
+## Brewing Usage
 
-Brewing Usage:
+Role: Primarily an aroma hop, used for late additions and dry hopping to impart its delicate floral and fruity notes. Can also be used for subtle bittering.
 
-Role: Primarily used as an aroma hop due to its low alpha acid content. It also functions well as a flavoring hop.
+Beer Styles: American Pale Ale, English Ale, Porter, Stout, Brown Ale, Lager, Pilsner.
 
-Beer Styles: Ales, Lagers. It works particularly well when brewing darker styles for colder months, such as Brown Ale, Stouts, and Porters. It is also suitable for ESBs and Pale Ales.
+## Commercial Examples
 
-Commercial Examples: Ales, Lagers. It has also been cited in examples like Arrogant Bastard and Sierra Nevada Celebration Ale , though Arrogant Bastard is more strongly associated with Chinook in other contexts.
+Widely used in many American and English-style ales. Often found in classic American Pale Ales and Brown Ales.
 
-Substitution Suggestions: Fuggle , Styrian Golding , Tettnang , Newport. US Fuggle is also a possible substitute.
+Substitution Suggestions: Fuggle, East Kent Golding, Tettnang, Styrian Golding.
+
+## Storage and Shelf Life
+
+Hops are best stored in a cool (32-41°F or 0-5°C), dark, and oxygen-free environment to preserve their delicate aromas and alpha acids. Vacuum-sealed packaging or nitrogen-flushed bags are ideal. When stored properly, Willamette hops can maintain their quality for 3-5 years. Once opened, hops should be used quickly or re-sealed and stored as described above.
+
+## Additional Context
+
+Willamette is often considered a workhorse aroma hop, providing a reliable and pleasant character without overpowering other flavors. Its mildness makes it an excellent choice for brewers who want to add a subtle hop presence without the aggressive notes found in some higher alpha acid varieties. It is aclassic American hop that has stood the test of time, continuing to be a popular choice for its versatility and balanced aromatic contributions. Its relatively low alpha acid content means it's rarely used for significant bittering, but rather for its finishing aroma and flavor.
+
+## Usage and Considerations
+
+When using Willamette, brewers should focus on its aromatic contributions. It is best utilized in late boil additions (15-0 minutes), whirlpool, or dry hopping to maximize its delicate floral, fruity, and spicy notes. While it can contribute some bitterness, its low alpha acid content means large quantities would be needed for significant bittering, which might lead to grassy flavors. It pairs well with other traditional American or English hops and can provide a soft, rounded hop character to a variety of beer styles.

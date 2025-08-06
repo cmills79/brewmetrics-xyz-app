@@ -1,30 +1,44 @@
 # Hop Profile: Talus
 
 Hop Name: Talus (HBC 692 cv)
+Lab / Manufacturer: Hop Breeding Company
+Strain Code: HBC 692 cv
+Type: Dual-Purpose
+Form: Pellet
 Country of Origin: USA
 
-Alpha Acids: 6.3-9.5% , 8.1-9.5% , 8.9-9.5%
+## Technical Specifications
 
-Beta Acids: 7.7-10.2% , 8.3-10.2%
+Alpha Acid: 8.5-10.5%
+Beta Acid: 3.5-5.0%
+Total Oil: 1.8-2.6 mL
+Oil Composition:
 
-Cohumulone: 22-24% , 34-39%
+    - Myrcene: 45-55%
+    - Humulene: 15-20%
+    - Caryophyllene: 8-12%
+    - Farnesene: <1%
 
-Total Oil (ml/100g): 1.0-2.7
+## Flavor & Aroma Profile
 
-Aroma/Flavor Descriptors:
+Primary: Pink Grapefruit, Citrus Zest, Pine Resin.
 
-Primary: Pink Grapefruit, Citrus Rinds, Dried Roses, Pine Resin, Tropical Fruits, Sage. Intense flavors of citrus, flowers, and wood. Grapefruit, Stone Fruit, Oak, Coconut, Pine.
+Secondary: Tropical Fruit (mango, passionfruit), Floral (rose), Woody, Herbal.
 
-Secondary: Lime, Red Currants , Potpourri, Woody , Resinous, Grapefruit Pith.
+Notes: Talus is a relatively new hop variety released in 2020 by Hop Breeding Company (HBC). It is a daughter of Sabro and known for its bold, complex, and unique aroma profile that stands out even among modern hop varieties. It offers a distinct combination of intense citrus, especially pink grapefruit, alongside resinous pine, tropical fruit, and sometimes subtle floral or woody notes. Its multifaceted character makes it a versatile hop for brewers looking to create innovative and highly aromatic beers.
 
-Notes: Talus, previously known as HBC 692, was released in 2020 by the Hop Breeding Company, a joint venture between John I. Haas and Yakima Chief Ranches. It is the result of a hybrid pollination of Sabro and open pollination. While a daughter of Sabro, its signature coconut aroma and flavor are notably softer and more subdued than in Sabro. Talus is recognized for its robust performance and ability to deliver consistent flavor outcomes. Its unique and impactful aromas are known to persist throughout the brewing process.
+## Brewing Usage
 
-Brewing Usage:
+Role: Dual-purpose hop, highly valued for late additions, whirlpool, and dry hopping to maximize its intense and complex flavor and aroma contributions. Can also be used for bittering.
 
-Role: Primarily an aroma hop. It is typically used as a late boil addition and for dry hopping. Brewers have also noted that its near 1:1 ratio of alpha to beta acids can create a "harmonious" bitterness if used earlier in the process, a characteristic highly sought after by German brewers for pilsners. Its versatility makes it suitable for many beer styles, particularly hop-forward beers.
+Beer Styles: American IPA, Hazy IPA, Pale Ale, NEIPA, Session IPA, American Wheat, Fruited Sours.
 
-Beer Styles: IPAs, DIPAs, IPLs. Popular for hop-forward beers and light beers like Pale Ales and Pilsners. Also used in NEIPA and West Coast IPA styles.
+## Commercial Examples
 
-Commercial Examples: Single Hill Fresh Hop Lateral A (used with wet and kilned HBC 586) , Fremont Brewing Space Rex Hazy (used with Centennial and Mosaic) , Fremont Brewing Head Full Fresh Hop Hazy (used with Mosaic).
+As a newer hop, it's rapidly being adopted by craft breweries. Look for single-hop Talus IPAs or beers where it's featured prominently in the hop bill.
 
-Substitution Suggestions: Citra , Mosaic , Simcoe , Sabro. While one source states "No Replacement" , other sources provide pairing and substitution suggestions.
+Substitution Suggestions: Due to its unique profile, direct substitutions are difficult. Brewers might blend hops like Citra (for citrus), Sabro (for some unique notes), or Chinook (for pine/grapefruit) to approximate certain aspects.
+
+## Storage and Shelf Life
+
+Hops are best stored in a cool (32-41°F or 0-5°C), dark, and oxygen-free environment to preserve their delicate aromas and alpha acids. Vacuum-sealed packaging or nitrogen-flushed bags are ideal. When stored properly, Talus  maintain their quality for 3-5 years.

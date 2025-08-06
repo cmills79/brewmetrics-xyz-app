@@ -1,30 +1,47 @@
 # Hop Profile: Idaho 7
 
-Hop Name: Idaho 7 (J-007)
-Country of Origin: USA (Idaho)
+## Technical Specifications
 
-Alpha Acids: 9-15% , 11% , 13-15%
+Country of Origin: USA
 
-Beta Acids: 3.5-9.1% , 4-6% , 4-5%
+Alpha Acids: 13-15%
 
-Cohumulone: 30-40%
+Beta Acids: 4-5%
 
-Total Oil (ml/100g): 1.0-5.0 , 1.0-1.6 , 2.15
+Cohumulone: 38-42%
 
-Aroma/Flavor Descriptors:
+Total Oil (ml/100g): 1.5-2.5
 
-Primary: Pungent Tropical Fruit, Citrus (apricot, orange, red grapefruit, papaya), Pine. Pineapple, Peach, Mango. Distinct tangerine flavor.
+## Aroma/Flavor Descriptors
 
-Secondary: Resiny, Black Tea , Herbal , Dank, Juicy , Stone Fruit.
+Primary: Tropical fruit (pineapple, mango, passionfruit), Citrus (orange, grapefruit).
 
-Notes: Idaho 7, also known as J-007, was developed by Jackson Hop Farm in Wilder, Idaho, and first released in 2015. Its rapid ascent to tenth place in hop acreage in its first year of widespread commercial production (1,509 acres) demonstrates the intense demand for new, distinctive aroma profiles in the North American craft beer market and the industry's agility in adopting them. The combination of "tropical fruit" and "resiny pine" in Idaho 7's profile exemplifies a trend towards complex, multi-layered hop aromas that bridge traditional West Coast (pine) and modern Hazy IPA (tropical) characteristics, appealing to a broad spectrum of craft beer consumers.
+Secondary: Pine, Black Tea, Resinous.
 
-Brewing Usage:
+## Notes
 
-Role: A dual-purpose hop. It is primarily used for aroma and dry hopping due to its potent aroma and flavor, but its high alpha acid content also allows it to contribute effective bitterness. It is mainly used as a late addition hop. Idaho 7 is excellent for use as a single hop or as part of a blend.
+Idaho 7 is a relatively new hop variety, released in 2015, developed by Jackson Hop Farm in Idaho. It quickly gained popularity in the craft brewing scene for its unique and complex aroma profile, which combines prominent tropical and citrus fruit notes with an underlying resinous and pine character. Its high alpha acid content also makes it suitable for bittering, but its primary value lies in its aromatic contributions, particularly in hop-forward beer styles. Idaho 7 is often described as a "multi-purpose" hop due to its ability to contribute across the flavor spectrum.
 
-Beer Styles: IPA, Pale Ale, Hop-forward American Wheat Beers. Also well-suited for NEIPA styles.
+## Brewing Usage
 
-Commercial Examples: Sierra Nevada Dankful IPA (used with 6 other hops) , Goose Island Lost Palate (used with Amarillo, Mosaic, and Simcoe) , Cascade Lakes Pineapple IPA (used with Centennial and Mosaic).
+Role: Dual-purpose hop, excellent for late additions, whirlpool, and dry hopping to maximize its intense flavor and aroma contributions. Can also be used for bittering.
 
-Substitution Suggestions: Citra , Loral , El Dorado , Azacca , Cashmere , Amarillo , Chinook , Columbus , Idaho Gem.
+Beer Styles: American IPA, Hazy IPA, Pale Ale, NEIPA, Session IPA, American Wheat.
+
+## Commercial Examples
+
+Deschutes Squeezy Rider IPA, Sierra Nevada Hazy Little Thing IPA (often blended), Stone IPA (often blended).
+
+Substitution Suggestions: Mosaic, Citra, Galaxy, El Dorado.
+
+## Storage and Shelf Life
+
+Hops are best stored in a cool (32-41°F or 0-5°C), dark, and oxygen-free environment to preserve their delicate aromas and alpha acids. Vacuum-sealed packaging or nitrogen-flushed bags are ideal. When stored properly, Idaho 7 hops can maintain their quality for 3-5 years. Once opened, hops should be used quickly or re-sealed and stored as described above.
+
+## Additional Context
+
+Idaho 7 has carved out a significant niche in the craft brewing world due to its distinctive and versatile flavor profile. Its ability to deliver a punch of tropical fruit and citrus while also offering a subtle pine and resinous backbone makes it a favorite for brewers looking to create complex and layered hop characters. It performs exceptionally well in modern hop-forward beers, contributing to both aroma and flavor. Its relatively high cohumulone content, while making it suitable for bittering, doesn't detract from its primary use as an aroma hop.
+
+## Usage and Considerations
+
+When using Idaho 7, brewers should leverage its potent aromatic qualities. It excels in late boil additions (10-0 minutes), whirlpool, and especially dry hopping, where its volatile oils are best preserved. For bittering, it provides a clean bitterness, but its unique aroma often reserves it for flavor and aroma contributions. Brewers often pair Idaho 7 with other tropical or citrus-forward hops to create complex fruit bomb profiles, or with danker hops to add another layer of complexity. Its versatility allows it to be the star of a single-hop IPA or a key player in a multi-hop blend.
