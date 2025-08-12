@@ -509,6 +509,9 @@ class AIRecipeGeneratorUI {
         specialRequests: this.recipeData.specialRequests
       });
       
+      // Store original recipe for revert functionality
+      this.originalRecipe = JSON.parse(JSON.stringify(response.recipe));
+      
       this.showGeneratedRecipe(response);
     } catch (error) {
       console.error('Error generating recipe:', error);
@@ -722,6 +725,9 @@ class AIRecipeGeneratorUI {
       </div>
     `);
     
+    // Store the response for action handlers
+    this.currentRecipeResponse = response;
+    
     // Setup action handlers
     this.setupRecipeActionHandlers(response);
     
@@ -731,11 +737,16 @@ class AIRecipeGeneratorUI {
   setupRecipeActionHandlers(response) {
     // Primary actions
     document.getElementById('load-into-designer').addEventListener('click', async () => {
-      const success = await window.AIBrewmaster.loadRecipeIntoDesigner(response.recipe);
-      if (success) {
-        this.showSuccess('Recipe loaded into designer successfully!');
-        setTimeout(() => this.closeModal(), 2000);
-      } else {
+      try {
+        const success = await window.AIBrewmaster.loadRecipeIntoDesigner(response.recipe);
+        if (success) {
+          this.showSuccess('Recipe loaded into designer successfully!');
+          setTimeout(() => this.closeModal(), 2000);
+        } else {
+          this.showError('Error loading recipe into designer.');
+        }
+      } catch (error) {
+        console.error('Error loading recipe:', error);
         this.showError('Error loading recipe into designer.');
       }
     });
@@ -819,8 +830,13 @@ class AIRecipeGeneratorUI {
     document.getElementById('apply-scaling').addEventListener('click', async () => {
       const newSize = parseFloat(document.getElementById('new-batch-size').value);
       if (newSize && newSize !== recipe.batchSize) {
-        const result = await window.AIBrewmaster.scaleRecipe(recipe, newSize);
-        this.showAdjustmentResult('Scale Recipe', result);
+        try {
+          const result = await window.AIBrewmaster.scaleRecipe(recipe, newSize);
+          this.showAdjustmentResult('Scale Recipe', result);
+        } catch (error) {
+          console.error('Error scaling recipe:', error);
+          this.showError('Error scaling recipe. Please try again.');
+        }
       }
     });
 
@@ -859,8 +875,13 @@ class AIRecipeGeneratorUI {
     document.getElementById('apply-gravity').addEventListener('click', async () => {
       const targetOG = parseFloat(document.getElementById('target-og').value);
       if (targetOG && Math.abs(targetOG - currentOG) > 0.002) {
-        const result = await window.AIBrewmaster.adjustGravity(recipe, targetOG);
-        this.showAdjustmentResult('Adjust Gravity', result);
+        try {
+          const result = await window.AIBrewmaster.adjustGravity(recipe, targetOG);
+          this.showAdjustmentResult('Adjust Gravity', result);
+        } catch (error) {
+          console.error('Error adjusting gravity:', error);
+          this.showError('Error adjusting gravity. Please try again.');
+        }
       }
     });
 
@@ -899,8 +920,13 @@ class AIRecipeGeneratorUI {
     document.getElementById('apply-bitterness').addEventListener('click', async () => {
       const targetIBU = parseFloat(document.getElementById('target-ibu').value);
       if (targetIBU && Math.abs(targetIBU - currentIBU) > 2) {
-        const result = await window.AIBrewmaster.adjustBitterness(recipe, targetIBU);
-        this.showAdjustmentResult('Adjust Bitterness', result);
+        try {
+          const result = await window.AIBrewmaster.adjustBitterness(recipe, targetIBU);
+          this.showAdjustmentResult('Adjust Bitterness', result);
+        } catch (error) {
+          console.error('Error adjusting bitterness:', error);
+          this.showError('Error adjusting bitterness. Please try again.');
+        }
       }
     });
 
@@ -942,8 +968,13 @@ class AIRecipeGeneratorUI {
     document.getElementById('apply-color').addEventListener('click', async () => {
       const targetSRM = parseFloat(document.getElementById('target-srm').value);
       if (targetSRM && Math.abs(targetSRM - currentSRM) > 1) {
-        const result = await window.AIBrewmaster.adjustColor(recipe, targetSRM);
-        this.showAdjustmentResult('Adjust Color', result);
+        try {
+          const result = await window.AIBrewmaster.adjustColor(recipe, targetSRM);
+          this.showAdjustmentResult('Adjust Color', result);
+        } catch (error) {
+          console.error('Error adjusting color:', error);
+          this.showError('Error adjusting color. Please try again.');
+        }
       }
     });
 
@@ -980,11 +1011,13 @@ class AIRecipeGeneratorUI {
     `;
 
     document.getElementById('accept-changes').addEventListener('click', () => {
-      this.showGeneratedRecipe({ recipe: result.recipe, instructions: {} });
+      // Update the current recipe response
+      this.currentRecipeResponse.recipe = result.recipe;
+      this.showGeneratedRecipe(this.currentRecipeResponse);
     });
 
     document.getElementById('reject-changes').addEventListener('click', () => {
-      this.showGeneratedRecipe({ recipe: this.originalRecipe, instructions: {} });
+      this.showGeneratedRecipe(this.currentRecipeResponse);
     });
   }
 
@@ -1038,7 +1071,8 @@ class AIRecipeGeneratorUI {
   }
 
   showRecipeTutorial(recipe) {
-    const tutorial = window.AIBrewmaster.generateRecipeTutorial(recipe);
+    try {
+      const tutorial = window.AIBrewmaster.generateRecipeTutorial(recipe);
     
     const content = document.getElementById('ai-recipe-content');
     content.innerHTML = `
@@ -1066,9 +1100,13 @@ class AIRecipeGeneratorUI {
       </div>
     `;
 
-    document.getElementById('back-to-recipe').addEventListener('click', () => {
-      this.showGeneratedRecipe({ recipe, instructions: {} });
-    });
+      document.getElementById('back-to-recipe').addEventListener('click', () => {
+        this.showGeneratedRecipe(this.currentRecipeResponse);
+      });
+    } catch (error) {
+      console.error('Error generating tutorial:', error);
+      this.showError('Error generating tutorial. Please try again.');
+    }
   }
 
   renderConversation() {

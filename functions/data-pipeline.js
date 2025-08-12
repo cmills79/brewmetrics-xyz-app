@@ -307,7 +307,6 @@ exports.backfillSurveyData = functions.https.onCall(async (data, context) => {
     const bqRows = [];
     surveySnapshot.forEach((doc) => {
       const responseData = doc.data();
-      
       // Get IDs from the document path
       const responseId = doc.id;
       const batchRef = doc.ref.parent.parent;

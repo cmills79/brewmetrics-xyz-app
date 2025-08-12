@@ -1,48 +1,47 @@
 # Hop Name: Centennial
 
-**Lab / Manufacturer:** Washington State University
-**Strain Code:** N/A
-**Variety:** N/
-**Form:** Pellet
-**Type:** Dual-Purpose Hop
-**Country of Origin:** USA
-
 ## Technical Specifications
+
+Country of Origin: USA (Washington, Oregon, Idaho)
 
 Alpha Acids: 9.5-11.5%
 
 Beta Acids: 3.5-4.5%
 
-Cohumulone: 29-33%
+Cohumulone: 28-30%
 
-Total Oil (ml/100g): 1.5-2.3
+Total Oil (ml/100g): 1.5-2.5
 
-## Flavor Descriptors
+## Aroma/Flavor Descriptors
 
-Primary: Citrus, Floral. Lemon.
+Primary: Citrus, Floral, Lemon
 
-Secondary: Spicy , Grapefruit , Gooseberry , Orange Blossom. It possesses a strong citrus aroma.
+Secondary: Pine, Spicy, Clean Bitterness
 
-Notes: Bred in 1974 and released in 1990, Centennial is genetically composed of Brewers Gold, Fuggle, Golding, and Bavarian varieties. It is often referred to as a 'Super Cascade' due to its strong citrus aroma and notably higher alpha acid content, which reflects a breeding trend towards enhancing desirable traits from established, popular varieties to provide brewers with more potent yet familiar options for hop-forward beers. Centennial is also recognized as one of the "Three Cs".
+## Notes
 
-Brewing Usage:
+Centennial is often called "Super Cascade" due to its similar citrus character but higher alpha acid content. Developed in 1974 and released in 1990, it's one of the "Three Cs" (Cascade, Centennial, Columbus) that define American craft brewing. This hop provides excellent bittering capabilities while maintaining the classic American citrus and floral aroma profile. Its balanced oil content makes it versatile for both bittering and aroma applications.
 
-Role: Classified as an aroma-type variety , Centennial is a versatile dual-purpose hop well-suited for bittering, offering a crisp and clean bitterness. Its robust character makes it ideal for single-hop beers and dry hopping applications.
+## Brewing Usage
 
-Beer Styles: American Pale Ale, IPA.
+Role: Dual-purpose hop excellent for both bittering and aroma. Higher alpha acids than Cascade make it more efficient for bittering while maintaining similar aroma characteristics.
 
-Commercial Examples: Bell's Brewing Two Hearted Ale , Flying Dog Brewery Centennial Imperial IPA (as a single hop) , Sierra Nevada Bigfoot Ale , Sierra Nevada Celebration Ale. The use of Centennial in single-hop beers highlights its distinct character and commercial value in showcasing specific flavor profiles.
+Beer Styles: American Pale Ale, IPA, American Wheat, American Amber Ale
 
-Substitution Suggestions: Cascade , Chinook , Columbus. For bittering, Columbus is a good substitute, while a 70/30 blend of Cascade and Columbus can approximate its aroma. Amarillo.
+## Commercial Examples
+
+Bell's Two Hearted Ale, Founders All Day IPA, Sierra Nevada Celebration Ale
+
+Substitution Suggestions: Cascade, Columbus, Amarillo, Chinook
 
 ## Storage and Shelf Life
 
-Hops are best stored in a cool (32-41°F or 0-5°C), dark, and oxygen-free environment to preserve their delicate aromas and alpha acids. Vacuum-sealed packaging or nitrogen-flushed bags are ideal. When stored properly, Centennial hops can maintain their quality for 3-5 years. Once opened, hops should be used quickly or re-sealed and stored as described above.
+Store in cool (32-41°F), dark, oxygen-free environment. Vacuum-sealed or nitrogen-flushed packaging preferred. Properly stored Centennial hops maintain quality for 3-5 years. Higher alpha acid content makes it more stable than some aroma-only varieties.
 
 ## Additional Context
 
-Centennial is often considered a cornerstone of the American craft brewing movement, bridging the gap between traditional English hops and the more aggressive, fruit-forward varieties that emerged later. Its balanced profile of strong citrus and floral notes, combined with a clean bitterness, made it a favorite for defining the American IPA and Pale Ale styles. While newer hops have gained popularity, Centennial remains a reliable choice for brewers seeking a classic, assertive hop character without being overly one-dimensional. Its resilience and consistent performance have ensured its continued relevance in a rapidly evolving hop landscape.
+Centennial bridges the gap between Cascade's moderate bittering and Columbus's high alpha content. It's particularly valued in American IPAs where brewers want citrus character with efficient bittering. The hop's clean bitterness doesn't clash with malt flavors, making it suitable for balanced pale ales as well as hop-forward styles.
 
 ## Usage and Considerations
 
-When using Centennial, brewers should consider its potent citrus and floral notes. It performs exceptionally well in late boil additions, whirlpool, and dry hopping, where its aromatic compounds are best preserved. For bittering, it provides a clean and firm bitterness. Its versatility allows it to be used as a standalone hop or in combination with other varieties to build complex hop profiles. Brewers often pair it with other "C" hops (Cascade, Columbus) to create a layered hop character.  
+Centennial works exceptionally well in late boil additions (5-20 minutes) where its citrus oils shine. For dry hopping, it provides bright citrus aroma without excessive grassiness. When used for bittering, it contributes clean, pleasant bitterness that doesn't dominate. Pairs excellently with other American hops, particularly Cascade and Columbus, creating layered citrus profiles.

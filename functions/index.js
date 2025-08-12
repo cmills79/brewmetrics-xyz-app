@@ -41,6 +41,145 @@ function checkRateLimit(uid) {
   return true;
 }
 
+exports.generateAIRecipe = functions.https.onCall(async (data, context) => {
+  // Authentication check
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+        "unauthenticated",
+        "User must be authenticated to generate recipes.",
+    );
+  }
+
+  const uid = context.auth.uid;
+  const { beerStyle, batchSize, experienceLevel, specialRequests } = data;
+
+  // Rate limiting check
+  if (!checkRateLimit(uid)) {
+    throw new functions.https.HttpsError(
+        "resource-exhausted",
+        "Rate limit exceeded. Please try again later.",
+    );
+  }
+
+  // Input validation
+  if (!beerStyle || typeof beerStyle !== "string") {
+    throw new functions.https.HttpsError(
+        "invalid-argument",
+        "Beer style is required.",
+    );
+  }
+
+  try {
+    const systemPrompt = `You are the AI Master Brewer, an expert brewing consultant with decades of commercial and craft brewing experience.
+    
+    TASK: Generate a complete, professional beer recipe based on the user's specifications.
+    
+    RESPONSE FORMAT: Return a JSON object with this exact structure:
+    {
+      "recipe": {
+        "name": "Recipe Name",
+        "batchSize": 5.0,
+        "targetOG": "1.055",
+        "targetFG": "1.012",
+        "targetABV": "5.6",
+        "targetIBU": 35,
+        "targetSRM": 8,
+        "fermentables": [
+          {"name": "Pale 2-Row", "amount": "8.5", "unit": "lbs", "yield": 81, "color": 2},
+          {"name": "Crystal 60L", "amount": "1.0", "unit": "lbs", "yield": 74, "color": 60}
+        ],
+        "hops": [
+          {"name": "Cascade", "amount": "1.0", "unit": "oz", "alpha": 5.5, "time": 60, "use": "Boil"},
+          {"name": "Centennial", "amount": "0.5", "unit": "oz", "alpha": 10.0, "time": 15, "use": "Boil"}
+        ],
+        "yeast": [
+          {"name": "Safale US-05", "amount": "1", "unit": "pkg", "attenuation": 75}
+        ],
+        "efficiency": 72,
+        "boilTime": 60
+      },
+      "summary": "Brief description of the recipe and brewing notes",
+      "instructions": {
+        "mash": "Mash instructions",
+        "boil": "Boil schedule",
+        "fermentation": "Fermentation guidelines"
+      }
+    }
+    
+    REQUIREMENTS:
+    - Use authentic ingredient names and realistic amounts
+    - Calculate accurate OG, FG, ABV, IBU, and SRM values
+    - Ensure recipe is balanced and true to style
+    - Include professional brewing advice
+    - Scale ingredients appropriately for batch size`;
+
+    const userPrompt = `Generate a ${beerStyle} recipe with these specifications:
+    - Batch Size: ${batchSize || 5} gallons
+    - Experience Level: ${experienceLevel || 'intermediate'}
+    ${specialRequests ? `- Special Requests: ${specialRequests}` : ''}
+    
+    Please create a complete, professional recipe with accurate calculations.`;
+
+    const fullPrompt = `${systemPrompt}\n\nUser Request: ${userPrompt}`;
+
+    const generativeModel = vertexAi.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      generationConfig: {
+        temperature: 0.7,
+        topP: 0.8,
+        topK: 40,
+        maxOutputTokens: 2048,
+      },
+    });
+
+    const resp = await generativeModel.generateContent(fullPrompt);
+    const responseData = resp.response;
+
+    if (!responseData || !responseData.candidates || responseData.candidates.length === 0) {
+      throw new Error("No response generated from AI model");
+    }
+
+    const candidate = responseData.candidates[0];
+    if (!candidate.content || !candidate.content.parts || candidate.content.parts.length === 0) {
+      throw new Error("Invalid response format from AI model");
+    }
+
+    const text = candidate.content.parts[0].text;
+    
+    // Parse JSON response
+    let recipeData;
+    try {
+      // Extract JSON from response (handle markdown code blocks)
+      const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) || text.match(/\{[\s\S]*\}/);
+      const jsonText = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : text;
+      recipeData = JSON.parse(jsonText);
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError, 'Raw text:', text);
+      throw new Error("Failed to parse recipe data");
+    }
+
+    functions.logger.info("AI recipe generation completed", {
+      uid,
+      beerStyle,
+      batchSize,
+      recipeGenerated: !!recipeData.recipe
+    });
+
+    return recipeData;
+  } catch (error) {
+    functions.logger.error("Error in generateAIRecipe", {
+      uid,
+      error: error.message,
+      stack: error.stack
+    });
+
+    throw new functions.https.HttpsError(
+        "internal",
+        "Failed to generate recipe. Please try again later.",
+    );
+  }
+});
+
 exports.getAIBrewingAdvice = functions.https.onCall(async (data, context) => {
       // Authentication check - allow both authenticated and anonymous users
       if (!context.auth) {
@@ -77,15 +216,49 @@ exports.getAIBrewingAdvice = functions.https.onCall(async (data, context) => {
   }
 
   try {
-    // Enhanced brewing-specific prompt
-    const systemPrompt = `You are the AI Master Brewer, an expert brewing consultant with decades of experience. 
-    You provide helpful, accurate, and practical brewing advice. Always respond in a friendly, professional tone.
-    When discussing specific techniques, ingredients, or processes, provide concrete details and actionable guidance.`;
+    // Enhanced brewing-specific prompt with expanded knowledge base
+    const systemPrompt = `You are the AI Master Brewer, an expert brewing consultant with decades of commercial and craft brewing experience.
+    
+    EXPERTISE AREAS:
+    - Recipe formulation and optimization for all beer styles
+    - Advanced brewing techniques (pressure fermentation, biotransformation, barrel aging)
+    - Water chemistry mastery and ion balance optimization
+    - Yeast management, propagation, and fermentation control
+    - Sensory analysis and off-flavor identification/correction
+    - Equipment optimization and maintenance protocols
+    - Quality control and consistency management
+    - Commercial brewing scaling and operations
+    - Troubleshooting complex brewing issues
+    - Innovation in brewing techniques and ingredients
+    
+    RESPONSE STYLE:
+    - Provide specific, actionable advice with concrete numbers and parameters
+    - Include relevant calculations, formulas, and technical details when appropriate
+    - Reference specific ingredients, equipment, and techniques by name
+    - Offer multiple solutions when applicable, ranked by effectiveness
+    - Always consider safety, quality, and consistency in recommendations
+    - Adapt technical depth to the apparent experience level of the questioner
+    
+    KNOWLEDGE BASE:
+    - Comprehensive ingredient database (75+ malts, 50+ hops, 30+ yeast strains)
+    - Water chemistry profiles for major brewing regions and styles
+    - Advanced fermentation techniques and troubleshooting
+    - Equipment optimization and maintenance protocols
+    - Sensory analysis and off-flavor identification
+    - Commercial brewing considerations and scaling
+    
+    Always provide helpful, accurate, and practical brewing advice in a friendly, professional tone.`;
 
     const fullPrompt = `${systemPrompt}\n\nUser Question: ${userPrompt}`;
 
     const generativeModel = vertexAi.getGenerativeModel({
       model: "gemini-2.5-flash",
+      generationConfig: {
+        temperature: 0.7,
+        topP: 0.8,
+        topK: 40,
+        maxOutputTokens: 2048,
+      },
     });
 
     const resp = await generativeModel.generateContent(fullPrompt);
@@ -116,7 +289,6 @@ exports.getAIBrewingAdvice = functions.https.onCall(async (data, context) => {
 
     return {response: text};
   } catch (error) {
-    // Structured error logging
     functions.logger.error("Error in getAIBrewingAdvice", {
       uid,
       error: error.message,
@@ -124,7 +296,6 @@ exports.getAIBrewingAdvice = functions.https.onCall(async (data, context) => {
       promptLength: userPrompt?.length || 0,
     });
 
-    // Don't expose internal error details to client
     throw new functions.https.HttpsError(
         "internal",
         "Failed to get AI response. Please try again later.",
@@ -132,6 +303,58 @@ exports.getAIBrewingAdvice = functions.https.onCall(async (data, context) => {
   }
 });
 
+exports.loadRecipeIntoDesigner = functions.https.onCall(async (data, context) => {
+  // Authentication check
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+        "unauthenticated",
+        "User must be authenticated to load recipes.",
+    );
+  }
+
+  const { recipe } = data;
+  
+  if (!recipe) {
+    throw new functions.https.HttpsError(
+        "invalid-argument",
+        "Recipe data is required.",
+    );
+  }
+
+  try {
+    // Convert AI recipe format to recipe designer format
+    const designerRecipe = {
+      name: recipe.name || 'AI Generated Recipe',
+      type: 'All Grain',
+      batchSize: parseFloat(recipe.batchSize) || 5.0,
+      efficiency: recipe.efficiency || 72,
+      boilTime: recipe.boilTime || 60,
+      style: recipe.style || '',
+      fermentables: recipe.fermentables || [],
+      hops: recipe.hops || [],
+      yeast: recipe.yeast || [],
+      targetOG: recipe.targetOG,
+      targetFG: recipe.targetFG,
+      targetABV: recipe.targetABV,
+      targetIBU: recipe.targetIBU,
+      targetSRM: recipe.targetSRM
+    };
+
+    return { success: true, recipe: designerRecipe };
+  } catch (error) {
+    functions.logger.error("Error loading recipe into designer", {
+      error: error.message,
+      recipe
+    });
+
+    throw new functions.https.HttpsError(
+        "internal",
+        "Failed to load recipe into designer.",
+    );
+  }
+});
+
 // Export data pipeline functions - temporarily disabled for deployment
 // exports.syncSurveyToBigQuery = syncSurveyToBigQuery;
 // exports.backfillSurveyData = backfillSurveyData;
+    return {response: text};

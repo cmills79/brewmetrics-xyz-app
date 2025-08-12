@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Designer - BrewMetrics</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="premium-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         .recipe-designer {
@@ -591,8 +592,10 @@
             <button class="toolbar-btn"><i class="fas fa-palette"></i> Adjust Color</button>
             <button class="toolbar-btn"><i class="fas fa-print"></i> Print</button>
             <button class="toolbar-btn"><i class="fas fa-list"></i> Brew Steps</button>
+            <button class="toolbar-btn premium-feature"><i class="fas fa-chart-bar"></i> Analytics</button>
             <button class="toolbar-btn"><i class="fas fa-cog"></i> Set as Default</button>
             <button class="toolbar-btn"><i class="fas fa-question-circle"></i> Recipe Tutorial</button>
+            <button class="upgrade-button btn btn-primary" style="margin-left: auto;">Upgrade to Premium</button>
         </div>
 
         <!-- Tabs -->
@@ -601,6 +604,7 @@
             <button class="recipe-tab" data-tab="starter">Starter</button>
             <button class="recipe-tab" data-tab="water">Water</button>
             <button class="recipe-tab" data-tab="mash">Mash</button>
+            <button class="recipe-tab premium-nav-item" data-tab="analytics">📊 Analytics</button>
             <button class="recipe-tab" data-tab="timer">Timer</button>
             <button class="recipe-tab" data-tab="session">Session</button>
             <button class="recipe-tab" data-tab="notes">Notes</button>
@@ -610,6 +614,20 @@
         <!-- Main Content -->
         <div class="recipe-content">
             <div class="recipe-main">
+                <!-- Premium Analytics Section -->
+                <div class="recipe-section" id="analytics-section">
+                    <h3>📊 Premium Analytics Dashboard</h3>
+                    <div class="free-tier-message">
+                        <h4>🚀 Unlock Advanced Analytics</h4>
+                        <p>Get detailed insights into revenue impact, customer preferences, and competitive positioning</p>
+                        <button class="btn btn-primary" onclick="window.subscriptionManager?.showUpgradeModal()">Upgrade to Premium</button>
+                    </div>
+                    <div id="revenue-analytics" class="premium-feature"></div>
+                    <div id="customer-insights" class="premium-feature"></div>
+                    <div id="predictive-analytics" class="premium-feature"></div>
+                    <div id="competitive-analysis" class="premium-feature"></div>
+                </div>
+                
                 <!-- Design Tab -->
                 <div class="recipe-section active" id="design-section">
                     <!-- Hop Schedule Optimization -->
@@ -1276,6 +1294,19 @@
                 </div>
 
                 <div class="sidebar-section">
+                    <h3><i class="fas fa-crown"></i> Premium Features</h3>
+                    <button class="quick-add-btn premium-feature" onclick="window.subscriptionManager?.showUpgradeModal()">
+                        <i class="fas fa-chart-line"></i> Advanced Analytics
+                    </button>
+                    <button class="quick-add-btn premium-feature" onclick="window.subscriptionManager?.showUpgradeModal()">
+                        <i class="fas fa-brain"></i> AI Recipe Optimizer
+                    </button>
+                    <button class="quick-add-btn premium-feature" onclick="window.subscriptionManager?.showUpgradeModal()">
+                        <i class="fas fa-trophy"></i> Competitive Analysis
+                    </button>
+                </div>
+                
+                <div class="sidebar-section">
                     <h3><i class="fas fa-info-circle"></i> Help</h3>
                     <button class="quick-add-btn" onclick="window.open('brewing-guide.html', '_blank')">
                         <i class="fas fa-book"></i> Brewing Guide
@@ -1332,6 +1363,10 @@
     <!-- AI Brewmaster Container -->
     <div id="ai-brewmaster-container"></div>
 
+    <!-- Premium Analytics Integration -->
+    <script src="subscription-manager.js"></script>
+    <script src="premium-analytics.js"></script>
+    
     <!-- AI Brewmaster Integration -->
     <script src="utils.js"></script>
     <script src="ai-brewmaster.js"></script>

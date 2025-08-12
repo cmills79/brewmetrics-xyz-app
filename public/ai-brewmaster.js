@@ -126,7 +126,7 @@ class AIBrewmaster {
     const lowerQuery = query.toLowerCase();
     let response = "";
     
-    // IPA recipe specific
+    // Specific beer style recipes
     if (lowerQuery.includes('ipa') && lowerQuery.includes('recipe')) {
       response = `Here's a solid American IPA recipe:
 
@@ -158,6 +158,64 @@ class AIBrewmaster {
 - Use RO water with gypsum addition
 - Keep hop additions cold until use
 - Package with minimal oxygen exposure`;
+    }
+    // Stout recipes
+    else if (lowerQuery.includes('stout') && lowerQuery.includes('recipe')) {
+      response = `Here's a classic Dry Irish Stout recipe:
+
+**5-Gallon Irish Stout Recipe:**
+
+**Grain Bill:**
+- 7 lbs Pale 2-Row Malt
+- 1.5 lbs Flaked Barley
+- 0.75 lb Roasted Barley
+- 0.5 lb Crystal 60L
+
+**Hop Schedule:**
+- 1 oz East Kent Goldings (5% AA) @ 60 min
+- 0.5 oz East Kent Goldings @ 15 min
+
+**Yeast & Process:**
+- Wyeast 1084 Irish Ale or Safale S-04
+- Mash at 154°F for 60 minutes
+- Ferment at 64-66°F for 7-10 days
+
+**Target Stats:**
+- OG: 1.042, FG: 1.010
+- ABV: 4.2%, IBU: 35, SRM: 35
+
+**Pro Tips:**
+- Don't over-roast flavors - balance is key
+- Serve on nitrogen for authentic creamy head
+- Low carbonation (1.6-2.0 volumes)`;
+    }
+    // Wheat beer recipes
+    else if ((lowerQuery.includes('wheat') || lowerQuery.includes('hefeweizen')) && lowerQuery.includes('recipe')) {
+      response = `Here's a traditional German Hefeweizen recipe:
+
+**5-Gallon Hefeweizen Recipe:**
+
+**Grain Bill:**
+- 5.5 lbs Wheat Malt (60%)
+- 3.5 lbs German Pilsner Malt (40%)
+
+**Hop Schedule:**
+- 0.75 oz Hallertau (4% AA) @ 60 min
+
+**Yeast & Process:**
+- Wyeast 3068 Weihenstephan Weizen
+- Mash at 152°F for 60 minutes
+- Ferment at 64-68°F for 7-10 days
+- No dry hopping - keep it traditional
+
+**Target Stats:**
+- OG: 1.048, FG: 1.010
+- ABV: 5.0%, IBU: 12, SRM: 3
+
+**Pro Tips:**
+- Use traditional German wheat yeast for banana/clove esters
+- Serve cloudy - don't filter
+- Higher carbonation (3.0+ volumes) for authentic mouthfeel`;
     }
     // Recipe ideas and suggestions
     else if (lowerQuery.includes('recipe') && (lowerQuery.includes('idea') || lowerQuery.includes('popular') || lowerQuery.includes('suggestion'))) {
@@ -215,6 +273,57 @@ class AIBrewmaster {
 
 **Water:** Low sulfate-to-chloride ratio emphasizes hop character.`;
     }
+    // Water chemistry questions
+    else if (lowerQuery.includes('water') && (lowerQuery.includes('chemistry') || lowerQuery.includes('profile'))) {
+      response = `Water chemistry fundamentals for brewing:
+
+**Key Minerals:**
+- **Calcium (Ca²⁺)**: 50-150 ppm - enzyme function, yeast health
+- **Sulfate (SO₄²⁻)**: 150-300 ppm - enhances hop character
+- **Chloride (Cl⁻)**: 50-150 ppm - enhances malt sweetness
+- **Magnesium (Mg²⁺)**: 10-30 ppm - yeast nutrient
+
+**Style Guidelines:**
+- **Hoppy Beers**: High sulfate-to-chloride ratio (2:1 or 3:1)
+- **Malty Beers**: Higher chloride, lower sulfate (1:2 ratio)
+- **Balanced Beers**: Equal sulfate and chloride (1:1 ratio)
+
+**Common Additions:**
+- **Gypsum (CaSO₄)**: Adds calcium and sulfate
+- **Calcium Chloride (CaCl₂)**: Adds calcium and chloride
+- **Epsom Salt (MgSO₄)**: Adds magnesium and sulfate
+
+**Pro Tips:**
+- Start with RO water for consistency
+- Target pH 5.2-5.6 in the mash
+- Taste your water - it affects 95% of your beer`;
+    }
+    // Yeast and fermentation
+    else if (lowerQuery.includes('yeast') && !lowerQuery.includes('stuck')) {
+      response = `Yeast selection and fermentation guide:
+
+**Ale Yeasts (Saccharomyces cerevisiae):**
+- **US-05/1056**: Clean American ale character, 60-72°F
+- **S-04/1084**: English ale character, slight fruitiness, 60-68°F
+- **3068**: German wheat yeast, banana/clove esters, 64-68°F
+- **3787**: Belgian yeast, fruity/spicy, 65-78°F
+
+**Lager Yeasts (Saccharomyces pastorianus):**
+- **34/70**: Clean German lager, 46-57°F
+- **2124**: Bohemian lager, 48-58°F
+
+**Fermentation Tips:**
+- **Pitch Rate**: 0.75M cells/mL/°P for ales, 1.5M for lagers
+- **Oxygenation**: 8-12 ppm dissolved oxygen
+- **Temperature Control**: ±2°F throughout fermentation
+- **Starter**: Use for liquid yeast >3 months old
+
+**Signs of Healthy Fermentation:**
+- Visible activity within 12-24 hours
+- Steady temperature rise (2-4°F)
+- Krausen formation and fall
+- Gravity drop of 75-85% in 5-7 days`;
+    }
     // Hop-specific questions
     else if (lowerQuery.includes('hop')) {
       response = `Hop selection depends on your beer style and desired characteristics:
@@ -244,20 +353,147 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
 
 **Signs of Issues:** Gravity readings unchanged for 3+ days, off odors, or visible contamination.`;
     }
+    // Troubleshooting questions
+    else if (lowerQuery.includes('off') && lowerQuery.includes('flavor')) {
+      response = `Common off-flavors and their causes:
+
+**Diacetyl (Buttery/Butterscotch):**
+- **Cause**: Incomplete fermentation, bacterial infection
+- **Fix**: Diacetyl rest at 65-68°F for 2-3 days
+- **Prevention**: Healthy yeast pitch, proper fermentation temperature
+
+**Acetaldehyde (Green Apple):**
+- **Cause**: Incomplete fermentation, oxidation
+- **Fix**: Extended conditioning time
+- **Prevention**: Adequate yeast pitch, avoid oxygen post-fermentation
+
+**Phenolic (Band-aid/Medicinal):**
+- **Cause**: Wild yeast, chlorine in water
+- **Fix**: Usually unfixable - prevention is key
+- **Prevention**: Use carbon-filtered water, proper sanitation
+
+**Astringent/Harsh:**
+- **Cause**: Over-sparging, grain husks, high pH
+- **Fix**: Blend with clean beer if mild
+- **Prevention**: Proper sparge technique, monitor pH
+
+**Metallic:**
+- **Cause**: Iron/copper contamination, old ingredients
+- **Fix**: Usually unfixable
+- **Prevention**: Check equipment, use fresh ingredients`;
+    }
+    // Mashing questions
+    else if (lowerQuery.includes('mash') && (lowerQuery.includes('temperature') || lowerQuery.includes('step'))) {
+      response = `Mashing temperature guide:
+
+**Single Infusion Temperatures:**
+- **148-150°F**: High fermentability, dry finish, light body
+- **152-154°F**: Balanced fermentability, medium body
+- **156-158°F**: Lower fermentability, full body, sweet finish
+
+**Step Mash Profile:**
+- **Protein Rest**: 122°F for 15-20 min (only for undermodified malts)
+- **Beta Amylase**: 148-150°F for 30-45 min (fermentability)
+- **Alpha Amylase**: 158-162°F for 15-30 min (body/sweetness)
+- **Mash Out**: 168°F for 10 min (stop enzyme activity)
+
+**Strike Water Calculation:**
+- **Formula**: Strike Temp = (Target Temp - Grain Temp) × (0.2 × Grain Weight / Water Volume) + Target Temp
+- **Typical Ratio**: 1.25-1.5 quarts per pound of grain
+
+**Pro Tips:**
+- Hold temperature ±2°F throughout mash
+- Stir gently to avoid hot spots
+- Test conversion with iodine if unsure`;
+    }
+    // Dry hopping questions
+    else if (lowerQuery.includes('dry hop')) {
+      response = `Dry hopping techniques for maximum aroma:
+
+**Timing Options:**
+- **During Active Fermentation (Days 2-4)**: Biotransformation effects, tropical fruit character
+- **Late Fermentation (Days 5-7)**: Balanced extraction, good aroma retention
+- **Post-Fermentation (Cold)**: Maximum aroma retention, delicate hop varieties
+
+**Dosage Guidelines:**
+- **Light**: 0.5-1 oz per 5 gallons (subtle enhancement)
+- **Medium**: 1-2 oz per 5 gallons (standard IPA levels)
+- **Heavy**: 2-4 oz per 5 gallons (NEIPA, Double IPA)
+
+**Best Hop Varieties:**
+- **Citra**: Tropical fruit, citrus
+- **Mosaic**: Berry, tropical, floral
+- **Galaxy**: Passion fruit, citrus
+- **Amarillo**: Orange, floral
+
+**Pro Tips:**
+- Use hop bags for easy removal
+- 3-5 day contact time is optimal
+- Purge with CO2 to prevent oxidation
+- Add during active fermentation for biotransformation`;
+    }
+    // Commercial brewing questions
+    else if (lowerQuery.includes('commercial') || lowerQuery.includes('professional')) {
+      response = `Commercial brewing considerations:
+
+**Scaling Challenges:**
+- 1 BBL = 31 gallons = 6.2x homebrew batch
+- Hop utilization changes with volume
+- Heat transfer affects timing
+- Different equipment characteristics
+
+**Quality Control:**
+- Microbiological testing required
+- Chemical analysis (ABV, IBU, pH)
+- Sensory evaluation panels
+- Batch documentation and records
+
+**Cost Factors:**
+- **Malt**: $0.50-1.50 per pound
+- **Hops**: $8-25 per pound
+- **Labor**: 4-8 hours brewing per batch
+- **Overhead**: Utilities, maintenance, compliance
+
+**Regulatory Requirements:**
+- TTB Brewer's Notice (US)
+- Formula and label approval
+- State brewing licenses
+- Local permits and zoning
+
+**Success Factors:**
+- Quality first - never compromise
+- Adequate capitalization
+- Consistent products
+- Strong market focus`;
+    }
     // General brewing advice
     else {
       response = `Key brewing principles:
 
-**Sanitation:** Most critical factor - sanitize everything that touches beer post-boil
-**Temperature Control:** Maintain proper fermentation temperature for your yeast strain
-**Quality Ingredients:** Fresh malt, hops, and viable yeast make the biggest difference
-**Process:** Follow your recipe timing, especially for hop additions and fermentation
+**The Four Pillars:**
+1. **Sanitation**: Most critical - sanitize everything post-boil
+2. **Temperature Control**: Proper fermentation temperature
+3. **Quality Ingredients**: Fresh malt, hops, viable yeast
+4. **Process Control**: Consistent timing and procedures
 
-**Common Issues to Avoid:**
+**Brewing Process Overview:**
+- **Mash**: Convert starches to sugars (148-158°F)
+- **Boil**: Sterilize, extract hop compounds (60-90 min)
+- **Fermentation**: Yeast converts sugars to alcohol
+- **Conditioning**: Flavors mature and clarify
+
+**Common Mistakes:**
 - Poor sanitation leading to infection
 - Temperature swings during fermentation
 - Oxidation during transfers
-- Rushing the process`;
+- Rushing the process
+- Using old or insufficient yeast
+
+**Success Tips:**
+- Take detailed notes for repeatability
+- Start simple, master basics first
+- Join local homebrew club
+- Taste critically and adjust recipes`;
     }
 
     return {
@@ -530,23 +766,30 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   }
 
   /**
-   * Generate a complete recipe with instructions
+   * Generate a complete recipe with instructions using Firebase function
    */
   async generateRecipe(beerStyle, characteristics = {}) {
-    const query = `Generate a complete ${beerStyle} recipe with ingredients, amounts, and step-by-step brewing instructions`;
-    
     try {
-      // Get AI response for recipe generation
-      const response = await this.getBrewingAdvice(query, { beerStyle, ...characteristics });
+      // Ensure user is authenticated
+      await this.ensureAuthenticated();
       
-      // Parse and structure the recipe
-      const recipe = this.parseRecipeFromResponse(response.summary, beerStyle, characteristics);
+      // Use Firebase function for recipe generation
+      if (typeof firebase !== 'undefined' && firebase.functions) {
+        const functions = firebase.functions('us-central1');
+        const generateAIRecipe = functions.httpsCallable('generateAIRecipe');
+        
+        const result = await generateAIRecipe({
+          beerStyle,
+          batchSize: characteristics.batchSize || 5,
+          experienceLevel: characteristics.experienceLevel || 'intermediate',
+          specialRequests: characteristics.specialRequests || ''
+        });
+        
+        return result.data;
+      }
       
-      return {
-        ...response,
-        recipe: recipe,
-        instructions: this.generateBrewingInstructions(recipe)
-      };
+      // Fallback to local generation
+      return this.generateFallbackRecipe(beerStyle, characteristics);
     } catch (error) {
       this.logger.error('Error generating recipe', error);
       return this.generateFallbackRecipe(beerStyle, characteristics);
@@ -1635,9 +1878,26 @@ ${adjustment > 0
   }
 
   /**
-   * Load AI-generated recipe into recipe designer
+   * Load AI-generated recipe into recipe designer using Firebase function
    */
   async loadRecipeIntoDesigner(recipe) {
+    try {
+      // Use Firebase function to process recipe data
+      if (typeof firebase !== 'undefined' && firebase.functions) {
+        await this.ensureAuthenticated();
+        const functions = firebase.functions('us-central1');
+        const loadRecipe = functions.httpsCallable('loadRecipeIntoDesigner');
+        
+        const result = await loadRecipe({ recipe });
+        if (result.data.success) {
+          recipe = result.data.recipe;
+        }
+      }
+    } catch (error) {
+      this.logger.warn('Firebase function not available, using direct loading', error);
+    }
+    
+    // Continue with existing loading logic
     try {
       // Check if we're on the recipe designer page
       const currentURL = window.location.pathname;

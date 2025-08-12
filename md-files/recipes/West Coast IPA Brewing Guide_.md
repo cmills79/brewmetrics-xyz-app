@@ -1,28 +1,26 @@
-
-
-## **1\. Consumables Procurement and Management: West Coast IPA Batch \#001**
+# **1\. Consumables Procurement and Management: West Coast IPA Batch \#001**
+  
+This section outlines the critical steps for sourcing and managing the consumable ingredients required to produce the West Coast IPA recipe at a commercial scale. It includes detailed guidance on selecting suppliers, calculating quantities, and ensuring ingredient quality.
 
 **1.1** With the physical plant established, the next step is to source the high-quality raw materials required for the inaugural batch. For a style as specific as a West Coast IPA, ingredient selection is paramount to achieving the target flavor profile. This involves establishing relationships with reliable bulk suppliers.
 
-### **2.1. Water Profile Construction: Sourcing and Calculating Mineral Additions**
+## **2.1. Water Profile Construction: Sourcing and Calculating Mineral Additions**
 
 Water constitutes over 90% of beer and its mineral content has a profound impact on flavor perception, especially in hop-forward styles.
 
-#### 
-
-#### **2.1.1. The "Why": The Role of Water Chemistry in a West Coast IPA**
+## **2.1.1. The "Why": The Role of Water Chemistry in a West Coast IPA**
 
 The defining characteristic of a classic West Coast IPA is its crisp, dry finish and assertive, sharp hop bitterness. The specified water profile, with a high concentration of sulfate (SO42−​) at 275 ppm and a low concentration of chloride (Cl−) at 50 ppm, is engineered to achieve this. This creates a sulfate-to-chloride ratio of 5.5:1. High sulfate levels accentuate hop bitterness, making it perceived as sharper and more pronounced, while low chloride levels prevent the beer from having a soft, full, or "malty" finish, thus enhancing the desired dryness.40 The target calcium (
 
 Ca2+) level of 110 ppm is also important for promoting enzyme activity in the mash and aiding in yeast flocculation and beer clarification.
 
-#### **2.1.2. The "How": Building Water from a Blank Slate**
+## **2.1.2. The "How": Building Water from a Blank Slate**
 
 The most reliable method for achieving a precise water profile is to start with demineralized water and add back specific brewing salts. The recommended approach is to install a commercial **Reverse Osmosis (RO) system**, which strips the source water of nearly all minerals and contaminants, creating a consistent "blank slate" for every brew.42
 
 Once the RO water is collected in the Hot Liquor Tank (HLT), a digital brewing water calculator such as **Brewer's Friend** or **Bru'n Water** should be used.43 By inputting the starting profile (RO water, which is effectively zero for all minerals), the target profile from the recipe, and the total water volume, the calculator will provide the exact gram measurements of each brewing salt needed.
 
-#### **2.1.3. Sourcing Minerals and Water Systems**
+## **2.1.3. Sourcing Minerals and Water Systems**
 
 The primary minerals required to build this IPA profile are **Gypsum (Calcium Sulfate \- CaSO4​)** to add calcium and sulfate, and **Calcium Chloride (CaCl2​)** to add calcium and chloride. For a 10 BBL batch, these will be needed in multi-pound quantities. Bulk purchases can be made from major brewing ingredient distributors like **RahrBSG**.46 Commercial RO systems designed for breweries can be sourced from specialized suppliers like
 
@@ -281,7 +279,7 @@ Furthermore, the execution of the brew day itself is a series of interconnected 
 
 By following this comprehensive guide for both procurement and process, a new brewery can equip itself with the necessary physical infrastructure and operational knowledge to not only replicate this specific West Coast IPA but also to establish a foundation of quality, consistency, and process control that will be essential for its long-term success.
 
-#### **Works cited**
+## **Works cited**
 
 1. Two Vessel Brewhouse & Brewing System \- Commercial Brewery ..., accessed July 24, 2025, [https://abs-commercial.com/two-vessel-brewhouses/](https://abs-commercial.com/two-vessel-brewhouses/)  
 2. DME Brewing Solutions 10 BBL 2 Vessel Brew System Listing \#975353 \- EquipNet, accessed July 24, 2025, [https://www.equipnet.com/dme-brewing-solutions-10-bbl-2-vessel-brew-sy-listid-975353/](https://www.equipnet.com/dme-brewing-solutions-10-bbl-2-vessel-brew-sy-listid-975353/)  
