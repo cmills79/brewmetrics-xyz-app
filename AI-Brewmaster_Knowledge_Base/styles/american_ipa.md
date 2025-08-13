@@ -41,17 +41,20 @@ Category: 21A - American IPA
 ## Brewing Guidelines
 
 **Grain Bill:**
+
 - 85-95% Base malt (American 2-row, Pilsner)
 - 5-15% Crystal malts (40-60L)
 - Optional: Munich, Vienna for complexity
 
 **Hop Schedule:**
+
 - Bittering: 60 minutes (Chinook, Columbus, Warrior)
 - Flavor: 20-30 minutes (Centennial, Cascade, Simcoe)
 - Aroma: 5-0 minutes (Citra, Mosaic, Amarillo)
 - Dry hop: 2-4 days (any American variety)
 
 **Process:**
+
 - Mash: 148-152°F for dry finish
 - Fermentation: 64-68°F for clean profile
 - Dry hop during active fermentation for biotransformation
@@ -63,12 +66,14 @@ American IPA evolved from English IPA but with distinctly American character. Th
 ## Judging Notes
 
 **Key Style Features:**
+
 - Hop-forward balance with supporting malt
 - Clean fermentation character
 - American hop varieties essential
 - Dry finish showcases hops
 
 **Common Faults:**
+
 - Excessive malt sweetness
 - Harsh, astringent bitterness
 - Inappropriate hop varieties

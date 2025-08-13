@@ -58,14 +58,14 @@ exports.createDemoBrewery = functions.https.onCall(async (data, context) => {
         const sampleBatches = [
             {
                 id: "WCIPA-2025-001",
-                name: "Citrus Burst IPA",
-                intro: "A bold West Coast IPA featuring Citra and Mosaic hops with bright citrus notes and a clean bitter finish.",
+                beerName: "Citrus Burst IPA",
+                beerIntro: "A bold West Coast IPA featuring Citra and Mosaic hops with bright citrus notes and a clean bitter finish.",
                 abv: 6.8,
                 ibu: 65,
                 style: "West Coast IPA",
                 batchCode: "WCIPA-2025-001",
-                packagedDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-                active: true,
+                packagedDate: "2025-01-15",
+                isActive: true,
                 createdAt: admin.firestore.FieldValue.serverTimestamp(),
                 customQuestions: [
                     "How prominent was the citrus aroma?",
@@ -75,14 +75,14 @@ exports.createDemoBrewery = functions.https.onCall(async (data, context) => {
             },
             {
                 id: "PORTER-2025-001",
-                name: "Midnight Porter",
-                intro: "Rich and smooth porter with notes of chocolate and coffee, perfect for cold evenings.",
+                beerName: "Midnight Porter",
+                beerIntro: "Rich and smooth porter with notes of chocolate and coffee, perfect for cold evenings.",
                 abv: 5.4,
                 ibu: 28,
                 style: "Robust Porter",
                 batchCode: "PORTER-2025-001",
-                packagedDate: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000),
-                active: true,
+                packagedDate: "2025-01-08",
+                isActive: true,
                 createdAt: admin.firestore.FieldValue.serverTimestamp(),
                 customQuestions: [
                     "How noticeable were the chocolate notes?",
@@ -92,14 +92,14 @@ exports.createDemoBrewery = functions.https.onCall(async (data, context) => {
             },
             {
                 id: "WHEAT-2025-001",
-                name: "Summer Wheat",
-                intro: "Light and refreshing wheat beer with subtle citrus notes, perfect for sunny days.",
+                beerName: "Summer Wheat",
+                beerIntro: "Light and refreshing wheat beer with subtle citrus notes, perfect for sunny days.",
                 abv: 4.8,
                 ibu: 18,
                 style: "American Wheat",
                 batchCode: "WHEAT-2025-001",
-                packagedDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-                active: true,
+                packagedDate: "2025-01-22",
+                isActive: true,
                 createdAt: admin.firestore.FieldValue.serverTimestamp(),
                 customQuestions: [
                     "How refreshing did you find this beer?",
@@ -171,19 +171,19 @@ exports.createDemoBrewery = functions.https.onCall(async (data, context) => {
                 sampleResponses.push({
                     batchId: batchId,
                     overallRating: rating,
-                    responses: {
-                        sweetness: variance(),
-                        acidity: variance(),
-                        bitterness: batchId === "WCIPA-2025-001" ? Math.max(3, variance()) : variance(),
-                        body: batchId === "PORTER-2025-001" ? Math.max(4, variance()) : variance(),
-                        carbonation: variance(),
-                        maltFlavors: batchId === "PORTER-2025-001" ? Math.max(4, variance()) : variance(),
-                        hopFlavors: batchId === "WCIPA-2025-001" ? Math.max(4, variance()) : Math.max(1, Math.min(3, variance())),
-                        finish: variance(),
-                        customQuestion1: variance(),
-                        customQuestion2: variance(),
-                        customQuestion3: variance()
-                    },
+                    surveyAnswers: [
+                        { questionId: 0, answer: variance() }, // sweetness
+                        { questionId: 1, answer: variance() }, // acidity
+                        { questionId: 2, answer: batchId === "WCIPA-2025-001" ? Math.max(3, variance()) : variance() }, // bitterness
+                        { questionId: 3, answer: batchId === "PORTER-2025-001" ? Math.max(4, variance()) : variance() }, // body
+                        { questionId: 4, answer: variance() }, // carbonation
+                        { questionId: 5, answer: batchId === "PORTER-2025-001" ? Math.max(4, variance()) : variance() }, // malt
+                        { questionId: 6, answer: batchId === "WCIPA-2025-001" ? Math.max(4, variance()) : Math.max(1, Math.min(3, variance())) }, // hop
+                        { questionId: 7, answer: variance() }, // finish
+                        { questionId: 8, answer: variance() }, // custom 1
+                        { questionId: 9, answer: variance() }, // custom 2
+                        { questionId: 10, answer: variance() } // custom 3
+                    ],
                     comments: rating >= 4 ? comments[batchId][i % comments[batchId].length] : (rating === 3 ? "Decent beer, nothing special." : "Not really my style."),
                     submittedAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
                     userId: `user_${String(i + 1).padStart(3, '0')}_${batchId.split('-')[0]}`

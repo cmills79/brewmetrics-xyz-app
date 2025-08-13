@@ -283,6 +283,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (contentArea) contentArea.scrollTop = 0;
             });
         }
+        // View All links in summary cards
+        const viewAllLinks = document.querySelectorAll('.summary-card-footer a');
+        viewAllLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetSection = link.getAttribute('href');
+                if (targetSection && targetSection.startsWith('#')) {
+                    setActiveSection(targetSection.substring(1));
+                    const contentArea = document.getElementById('dashboard-content-area');
+                    if (contentArea) contentArea.scrollTop = 0;
+                }
+            });
+        });
+        
         // Add any other event listeners here that *must* be set up only once a user is authenticated
         // and the dashboard elements are guaranteed to be in the DOM and ready for interaction.
         // For instance, if any elements are dynamically added or become interactive only after a user logs in.

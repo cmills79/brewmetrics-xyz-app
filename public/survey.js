@@ -74,14 +74,16 @@ const VIDEO_EXTENSION = '.mp4';
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Survey page script loaded. SKIP_VIDEOS:", SKIP_VIDEOS, "VIDEO_BASE_PATH:", VIDEO_BASE_PATH);
     
-    // Initialize enhanced data capture if available
-    if (window.enhancedSurveyCapture) {
-        window.enhancedSurveyCapture.trackInteraction('survey_start', {
-            breweryId: breweryId,
-            batchId: batchId
-        });
-    }
-
+    // --- State Variables (moved up before first use) ---
+    let currentQuestionIndex = 0;
+    let surveyAnswers = [];
+    let breweryId = null;
+    let batchId = null;
+    let currentSelectedRating = null;
+    let breweryGmbLink = null;
+    let combinedQuestions = [...surveyQuestions];
+    let overallRating = null;
+    
     // --- Get DOM Elements ---
     const beerNameIntroDisplay = document.getElementById('beer-name-intro');
     const questionNumberDisplay = document.getElementById('question-number');
@@ -105,15 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const surveyVideo = document.getElementById('survey-video');
     const videoLoading = document.getElementById('video-loading');
 
-    // --- State Variables ---
-    let currentQuestionIndex = 0;
-    let surveyAnswers = [];
-    let breweryId = null;
-    let batchId = null;
-    let currentSelectedRating = null;
-    let breweryGmbLink = null;
-    let combinedQuestions = [...surveyQuestions];
-    let overallRating = null;
+
 
     // --- Function to display error message ---
     function displaySurveyError(message) {
@@ -142,6 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!breweryId || !batchId) {
             throw new Error("Missing Brewery ID or Batch ID in URL.");
         }
+        
+        // Initialize enhanced data capture after getting IDs
+        if (window.enhancedSurveyCapture) {
+            window.enhancedSurveyCapture.trackInteraction('survey_start', {
+                breweryId: breweryId,
+                batchId: batchId
+            });
+        }
     } catch (error) {
         displaySurveyError("Error: Could not retrieve brewery or beer information from the URL. Please go back and select the beer again.");
         return;
@@ -168,15 +170,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     beerNameIntroDisplay.classList.remove('hidden');
                 }
                 if (batchData.customQuestions && Array.isArray(batchData.customQuestions)) {
-                     fetchedQuestions = batchData.customQuestions.map((q, index) => ({
+                     fetchedQuestions = batchData.customQuestions.map((questionText, index) => ({
                          id: surveyQuestions.length + 1 + index,
-                         text: q.text || `Custom Question ${index + 1}`,
+                         text: questionText || `Custom Question ${index + 1}`,
                          ratings: [ { value: 1, caption: "Very Low / Not Present" }, { value: 2, caption: "Slightly Noticeable" }, { value: 3, caption: "Moderately Noticeable" }, { value: 4, caption: "Quite Strong" }, { value: 5, caption: "Very Strong / Dominant" } ],
-                         tooltip: q.tooltip || "Rate the intensity or presence of this characteristic.",
-                         explanation: q.explanation || "This is a custom characteristic defined by the brewery for this specific beer."
+                         tooltip: "Rate the intensity or presence of this characteristic.",
+                         explanation: "This is a custom characteristic defined by the brewery for this specific beer."
                      }));
                      combinedQuestions = [...surveyQuestions, ...fetchedQuestions];
                      console.log(`Total questions (default + custom): ${combinedQuestions.length}`);
+                     console.log('Custom questions:', fetchedQuestions);
                 } else {
                     combinedQuestions = [...surveyQuestions];
                 }
@@ -391,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const previousQuestion = combinedQuestions[currentQuestionIndex];
         surveyAnswers.push({
-            questionId: previousQuestion.id,
+            questionId: currentQuestionIndex, // Use index for proper ordering
             questionText: previousQuestion.text,
             answer: currentSelectedRating
         });

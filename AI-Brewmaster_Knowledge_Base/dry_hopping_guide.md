@@ -7,14 +7,17 @@ Dry hopping is the addition of hops to beer during or after fermentation, withou
 ## Timing Strategies
 
 **During Active Fermentation (Days 2-4):**
+
 - Biotransformation effects, CO2 purging reduces oxidation
 - Best for tropical fruit character, NEIPA styles
 
 **Late Fermentation (Days 5-7):**
+
 - Balanced extraction, good aroma retention
 - Best for traditional IPAs, balanced hop character
 
 **Post-Fermentation (Cold):**
+
 - Maximum aroma retention, no yeast interaction
 - Best for delicate hop varieties, final aroma boost
 
@@ -28,6 +31,7 @@ Dry hopping is the addition of hops to beer during or after fermentation, withou
 ## Best Hop Varieties
 
 **High-Oil Varieties:**
+
 - Citra: Tropical fruit, citrus
 - Mosaic: Berry, tropical, floral
 - Galaxy: Passion fruit, citrus
