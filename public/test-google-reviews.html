@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Google Reviews - BrewMetrics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="google-reviews-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .auth-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .auth-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #dc3545;
+        }
+        .status-indicator.connected {
+            background: #28a745;
+        }
+        .login-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .login-form input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .login-form button {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-form button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1><i class="fab fa-google"></i> Google Reviews Test Page</h1>
+            <p>Test the Google Reviews functionality for BrewMetrics</p>
+        </div>
+
+        <div class="auth-section">
+            <div class="auth-status">
+                <div class="status-indicator" id="auth-indicator"></div>
+                <span id="auth-status-text">Not authenticated</span>
+            </div>
+            <div class="login-form" id="login-form">
+                <input type="email" id="test-email" placeholder="test@brewery.com" value="test@brewery.com">
+                <input type="password" id="test-password" placeholder="password" value="password123">
+                <button onclick="testLogin()">Login</button>
+                <button onclick="testLogout()">Logout</button>
+            </div>
+        </div>
+
+        <section id="google-reviews-section" class="dashboard-section">
+            <!-- Google Reviews content will be populated here -->
+        </section>
+    </div>
+
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmvUqgMlnaQFiyqlo50D66fX0Bwav3j1k",
+            authDomain: "brewmetrics-xyz-app-e8d51.firebaseapp.com",
+            projectId: "brewmetrics-xyz-app-e8d51",
+            storageBucket: "brewmetrics-xyz-app-e8d51.appspot.com",
+            messagingSenderId: "391623246374",
+            appId: "1:391623246374:web:3b8e39db5fff674befdce7",
+            measurementId: "G-MHT3H2ZVRY"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        const functions = firebase.functions();
+
+        // Test authentication functions
+        async function testLogin() {
+            const email = document.getElementById('test-email').value;
+            const password = document.getElementById('test-password').value;
+            
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                console.log('Login successful');
+            } catch (error) {
+                console.error('Login failed:', error);
+                // For testing, create a test user if login fails
+                try {
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    console.log('Test user created:', userCredential.user.uid);
+                    
+                    // Create test brewery data
+                    await db.collection('breweries').doc(userCredential.user.uid).set({
+                        name: 'Test Brewery',
+                        email: email,
+                        location: 'Test City, TS',
+                        gmbReviewLink: 'https://example.com/reviews',
+                        gmbAvgRating: 4.5,
+                        gmbTotalReviews: 25,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    console.log('Test brewery data created');
+                } catch (createError) {
+                    console.error('Failed to create test user:', createError);
+                }
+            }
+        }
+
+        async function testLogout() {
+            try {
+                await auth.signOut();
+                console.log('Logout successful');
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
+        }
+
+        // Monitor auth state
+        auth.onAuthStateChanged((user) => {
+            const indicator = document.getElementById('auth-indicator');
+            const statusText = document.getElementById('auth-status-text');
+            
+            if (user) {
+                indicator.classList.add('connected');
+                statusText.textContent = `Authenticated as ${user.email}`;
+                
+                // Initialize Google Reviews Manager
+                if (window.googleReviewsManager) {
+                    window.googleReviewsManager.loadBreweryData();
+                }
+            } else {
+                indicator.classList.remove('connected');
+                statusText.textContent = 'Not authenticated';
+            }
+        });
+    </script>
+    
+    <!-- Google Reviews Integration -->
+    <script src="google-reviews.js"></script>
+</body>
+</html>

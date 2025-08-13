@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Setup - BrewMetrics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .demo-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .demo-header {
+            margin-bottom: 30px;
+        }
+        .demo-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .demo-header p {
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+        .demo-features {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .demo-features h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-list i {
+            color: #28a745;
+            width: 20px;
+        }
+        .setup-button {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+        }
+        .setup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+        .setup-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .credentials-box {
+            background: #e8f5e8;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        .credentials-box.show {
+            display: block;
+        }
+        .credential-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+        .credential-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .credential-value {
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 3px;
+            border: 1px solid #dee2e6;
+        }
+        .copy-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        .status-message.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .status-message.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .login-link {
+            margin-top: 20px;
+        }
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1><i class="fas fa-beer"></i> BrewMetrics Demo Setup</h1>
+            <p>Create a complete demo brewery with sample data to explore all features</p>
+        </div>
+
+        <div class="demo-features">
+            <h3>What You'll Get:</h3>
+            <ul class="feature-list">
+                <li><i class="fas fa-check"></i> Complete brewery profile (Hop Valley Brewing Co.)</li>
+                <li><i class="fas fa-check"></i> 3 sample beer batches with different styles</li>
+                <li><i class="fas fa-check"></i> Real customer survey responses</li>
+                <li><i class="fas fa-check"></i> Google Reviews with response examples</li>
+                <li><i class="fas fa-check"></i> Analytics dashboard with charts</li>
+                <li><i class="fas fa-check"></i> QR codes for customer surveys</li>
+                <li><i class="fas fa-check"></i> AI Recipe Generator access</li>
+                <li><i class="fas fa-check"></i> Premium features demonstration</li>
+            </ul>
+        </div>
+
+        <button id="setup-demo" class="setup-button">
+            <i class="fas fa-rocket"></i> Create Demo Brewery
+        </button>
+
+        <div id="status-message" class="status-message"></div>
+
+        <div id="credentials-box" class="credentials-box">
+            <h3><i class="fas fa-key"></i> Demo Login Credentials</h3>
+            <p>Use these credentials to log into your demo brewery:</p>
+            
+            <div class="credential-item">
+                <span class="credential-label">Email:</span>
+                <div>
+                    <span class="credential-value" id="demo-email">demo@hopvalleybrewing.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('demo-email')">Copy</button>
+                </div>
+            </div>
+            
+            <div class="credential-item">
+                <span class="credential-label">Password:</span>
+                <div>
+                    <span class="credential-value" id="demo-password">demo123456</span>
+                    <button class="copy-btn" onclick="copyToClipboard('demo-password')">Copy</button>
+                </div>
+            </div>
+            
+            <div class="credential-item">
+                <span class="credential-label">Brewery Name:</span>
+                <div>
+                    <span class="credential-value" id="demo-brewery">Hop Valley Brewing Co.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-link">
+            <a href="index.html"><i class="fas fa-sign-in-alt"></i> Go to Login Page</a>
+        </div>
+    </div>
+
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmvUqgMlnaQFiyqlo50D66fX0Bwav3j1k",
+            authDomain: "brewmetrics-xyz-app-e8d51.firebaseapp.com",
+            projectId: "brewmetrics-xyz-app-e8d51",
+            storageBucket: "brewmetrics-xyz-app-e8d51.appspot.com",
+            messagingSenderId: "391623246374",
+            appId: "1:391623246374:web:3b8e39db5fff674befdce7",
+            measurementId: "G-MHT3H2ZVRY"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const functions = firebase.functions();
+
+        async function setupDemo() {
+            const setupButton = document.getElementById('setup-demo');
+            const statusMessage = document.getElementById('status-message');
+            const credentialsBox = document.getElementById('credentials-box');
+            
+            setupButton.disabled = true;
+            setupButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Demo Brewery...';
+            
+            statusMessage.style.display = 'none';
+            credentialsBox.classList.remove('show');
+            
+            try {
+                const createDemo = functions.httpsCallable('createDemoBrewery');
+                const result = await createDemo();
+                
+                if (result.data.success) {
+                    statusMessage.className = 'status-message success';
+                    statusMessage.innerHTML = `
+                        <i class="fas fa-check-circle"></i> 
+                        <strong>Demo brewery created successfully!</strong><br>
+                        Created ${result.data.data.batches} beer batches, 
+                        ${result.data.data.responses} survey responses, and 
+                        ${result.data.data.reviews} Google reviews.
+                    `;
+                    statusMessage.style.display = 'block';
+                    credentialsBox.classList.add('show');
+                    
+                    setupButton.innerHTML = '<i class="fas fa-check"></i> Demo Created Successfully!';
+                    setupButton.style.background = '#28a745';
+                } else {
+                    throw new Error('Demo creation failed');
+                }
+                
+            } catch (error) {
+                console.error('Error creating demo:', error);
+                statusMessage.className = 'status-message error';
+                statusMessage.innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    <strong>Error creating demo brewery:</strong><br>
+                    ${error.message || 'Unknown error occurred'}
+                `;
+                statusMessage.style.display = 'block';
+                
+                setupButton.disabled = false;
+                setupButton.innerHTML = '<i class="fas fa-rocket"></i> Create Demo Brewery';
+            }
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const button = element.nextElementSibling;
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#007bff';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        document.getElementById('setup-demo').addEventListener('click', setupDemo);
+    </script>
+</body>
+</html>

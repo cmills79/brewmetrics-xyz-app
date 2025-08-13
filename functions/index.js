@@ -354,7 +354,77 @@ exports.loadRecipeIntoDesigner = functions.https.onCall(async (data, context) =>
   }
 });
 
-// Export data pipeline functions - temporarily disabled for deployment
-// exports.syncSurveyToBigQuery = syncSurveyToBigQuery;
-// exports.backfillSurveyData = backfillSurveyData;
-    return {response: text};
+/**
+ * Google My Business Reviews Integration
+ */
+exports.fetchGoogleReviews = functions.https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated');
+    }
+
+    const { breweryId } = data;
+    
+    try {
+        // Simulated reviews data - in production would use GMB API
+        const simulatedReviews = [
+            {
+                reviewId: 'gmb_review_1',
+                author: 'John Smith',
+                rating: 5,
+                text: 'Excellent brewery with great atmosphere!',
+                createTime: new Date().toISOString(),
+                reviewReply: null
+            },
+            {
+                reviewId: 'gmb_review_2', 
+                author: 'Jane Doe',
+                rating: 4,
+                text: 'Good beer selection, friendly staff.',
+                createTime: new Date(Date.now() - 86400000).toISOString(),
+                reviewReply: {
+                    comment: 'Thank you for your kind words!',
+                    updateTime: new Date().toISOString()
+                }
+            }
+        ];
+
+        return {
+            success: true,
+            reviews: simulatedReviews,
+            totalReviews: simulatedReviews.length,
+            averageRating: simulatedReviews.reduce((sum, r) => sum + r.rating, 0) / simulatedReviews.length
+        };
+
+    } catch (error) {
+        functions.logger.error('Error fetching Google reviews:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to fetch reviews');
+    }
+});
+
+exports.respondToGoogleReview = functions.https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated');
+    }
+
+    const { reviewId, responseText } = data;
+    
+    if (!responseText || responseText.trim().length === 0) {
+        throw new functions.https.HttpsError('invalid-argument', 'Response text is required');
+    }
+
+    try {
+        // In production, would call GMB API to post response
+        return {
+            success: true,
+            message: 'Response posted successfully'
+        };
+
+    } catch (error) {
+        functions.logger.error('Error responding to review:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to post response');
+    }
+});
+
+// Import and export demo setup function
+const { createDemoBrewery } = require('./demo-setup');
+exports.createDemoBrewery = createDemoBrewery;
