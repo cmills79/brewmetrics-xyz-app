@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewMetrics - Modern UI Libraries Integration</title>
+    
+    <!-- Modern CSS Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.css" rel="stylesheet">
+    
+    <!-- Our Enhanced UI Styles -->
+    <link href="enhanced-ui.css" rel="stylesheet">
+    <link href="advanced-components.css" rel="stylesheet">
+    
+    <style>
+        /* Demo Page Specific Styles */
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .demo-section {
+            margin-bottom: 60px;
+        }
+        
+        .demo-title {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .demo-subtitle {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-showcase {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+        
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js" class="particles-bg"></div>
+    
+    <!-- Main Content -->
+    <div class="demo-container">
+        <h1 class="demo-title animate__animated animate__fadeInDown">
+            BrewMetrics Enhanced UI Demo
+        </h1>
+        
+        <!-- Metric Cards Section -->
+        <section class="demo-section" data-aos="fade-up">
+            <h2 class="demo-subtitle">Advanced Metric Cards</h2>
+            <div class="demo-grid">
+                <div data-component="metric-card" 
+                     data-config='{"value": 1250, "label": "Total Surveys", "icon": "fas fa-poll", "change": 12.5, "chartData": {"labels": ["Jan", "Feb", "Mar", "Apr"], "values": [100, 150, 120, 180]}}'></div>
+                
+                <div data-component="metric-card" 
+                     data-config='{"value": 4.8, "label": "Average Rating", "icon": "fas fa-star", "change": 5.2, "chartData": {"labels": ["Jan", "Feb", "Mar", "Apr"], "values": [4.2, 4.5, 4.7, 4.8]}}'></div>
+                
+                <div data-component="metric-card" 
+                     data-config='{"value": 89, "label": "Customer Satisfaction", "icon": "fas fa-heart", "change": -2.1, "chartData": {"labels": ["Jan", "Feb", "Mar", "Apr"], "values": [85, 87, 91, 89]}}'></div>
+            </div>
+        </section>
+        
+        <!-- Progress Rings Section -->
+        <section class="demo-section" data-aos="fade-up" data-aos-delay="100">
+            <h2 class="demo-subtitle">Progress Indicators</h2>
+            <div class="demo-grid">
+                <div class="feature-showcase">
+                    <h3>Brewing Progress</h3>
+                    <div data-component="progress-ring" 
+                         data-config='{"value": 75, "max": 100, "size": 120, "strokeWidth": 8}'></div>
+                </div>
+                
+                <div class="feature-showcase">
+                    <h3>Quality Score</h3>
+                    <div data-component="progress-ring" 
+                         data-config='{"value": 92, "max": 100, "size": 120, "strokeWidth": 8}'></div>
+                </div>
+                
+                <div class="feature-showcase">
+                    <h3>Customer Retention</h3>
+                    <div data-component="progress-ring" 
+                         data-config='{"value": 68, "max": 100, "size": 120, "strokeWidth": 8}'></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Chart Widgets Section -->
+        <section class="demo-section" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="demo-subtitle">Interactive Chart Widgets</h2>
+            <div class="demo-grid">
+                <div data-component="chart-widget" 
+                     data-config='{
+                         "title": "Survey Responses Over Time",
+                         "type": "line",
+                         "data": {
+                             "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                             "datasets": [{
+                                 "label": "Responses",
+                                 "data": [65, 78, 90, 81, 95, 102],
+                                 "borderColor": "rgb(37, 99, 235)",
+                                 "backgroundColor": "rgba(37, 99, 235, 0.1)",
+                                 "tension": 0.4,
+                                 "fill": true
+                             }]
+                         }
+                     }'></div>
+                
+                <div data-component="chart-widget" 
+                     data-config='{
+                         "title": "Beer Style Preferences",
+                         "type": "doughnut",
+                         "data": {
+                             "labels": ["IPA", "Lager", "Stout", "Wheat", "Pilsner"],
+                             "datasets": [{
+                                 "data": [30, 25, 20, 15, 10],
+                                 "backgroundColor": [
+                                     "#667eea", "#764ba2", "#f093fb", "#f5576c", "#4facfe"
+                                 ]
+                             }]
+                         }
+                     }'></div>
+            </div>
+        </section>
+        
+        <!-- Advanced Data Table Section -->
+        <section class="demo-section" data-aos="fade-up" data-aos-delay="300">
+            <h2 class="demo-subtitle">Advanced Data Table</h2>
+            <div data-component="data-table" 
+                 data-config='{"itemsPerPage": 5}'
+                 data-data='[
+                     {"batch": "IPA-001", "style": "American IPA", "rating": 4.5, "responses": 23, "date": "2024-01-15"},
+                     {"batch": "LAG-002", "style": "German Lager", "rating": 4.2, "responses": 18, "date": "2024-01-12"},
+                     {"batch": "STO-003", "style": "Imperial Stout", "rating": 4.8, "responses": 31, "date": "2024-01-10"},
+                     {"batch": "WHE-004", "style": "Wheat Beer", "rating": 4.1, "responses": 15, "date": "2024-01-08"},
+                     {"batch": "PIL-005", "style": "Czech Pilsner", "rating": 4.6, "responses": 27, "date": "2024-01-05"}
+                 ]'></div>
+        </section>
+        
+        <!-- Timeline Section -->
+        <section class="demo-section" data-aos="fade-up" data-aos-delay="400">
+            <h2 class="demo-subtitle">Brewing Timeline</h2>
+            <div data-component="timeline" 
+                 data-events='[
+                     {"title": "Mash In", "description": "Started mashing process at 152°F", "date": "Day 1 - 9:00 AM", "icon": "fas fa-thermometer-half"},
+                     {"title": "Boil Started", "description": "60-minute boil with hop additions", "date": "Day 1 - 10:30 AM", "icon": "fas fa-fire"},
+                     {"title": "Fermentation", "description": "Pitched yeast and started fermentation", "date": "Day 1 - 2:00 PM", "icon": "fas fa-flask"},
+                     {"title": "Dry Hop", "description": "Added dry hops for aroma", "date": "Day 5 - 10:00 AM", "icon": "fas fa-leaf"},
+                     {"title": "Packaging", "description": "Kegged and ready for serving", "date": "Day 14 - 3:00 PM", "icon": "fas fa-wine-bottle"}
+                 ]'></div>
+        </section>
+        
+        <!-- Interactive Elements Section -->
+        <section class="demo-section" data-aos="fade-up" data-aos-delay="500">
+            <h2 class="demo-subtitle">Interactive Elements</h2>
+            <div class="demo-grid">
+                <div class="feature-showcase">
+                    <h3>File Upload</h3>
+                    <div data-component="file-upload" 
+                         data-config='{"accept": ".csv,.xlsx", "multiple": true}'></div>
+                </div>
+                
+                <div class="feature-showcase">
+                    <h3>Advanced Search</h3>
+                    <div data-component="search-box" 
+                         data-config='{"placeholder": "Search batches, styles, or ratings..."}'></div>
+                </div>
+                
+                <div class="feature-showcase">
+                    <h3>Rating System</h3>
+                    <div data-component="rating-stars" 
+                         data-config='{"rating": 4, "maxStars": 5}'></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Action Buttons -->
+        <section class="demo-section" data-aos="fade-up" data-aos-delay="600">
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn btn-primary hover-lift" onclick="showDemo()">
+                    <i class="fas fa-play"></i> Start Interactive Demo
+                </button>
+                <button class="btn btn-secondary hover-lift" onclick="toggleTheme()">
+                    <i class="fas fa-palette"></i> Toggle Theme
+                </button>
+                <button class="btn btn-success hover-lift" onclick="showNotification()">
+                    <i class="fas fa-bell"></i> Test Notification
+                </button>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Modern JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy-bundle.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    
+    <!-- Our Enhanced UI Scripts -->
+    <script src="enhanced-ui.js"></script>
+    <script src="advanced-components.js"></script>
+    
+    <script>
+        // Demo Functions
+        function showDemo() {
+            if (window.enhancedUI) {
+                window.enhancedUI.showNotification('Interactive demo started! Explore all the enhanced features.', 'success');
+                
+                // Animate all cards
+                gsap.from('.card', {
+                    duration: 0.8,
+                    y: 50,
+                    opacity: 0,
+                    stagger: 0.1,
+                    ease: 'power2.out'
+                });
+            }
+        }
+        
+        function toggleTheme() {
+            if (window.enhancedUI) {
+                window.enhancedUI.toggleTheme();
+            }
+        }
+        
+        function showNotification() {
+            if (window.enhancedUI) {
+                const messages = [
+                    'New survey response received!',
+                    'Batch analysis complete.',
+                    'Quality metrics updated.',
+                    'Customer feedback processed.'
+                ];
+                const types = ['success', 'info', 'warning'];
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                const randomType = types[Math.floor(Math.random() * types.length)];
+                
+                window.enhancedUI.showNotification(randomMessage, randomType);
+            }
+        }
+        
+        // Initialize enhanced features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 100
+            });
+            
+            // Initialize Particles
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 80 },
+                        color: { value: '#667eea' },
+                        shape: { type: 'circle' },
+                        opacity: { 
+                            value: 0.1,
+                            random: true
+                        },
+                        size: { 
+                            value: 3,
+                            random: true
+                        },
+                        move: {
+                            enable: true,
+                            speed: 1,
+                            direction: 'none',
+                            random: true,
+                            out_mode: 'out'
+                        }
+                    },
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: {
+                            onhover: { enable: true, mode: 'repulse' },
+                            onclick: { enable: true, mode: 'push' }
+                        },
+                        modes: {
+                            repulse: { distance: 100 },
+                            push: { particles_nb: 4 }
+                        }
+                    }
+                });
+            }
+            
+            // Initialize Tooltips
+            if (typeof tippy !== 'undefined') {
+                tippy('[data-tippy-content]', {
+                    theme: 'brewmetrics',
+                    animation: 'scale'
+                });
+            }
+            
+            // Add some interactive elements
+            setTimeout(() => {
+                // Add tooltips to buttons
+                document.querySelectorAll('.btn').forEach(btn => {
+                    if (!btn.hasAttribute('data-tippy-content')) {
+                        btn.setAttribute('data-tippy-content', 'Click to interact');
+                    }
+                });
+                
+                // Re-initialize tooltips
+                if (typeof tippy !== 'undefined') {
+                    tippy('[data-tippy-content]');
+                }
+            }, 1000);
+        });
+        
+        // GSAP Animations for enhanced interactions
+        if (typeof gsap !== 'undefined') {
+            // Hover animations for cards
+            document.addEventListener('mouseenter', (e) => {
+                if (e.target.classList.contains('card')) {
+                    gsap.to(e.target, {
+                        duration: 0.3,
+                        y: -8,
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+                        ease: 'power2.out'
+                    });
+                }
+            }, true);
+            
+            document.addEventListener('mouseleave', (e) => {
+                if (e.target.classList.contains('card')) {
+                    gsap.to(e.target, {
+                        duration: 0.3,
+                        y: 0,
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                        ease: 'power2.out'
+                    });
+                }
+            }, true);
+        }
+    </script>
+</body>
+</html>

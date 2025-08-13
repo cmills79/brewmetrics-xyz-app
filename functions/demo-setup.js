@@ -120,92 +120,76 @@ exports.createDemoBrewery = functions.https.onCall(async (data, context) => {
         });
         await batch.commit();
 
-        // Create sample survey responses
-        const sampleResponses = [
-            // Citrus Burst IPA responses
-            {
-                batchId: "WCIPA-2025-001",
-                overallRating: 5,
-                responses: {
-                    sweetness: 2,
-                    acidity: 3,
-                    bitterness: 5,
-                    body: 4,
-                    carbonation: 4,
-                    maltFlavors: 3,
-                    hopFlavors: 5,
-                    finish: 4,
-                    customQuestion1: 5,
-                    customQuestion2: 4,
-                    customQuestion3: 5
-                },
-                comments: "Absolutely fantastic IPA! The citrus hops really shine through.",
-                submittedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-                userId: "user_001"
-            },
-            {
-                batchId: "WCIPA-2025-001",
-                overallRating: 4,
-                responses: {
-                    sweetness: 2,
-                    acidity: 3,
-                    bitterness: 4,
-                    body: 4,
-                    carbonation: 4,
-                    maltFlavors: 3,
-                    hopFlavors: 4,
-                    finish: 4,
-                    customQuestion1: 4,
-                    customQuestion2: 4,
-                    customQuestion3: 4
-                },
-                comments: "Great IPA, maybe a touch too bitter for my taste but well made.",
-                submittedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-                userId: "user_002"
-            },
-            // Midnight Porter responses
-            {
-                batchId: "PORTER-2025-001",
-                overallRating: 5,
-                responses: {
-                    sweetness: 3,
-                    acidity: 2,
-                    bitterness: 3,
-                    body: 5,
-                    carbonation: 3,
-                    maltFlavors: 5,
-                    hopFlavors: 2,
-                    finish: 5,
-                    customQuestion1: 5,
-                    customQuestion2: 4,
-                    customQuestion3: 5
-                },
-                comments: "Perfect porter! Love the chocolate and coffee notes.",
-                submittedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-                userId: "user_003"
-            },
-            // Summer Wheat responses
-            {
-                batchId: "WHEAT-2025-001",
-                overallRating: 4,
-                responses: {
-                    sweetness: 3,
-                    acidity: 3,
-                    bitterness: 2,
-                    body: 3,
-                    carbonation: 4,
-                    maltFlavors: 3,
-                    hopFlavors: 2,
-                    finish: 4,
-                    customQuestion1: 4,
-                    customQuestion2: 3,
-                    customQuestion3: 4
-                },
-                comments: "Very refreshing summer beer, perfect for the patio.",
-                submittedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-                userId: "user_004"
+        // Generate 100+ sample survey responses per batch
+        const sampleResponses = [];
+        const batchIds = ["WCIPA-2025-001", "PORTER-2025-001", "WHEAT-2025-001"];
+        
+        const comments = {
+            "WCIPA-2025-001": [
+                "Absolutely fantastic IPA! The citrus hops really shine through.",
+                "Great IPA, maybe a touch too bitter for my taste but well made.",
+                "Love the hop forward profile, perfect balance.",
+                "Citrus notes are amazing, very drinkable.",
+                "Best IPA I've had in a while!",
+                "Nice hoppy finish, would order again.",
+                "Excellent beer, great aroma.",
+                "Perfect bitterness level for an IPA.",
+                "Outstanding citrus character.",
+                "Really well crafted beer."
+            ],
+            "PORTER-2025-001": [
+                "Perfect porter! Love the chocolate and coffee notes.",
+                "Rich and smooth, exactly what I want in a porter.",
+                "Great roasted malt character.",
+                "Excellent balance of chocolate and coffee.",
+                "Smooth finish, very drinkable.",
+                "Perfect for a cold evening.",
+                "Love the mouthfeel on this one.",
+                "Great dark beer, not too heavy.",
+                "Excellent porter, will definitely have another.",
+                "Perfect roasted flavor profile."
+            ],
+            "WHEAT-2025-001": [
+                "Very refreshing summer beer, perfect for the patio.",
+                "Light and crisp, exactly what I needed.",
+                "Great wheat character, very smooth.",
+                "Perfect summer refresher.",
+                "Love the citrus notes in this wheat.",
+                "Easy drinking, great for hot days.",
+                "Excellent wheat beer, very balanced.",
+                "Perfect for outdoor drinking.",
+                "Light and refreshing, great flavor.",
+                "Smooth wheat beer, really enjoyable."
+            ]
+        };
+
+        batchIds.forEach(batchId => {
+            for (let i = 0; i < 120; i++) {
+                const rating = Math.random() < 0.7 ? (Math.random() < 0.5 ? 5 : 4) : (Math.random() < 0.7 ? 3 : (Math.random() < 0.8 ? 2 : 1));
+                const variance = () => Math.max(1, Math.min(5, Math.round(rating + (Math.random() - 0.5) * 2)));
+                
+                sampleResponses.push({
+                    batchId: batchId,
+                    overallRating: rating,
+                    responses: {
+                        sweetness: variance(),
+                        acidity: variance(),
+                        bitterness: batchId === "WCIPA-2025-001" ? Math.max(3, variance()) : variance(),
+                        body: batchId === "PORTER-2025-001" ? Math.max(4, variance()) : variance(),
+                        carbonation: variance(),
+                        maltFlavors: batchId === "PORTER-2025-001" ? Math.max(4, variance()) : variance(),
+                        hopFlavors: batchId === "WCIPA-2025-001" ? Math.max(4, variance()) : Math.max(1, Math.min(3, variance())),
+                        finish: variance(),
+                        customQuestion1: variance(),
+                        customQuestion2: variance(),
+                        customQuestion3: variance()
+                    },
+                    comments: rating >= 4 ? comments[batchId][i % comments[batchId].length] : (rating === 3 ? "Decent beer, nothing special." : "Not really my style."),
+                    submittedAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+                    userId: `user_${String(i + 1).padStart(3, '0')}_${batchId.split('-')[0]}`
+                });
             }
-        ];
+        });
 
         const responseBatch = admin.firestore().batch();
         sampleResponses.forEach((response, index) => {

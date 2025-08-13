@@ -14,8 +14,29 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="google-reviews-styles.css">
     <link rel="stylesheet" href="advanced-analytics-styles.css">
+    
+    <!-- Enhanced UI Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.css" rel="stylesheet">
+    
+    <!-- Enhanced UI Styles -->
+    <link href="enhanced-ui.css" rel="stylesheet">
+    <link href="advanced-components.css" rel="stylesheet">
+    
+    <!-- Brewery Theme -->
+    <link href="brewery-theme.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Enhanced UI Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy-bundle.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 
     <style>
         /* Existing styles from your HTML for modals and feedback items - Preserved */
@@ -399,7 +420,15 @@
     </style>
 </head>
 <body>
-    <div id="loading-indicator" style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 1.2em;">Loading Brewery Dashboard...</div>
+    <!-- Particles Background -->
+    <div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></div>
+    
+    <div id="loading-indicator" style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 1.2em;">
+        <div class="loading-content animate__animated animate__fadeIn">
+            <div class="loading-spinner"></div>
+            <p style="margin-top: 20px;">Loading BrewMetrics Dashboard...</p>
+        </div>
+    </div>
 
     <div id="app-container" class="hidden">
         <aside id="sidebar">
@@ -461,27 +490,27 @@
                     </div>
 
                     <div class="summary-cards-container">
-                        <div class="summary-card">
+                        <div class="summary-card card hover-lift" data-aos="fade-up" data-aos-delay="100">
                             <div class="summary-card-content">
                                 <div class="summary-card-icon batches"><i class="fas fa-box-open"></i></div>
                                 <div class="summary-card-info">
                                     <h4>Active Batches</h4>
-                                    <div class="value">0</div>
+                                    <div class="value" data-component="metric-card" data-config='{"value": 0}'>0</div>
                                 </div>
                             </div>
                             <div class="summary-card-footer"><a href="#batch-management-section">View all</a></div>
                         </div>
-                        <div class="summary-card">
+                        <div class="summary-card card hover-lift" data-aos="fade-up" data-aos-delay="200">
                             <div class="summary-card-content">
                                 <div class="summary-card-icon feedback"><i class="fas fa-comments"></i></div>
                                 <div class="summary-card-info">
                                     <h4>Feedback Responses</h4>
-                                    <div class="value">0</div>
+                                    <div class="value" data-component="metric-card" data-config='{"value": 0}'>0</div>
                                 </div>
                             </div>
                             <div class="summary-card-footer"><a href="#batch-management-section">View all</a></div>
                         </div>
-                        <div class="summary-card">
+                        <div class="summary-card card hover-lift" data-aos="fade-up" data-aos-delay="300">
                             <div class="summary-card-content">
                                 <div class="summary-card-icon reviews"><i class="fas fa-star"></i></div>
                                 <div class="summary-card-info">
@@ -491,12 +520,12 @@
                             </div>
                             <div class="summary-card-footer"><a href="#google-reviews-section">Manage reviews</a></div>
                         </div>
-                        <div class="summary-card">
+                        <div class="summary-card card hover-lift" data-aos="fade-up" data-aos-delay="400">
                             <div class="summary-card-content">
                                 <div class="summary-card-icon discounts"><i class="fas fa-tags"></i></div>
                                 <div class="summary-card-info">
                                     <h4>Active Discount Offers</h4>
-                                    <div class="value">0</div>
+                                    <div class="value" data-component="metric-card" data-config='{"value": 0}'>0</div>
                                 </div>
                             </div>
                             <div class="summary-card-footer"><a href="#settings-section">Manage offers</a></div>
@@ -505,7 +534,7 @@
 
                     <div class="dashboard-section" style="display:block; background-color:transparent; box-shadow:none; padding:0; border-top: none;">
                         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
-                            <div class="dashboard-section" style="display:block; border-top: 4px solid var(--brew-brown);">
+                            <div class="dashboard-section card hover-lift" data-aos="fade-up" data-aos-delay="500" style="display:block; border-top: 4px solid var(--brew-brown);">
                                 <h2><i class="fas fa-trophy"></i> Top Rated Beers</h2>
                                 <div id="top-rated-beers-controls" style="margin-bottom: 10px;">
                                     <label for="top-rated-time-select">Time Period:</label>
@@ -519,7 +548,7 @@
                                     <li>Loading...</li>
                                 </ul>
                             </div>
-                            <div class="dashboard-section" style="display:block; border-top: 4px solid var(--brew-link-blue);">
+                            <div class="dashboard-section card hover-lift" data-aos="fade-up" data-aos-delay="600" style="display:block; border-top: 4px solid var(--brew-link-blue);">
                                 <h2><i class="fas fa-chart-bar"></i> Flavor Profile Trends</h2>
                                 <p>Overall flavor profile trends across your brewery will be displayed here. (Coming Soon)</p>
                             </div>
@@ -948,6 +977,50 @@
     
     <!-- Advanced Analytics System -->
     <script src="advanced-analytics.js"></script>
+    
+    <!-- Enhanced UI Scripts -->
+    <script src="enhanced-ui.js"></script>
+    <script src="advanced-components.js"></script>
+    
+    <!-- Brewery Theme Scripts -->
+    <script src="brewery-animations.js"></script>
+    
+    <script>
+        // Initialize Enhanced UI Features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS (Animate On Scroll)
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-out-cubic',
+                    once: true,
+                    offset: 100
+                });
+            }
+            
+            // Brewery particles will be initialized by brewery-animations.js
+            
+            // Initialize Tooltips
+            if (typeof tippy !== 'undefined') {
+                tippy('[title]', {
+                    theme: 'brewmetrics',
+                    animation: 'scale'
+                });
+            }
+            
+            // Enhanced button interactions
+            setTimeout(() => {
+                if (window.enhancedUI) {
+                    window.enhancedUI.enhance();
+                }
+                
+                // Initialize brewery enhancements
+                if (window.breweryAnimations) {
+                    window.breweryAnimations.enhanceBreweryElements();
+                }
+            }, 1000);
+        });
+    </script>
     
     <!-- AI Brewmaster Container -->
     <div id="ai-brewmaster-container"></div>

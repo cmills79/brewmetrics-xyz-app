@@ -73,6 +73,14 @@ const VIDEO_EXTENSION = '.mp4';
 // --- UPDATED CODE FOR SURVEY LOGIC ---
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Survey page script loaded. SKIP_VIDEOS:", SKIP_VIDEOS, "VIDEO_BASE_PATH:", VIDEO_BASE_PATH);
+    
+    // Initialize enhanced data capture if available
+    if (window.enhancedSurveyCapture) {
+        window.enhancedSurveyCapture.trackInteraction('survey_start', {
+            breweryId: breweryId,
+            batchId: batchId
+        });
+    }
 
     // --- Get DOM Elements ---
     const beerNameIntroDisplay = document.getElementById('beer-name-intro');
@@ -520,28 +528,29 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(async () => {
                 console.log("Survey responses saved successfully to Firestore!");
                 
-                // Also send to BigQuery for analytics
+                // Enhanced analytics capture
                 try {
-                    if (window.BrewMetricsAnalytics) {
-                        const analyticsData = {
-                            feedback_id: `feedback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-                            brewery_id: breweryId,
-                            batch_id: batchId,
-                            recipe_id: null, // Could be added if recipe info is available
-                            user_id: 'anonymous',
-                            overall_rating: overallRating,
-                            survey_answers: surveyAnswers,
-                            feedback_text: '',
-                            survey_version: '1.0',
-                            response_time_seconds: null
-                        };
+                    if (window.enhancedSurveyCapture) {
+                        const enhancedData = await window.enhancedSurveyCapture.submitEnhancedSurvey({
+                            breweryId,
+                            batchId,
+                            surveyAnswers,
+                            overallRating
+                        });
+                        console.log("Enhanced survey data captured!");
                         
-                        await window.BrewMetricsAnalytics.submitSurveyFeedback(analyticsData);
-                        console.log("Survey data submitted to BigQuery analytics!");
+                        // Track revenue impact
+                        if (window.revenueTracker) {
+                            await window.revenueTracker.trackSurveyRevenueImpact(enhancedData);
+                        }
+                        
+                        // Dispatch survey completion event
+                        document.dispatchEvent(new CustomEvent('surveyCompleted', {
+                            detail: { batchId, overallRating, enhancedData }
+                        }));
                     }
                 } catch (analyticsError) {
-                    console.warn("Failed to submit to analytics, but survey saved:", analyticsError);
-                    // Don't block the user experience if analytics fails
+                    console.warn("Enhanced analytics failed, but survey saved:", analyticsError);
                 }
                 
                 if (SKIP_VIDEOS) {

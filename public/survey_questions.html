@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrewMetrics - Beer Survey</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            display: block;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .survey-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .survey-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .survey-content {
+            padding: 30px;
+        }
+        
+        .question-progress {
+            background: #f8f9fa;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+        
+        .rating-button {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .rating-button:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        
+        .rating-button.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .tooltip {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+        
+        .explanation-container {
+            background: #e8f4f8;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .video-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .video-container video {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+        
+        .final-step {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .gmb-button {
+            display: inline-block;
+            background: #4285f4;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 20px 0;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .gmb-button:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .survey-container {
+                margin: 10px;
+                border-radius: 12px;
+            }
+            
+            .survey-header, .survey-content {
+                padding: 20px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="survey-container">
+        <!-- Survey Header -->
+        <div class="survey-header">
+            <div id="beer-name-intro" class="hidden">
+                <!-- Beer name and intro will be populated here -->
+            </div>
+            <h1>Beer Feedback Survey</h1>
+            <p>Help us improve by sharing your tasting experience</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-survey" class="survey-content">
+            <div style="text-align: center; padding: 40px;">
+                <div class="loading-spinner" style="margin: 0 auto 20px;"></div>
+                <p>Loading your survey...</p>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-message-survey" class="error-message hidden" style="margin: 20px; padding: 20px; text-align: center;">
+            <!-- Error messages will be displayed here -->
+        </div>
+
+        <!-- Video Container -->
+        <div id="video-container" class="video-container hidden">
+            <div id="video-loading" style="display: none;">Loading video...</div>
+            <video id="survey-video" controls style="max-width: 100%; border-radius: 12px;">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Explanation Container -->
+        <div id="explanation-container" class="explanation-container hidden">
+            <h3 id="explanation-title">Understanding This Question</h3>
+            <p id="explanation-text"></p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="continue-button" class="btn btn-primary">Continue to Question</button>
+            </div>
+        </div>
+
+        <!-- Question Area -->
+        <div id="question-area" class="survey-content hidden">
+            <div class="question-progress">
+                <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+            </div>
+            
+            <div id="question-number" class="question-number">Question 1 of 8</div>
+            <h2 id="question-text">Question text will appear here</h2>
+            
+            <div id="tooltip-display" class="tooltip hidden">
+                <span id="tooltip-text"></span>
+            </div>
+            
+            <div id="ratings-container">
+                <!-- Rating buttons will be populated here -->
+            </div>
+        </div>
+
+        <!-- Overall Rating Area -->
+        <div id="overall-rating-area" class="survey-content hidden">
+            <div class="question-progress">
+                <div class="progress-fill" style="width: 100%;"></div>
+            </div>
+            
+            <h2>Overall, how would you rate this beer?</h2>
+            <p>Consider all aspects of your tasting experience</p>
+            
+            <div id="overall-ratings-container">
+                <!-- Overall rating buttons will be populated here -->
+            </div>
+        </div>
+
+        <!-- Navigation Area -->
+        <div id="navigation-area" class="survey-content hidden">
+            <div class="navigation-buttons">
+                <button id="next-button" class="btn btn-primary" disabled>Confirm Answer</button>
+                <button id="finish-button" class="btn btn-primary hidden" disabled>Complete Survey</button>
+            </div>
+        </div>
+
+        <!-- Final Step -->
+        <div id="final-step-area" class="final-step hidden">
+            <!-- Thank you message and Google review prompt will be populated here -->
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmvUqgMlnaQFiyqlo50D66fX0Bwav3j1k",
+            authDomain: "brewmetrics-xyz-app-e8d51.firebaseapp.com",
+            projectId: "brewmetrics-xyz-app-e8d51",
+            storageBucket: "brewmetrics-xyz-app-e8d51.firebasestorage.app",
+            messagingSenderId: "391623246374",
+            appId: "1:391623246374:web:3b8e39db5fff674befdce7",
+            measurementId: "G-MHT3H2ZVRY"
+        };
+
+        let app, db, auth, functions;
+        try {
+            app = firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+            db = firebase.firestore();
+            functions = firebase.functions();
+            console.log("Firebase Initialized on Survey Questions Page!");
+        } catch (e) {
+            console.error("Error initializing Firebase:", e);
+            document.getElementById('error-message-survey').textContent = 'Critical Error: Could not connect to services. Please refresh the page.';
+            document.getElementById('error-message-survey').classList.remove('hidden');
+            document.getElementById('loading-survey').style.display = 'none';
+        }
+    </script>
+
+    <!-- Enhanced Data Capture Scripts -->
+    <script src="enhanced-survey-capture.js"></script>
+    <script src="revenue-tracking.js"></script>
+    
+    <!-- Survey Logic Script -->
+    <script src="survey.js"></script>
+</body>
+</html>

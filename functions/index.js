@@ -428,3 +428,11 @@ exports.respondToGoogleReview = functions.https.onCall(async (data, context) => 
 // Import and export demo setup function
 const { createDemoBrewery } = require('./demo-setup');
 exports.createDemoBrewery = createDemoBrewery;
+
+// Import and export analytics capture functions
+const analyticsCapture = require('./analytics-capture');
+exports.submitEnhancedSurveyResponse = analyticsCapture.submitEnhancedSurveyResponse;
+exports.trackCustomerJourney = analyticsCapture.trackCustomerJourney;
+exports.captureRevenueImpact = analyticsCapture.captureRevenueImpact;
+exports.captureCompetitiveData = analyticsCapture.captureCompetitiveData;
+exports.generatePredictiveAnalytics = analyticsCapture.generatePredictiveAnalytics;
