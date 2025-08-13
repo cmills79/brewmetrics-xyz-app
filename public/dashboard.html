@@ -649,17 +649,23 @@
                     <div class="ai-quick-actions">
                         <h4>Quick Actions:</h4>
                         <div class="quick-action-buttons">
-                            <button class="ai-action-btn" data-action="generate-recipe">
+                            <button class="ai-action-btn" onclick="handleDashboardAIAction('generate-recipe')">
                                 <i class="fas fa-magic"></i> Generate Recipe
                             </button>
-                            <button class="ai-action-btn" data-action="inventory-recipe">
-                                <i class="fas fa-boxes"></i> Use My Inventory
-                            </button>
-                            <button class="ai-action-btn" data-action="enhance-recipe">
+                            <button class="ai-action-btn" onclick="handleDashboardAIAction('enhance-recipe')">
                                 <i class="fas fa-star"></i> Enhance Recipe
                             </button>
-                            <button class="ai-action-btn" data-action="troubleshoot">
+                            <button class="ai-action-btn" onclick="handleDashboardAIAction('experimental-recipe')">
+                                <i class="fas fa-rocket"></i> Experimental Recipe
+                            </button>
+                            <button class="ai-action-btn" onclick="handleDashboardAIAction('analyze-batch')">
+                                <i class="fas fa-chart-bar"></i> Analyze Batch
+                            </button>
+                            <button class="ai-action-btn" onclick="handleDashboardAIAction('troubleshoot-batch')">
                                 <i class="fas fa-tools"></i> Troubleshoot Batch
+                            </button>
+                            <button class="ai-action-btn" onclick="handleDashboardAIAction('inventory-recipe')">
+                                <i class="fas fa-boxes"></i> Use My Inventory
                             </button>
                         </div>
                     </div>
@@ -985,8 +991,10 @@
     
     <!-- AI Brewmaster Integration -->
     <script src="brewing_knowledge_expansion.js"></script>
+    <script src="AI-Brewmaster_Knowledge_Base/advanced_brewing_mastery.js"></script>
     <script src="offline-knowledge-base.js"></script>
     <script src="ai-brewmaster.js"></script>
+    <script src="ai-brewmaster-functions.js"></script>
     <script src="ai-brewmaster-ui.js"></script>
     
     <!-- Google Reviews Integration -->
@@ -1066,6 +1074,24 @@
                     window.breweryAnimations.enhanceBreweryElements();
                 }
             }, 1000);
+            
+            // Dashboard AI action handler
+            window.handleDashboardAIAction = async function(action) {
+                const aiMessages = document.getElementById('ai-messages');
+                if (!aiMessages) return;
+                
+                const userMsg = document.createElement('div');
+                userMsg.className = 'ai-message user';
+                userMsg.innerHTML = `<div class="ai-avatar"><i class="fas fa-user"></i></div><div class="ai-message-content">${action.replace('-', ' ')}</div>`;
+                aiMessages.appendChild(userMsg);
+                
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'ai-message';
+                aiMsg.innerHTML = `<div class="ai-avatar"><i class="fas fa-user-tie"></i></div><div class="ai-message-content">Processing ${action}... Use the AI widget for full functionality.</div>`;
+                aiMessages.appendChild(aiMsg);
+                
+                aiMessages.scrollTop = aiMessages.scrollHeight;
+            };
         });
     </script>
     

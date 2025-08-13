@@ -78,6 +78,9 @@ class OfflineKnowledgeBase {
       // Load expanded brewing knowledge
       this.loadExpandedKnowledge();
       
+      // Load advanced brewing mastery
+      this.loadAdvancedMastery();
+      
       // Create search index
       this.createSearchIndex();
       
@@ -424,26 +427,33 @@ class OfflineKnowledgeBase {
    */
   addBrewmasterPersonality(response, query, topResult) {
     const personality = window.expandedBrewingKnowledge?.personality;
-    if (!personality) return response;
+    const mastery = window.advancedBrewingMastery?.personality;
+    if (!personality && !mastery) return response;
 
     const queryLower = query.toLowerCase();
     let intro = '';
     let outro = '';
 
-    // Choose appropriate intro based on query type
-    if (queryLower.includes('help') || queryLower.includes('how')) {
-      intro = this.getRandomElement(personality.expertise.collaborative) + ' ';
-    } else if (queryLower.includes('problem') || queryLower.includes('wrong') || queryLower.includes('fix')) {
-      intro = this.getRandomElement(personality.warnings) + ' ';
+    // Choose appropriate intro based on query type and complexity
+    if (queryLower.includes('chemistry') || queryLower.includes('formula') || queryLower.includes('advanced')) {
+      intro = mastery ? this.getRandomElement(mastery.expertise.advanced) + ' ' : '';
+    } else if (queryLower.includes('experimental') || queryLower.includes('innovation')) {
+      intro = mastery ? this.getRandomElement(mastery.expertise.experimental) + ' ' : '';
+    } else if (queryLower.includes('problem') || queryLower.includes('troubleshoot') || queryLower.includes('fix')) {
+      intro = mastery ? this.getRandomElement(mastery.expertise.troubleshooting) + ' ' : 
+              personality ? this.getRandomElement(personality.warnings) + ' ' : '';
+    } else if (queryLower.includes('help') || queryLower.includes('how')) {
+      intro = personality ? this.getRandomElement(personality.expertise.collaborative) + ' ' : '';
     } else if (queryLower.includes('recipe') || queryLower.includes('brew')) {
-      intro = this.getRandomElement(personality.expertise.confident) + ' ';
+      intro = personality ? this.getRandomElement(personality.expertise.confident) + ' ' : '';
     }
 
     // Add encouraging outro for complex topics
-    if (topResult && (topResult.section === 'troubleshooting' || queryLower.includes('advanced'))) {
-      outro = ' ' + this.getRandomElement(personality.encouragement);
+    if (topResult && (topResult.section === 'troubleshooting' || topResult.section === 'chemistry' || queryLower.includes('advanced'))) {
+      outro = ' ' + (mastery ? this.getRandomElement(mastery.encouragement) : 
+                    personality ? this.getRandomElement(personality.encouragement) : '');
     } else if (topResult && topResult.section === 'styles') {
-      outro = ' ' + this.getRandomElement(personality.passion);
+      outro = ' ' + (personality ? this.getRandomElement(personality.passion) : '');
     }
 
     return intro + response + outro;
@@ -534,6 +544,59 @@ class OfflineKnowledgeBase {
             keywords: [section, 'brewing', 'guide', 'techniques']
           });
         }
+      });
+    }
+  }
+
+  /**
+   * Load advanced brewing mastery knowledge
+   */
+  loadAdvancedMastery() {
+    if (window.advancedBrewingMastery) {
+      const mastery = window.advancedBrewingMastery;
+      
+      // Add chemistry knowledge
+      Object.entries(mastery.chemistry || {}).forEach(([topic, content]) => {
+        this.knowledgeIndex.set(`chemistry/${topic}.md`, {
+          content,
+          section: 'chemistry',
+          filename: `${topic}.md`,
+          title: `${topic.charAt(0).toUpperCase() + topic.slice(1)} Chemistry`,
+          keywords: [topic, 'chemistry', 'science', 'formulas', 'advanced']
+        });
+      });
+      
+      // Add experimental techniques
+      Object.entries(mastery.experimental || {}).forEach(([technique, content]) => {
+        this.knowledgeIndex.set(`experimental/${technique}.md`, {
+          content,
+          section: 'experimental',
+          filename: `${technique}.md`,
+          title: `${technique.charAt(0).toUpperCase() + technique.slice(1)} Techniques`,
+          keywords: [technique, 'experimental', 'advanced', 'innovation']
+        });
+      });
+      
+      // Add batch management
+      Object.entries(mastery.batchManagement || {}).forEach(([topic, content]) => {
+        this.knowledgeIndex.set(`batch/${topic}.md`, {
+          content,
+          section: 'batch',
+          filename: `${topic}.md`,
+          title: `${topic.charAt(0).toUpperCase() + topic.slice(1)} Management`,
+          keywords: [topic, 'batch', 'management', 'quality', 'professional']
+        });
+      });
+      
+      // Add equipment optimization
+      Object.entries(mastery.equipment || {}).forEach(([topic, content]) => {
+        this.knowledgeIndex.set(`equipment/${topic}.md`, {
+          content,
+          section: 'equipment',
+          filename: `${topic}.md`,
+          title: `${topic.charAt(0).toUpperCase() + topic.slice(1)} Equipment`,
+          keywords: [topic, 'equipment', 'optimization', 'efficiency']
+        });
       });
     }
   }
@@ -668,7 +731,11 @@ class OfflineKnowledgeBase {
                     this.getDocumentsBySection('ingredients/yeast').length,
         guides: this.getDocumentsBySection('').length + this.getDocumentsBySection('guides').length,
         recipes: this.getDocumentsBySection('recipes').length,
-        calculations: this.getDocumentsBySection('calculations').length
+        calculations: this.getDocumentsBySection('calculations').length,
+        chemistry: this.getDocumentsBySection('chemistry').length,
+        experimental: this.getDocumentsBySection('experimental').length,
+        batch: this.getDocumentsBySection('batch').length,
+        equipment: this.getDocumentsBySection('equipment').length
       }
     };
   }

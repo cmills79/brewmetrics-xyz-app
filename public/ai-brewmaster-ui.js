@@ -81,17 +81,23 @@ class AIBrewmasterUI {
             </div>
 
             <div class="ai-quick-actions">
-              <button class="ai-quick-btn" data-action="recipe-suggestions">
-                📝 Recipe Ideas
+              <button class="ai-quick-btn" data-action="generate-recipe">
+                🧪 Generate Recipe
+              </button>
+              <button class="ai-quick-btn" data-action="enhance-recipe">
+                ⭐ Enhance Recipe
+              </button>
+              <button class="ai-quick-btn" data-action="experimental-recipe">
+                🚀 Experimental Recipe
+              </button>
+              <button class="ai-quick-btn" data-action="analyze-batch">
+                📊 Analyze Batch
+              </button>
+              <button class="ai-quick-btn" data-action="troubleshoot-batch">
+                🔧 Troubleshoot Batch
               </button>
               <button class="ai-quick-btn" data-action="inventory-recipe">
                 📦 Use My Inventory
-              </button>
-              <button class="ai-quick-btn" data-action="troubleshooting">
-                🔧 Troubleshooting
-              </button>
-              <button class="ai-quick-btn" data-action="ingredients">
-                🌾 Ingredients
               </button>
             </div>
 
@@ -551,32 +557,62 @@ class AIBrewmasterUI {
     }
   }
 
-  handleQuickAction(action) {
+  async handleQuickAction(action) {
     const context = this.getRecipeContext();
-    let query = '';
     
-    switch (action) {
-      case 'recipe-suggestions':
-        query = context.beerStyle ? 
-          `Give me recipe suggestions for ${context.beerStyle}` : 
-          'What are some popular beer recipe ideas?';
-        break;
-      case 'inventory-recipe':
-        query = 'Create a recipe using only my current inventory';
-        break;
-      case 'troubleshooting':
-        query = 'What are common brewing problems and how to fix them?';
-        break;
-      case 'ingredients':
-        query = context.beerStyle ? 
-          `What ingredients work best for ${context.beerStyle}?` : 
-          'Tell me about brewing ingredients and their effects';
-        break;
+    // Initialize AI functions if not available
+    if (!this.aiFunctions && window.AIBrewmasterFunctions && this.ai) {
+      this.aiFunctions = new window.AIBrewmasterFunctions(this.ai);
     }
     
-    if (query) {
-      document.getElementById('ai-query-input').value = query;
-      document.getElementById('ai-send-btn').disabled = false;
+    // Show loading
+    this.showLoading(true);
+    
+    try {
+      let response;
+      
+      switch (action) {
+        case 'generate-recipe':
+          const style = context.beerStyle || await this.promptForStyle();
+          response = await this.aiFunctions.generateRecipe(style, context);
+          break;
+          
+        case 'enhance-recipe':
+          if (!context.beerStyle) {
+            response = { summary: "I need a recipe to enhance. Please open the Recipe Designer first or describe your current recipe." };
+          } else {
+            response = await this.aiFunctions.enhanceRecipe(context);
+          }
+          break;
+          
+        case 'experimental-recipe':
+          const expStyle = context.beerStyle || await this.promptForStyle();
+          response = await this.aiFunctions.createExperimentalRecipe(expStyle, 'hop');
+          break;
+          
+        case 'analyze-batch':
+          response = await this.handleBatchAnalysis();
+          break;
+          
+        case 'troubleshoot-batch':
+          response = await this.handleBatchTroubleshooting();
+          break;
+          
+        case 'inventory-recipe':
+          response = await this.ai.generateInventoryAwareResponse('Create a recipe using only my current inventory');
+          break;
+          
+        default:
+          response = { summary: "Function not implemented yet. Try asking me directly!" };
+      }
+      
+      this.addMessage('ai', response.summary, response.suggestions || []);
+      
+    } catch (error) {
+      console.error('AI function error:', error);
+      this.addMessage('ai', "Had a hiccup with that function. Try asking me directly instead!", []);
+    } finally {
+      this.showLoading(false);
     }
   }
 
@@ -614,6 +650,26 @@ class AIBrewmasterUI {
     } else {
       toggleBtn.title = 'Ask AI Brewmaster (Ready - Online mode)';
     }
+  }
+
+  async promptForStyle() {
+    return prompt("What beer style would you like to work with?") || "American IPA";
+  }
+  
+  async handleBatchAnalysis() {
+    const batchId = prompt("Enter batch ID to analyze (or leave blank for general analysis):");
+    if (batchId && this.aiFunctions) {
+      return await this.aiFunctions.analyzeBatchRatings(batchId);
+    }
+    return { summary: "To analyze a specific batch, I need the batch ID. For now, here's general batch analysis guidance: Check your fermentation temps, hop freshness, and water chemistry. These are the big three that affect customer ratings." };
+  }
+  
+  async handleBatchTroubleshooting() {
+    const issues = prompt("What issues are you experiencing? (e.g., 'low hop aroma, thin body')");
+    if (issues && this.aiFunctions) {
+      return await this.aiFunctions.troubleshootBatch({}, issues.split(',').map(i => i.trim()));
+    }
+    return { summary: "Describe the issues you're seeing and I'll help diagnose the root cause. Common problems: off-flavors, poor aroma, thin body, or clarity issues." };
   }
 
   showError(message) {
