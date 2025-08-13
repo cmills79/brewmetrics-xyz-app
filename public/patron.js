@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     breweryNameDisplay.textContent = breweryData.breweryName || 'this Brewery';
                 }
                  if (errorMessageDiv) errorMessageDiv.style.display = 'none'; // Hide error on success
+                loadBatchPhotos(breweryId); // Load batch photos
                 fetchAndDisplayBatches(breweryId); // Use the trimmed breweryId
             } else {
                 displayError(`Error: Brewery with ID ${breweryId} not found via script (source: server), though it might exist. Please check configuration or QR code.`);
@@ -150,6 +151,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Error getting active batches (source: server): ", error);
                 displayError("An error occurred while fetching the list of beers. Please try again.");
             });
+    }
+
+    // --- Function to load and display batch photos ---
+    async function loadBatchPhotos(currentBreweryId) {
+        try {
+            // Get brewery configuration with photos
+            const configDoc = await db.collection('breweries').doc(currentBreweryId)
+                .collection('configuration').doc('equipment').get();
+            
+            if (configDoc.exists) {
+                const config = configDoc.data();
+                const photos = config.batchPhotos || [];
+                
+                if (photos.length > 0) {
+                    displayBatchPhotos(photos);
+                }
+            }
+        } catch (error) {
+            console.error('Error loading batch photos:', error);
+            // Don't show error to user - photos are optional
+        }
+    }
+
+    // --- Function to display batch photos ---
+    function displayBatchPhotos(photos) {
+        const photosContainer = document.getElementById('batch-photos');
+        if (!photosContainer || photos.length === 0) return;
+        
+        photosContainer.innerHTML = '';
+        
+        // Create photo gallery
+        photos.slice(0, 3).forEach(photo => { // Limit to 3 photos
+            const img = document.createElement('img');
+            img.src = photo.url;
+            img.alt = photo.name || 'Batch photo';
+            img.style.cssText = `
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin: 0 5px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            `;
+            photosContainer.appendChild(img);
+        });
+        
+        photosContainer.style.display = 'block';
     }
 
     // --- Function to handle starting the survey ---

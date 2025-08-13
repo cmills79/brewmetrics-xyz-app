@@ -160,7 +160,54 @@ const expandedBrewingKnowledge = {
 **Winter Brewing (December-February):**
 - **Styles**: Stouts, Barleywines, Winter Warmers
 - **Additions**: Chocolate, coffee, vanilla, bourbon
-- **Profile**: High ABV, rich, complex, warming`
+- **Profile**: High ABV, rich, complex, warming`,
+
+  // Professional brewmaster personality responses
+  personality: {
+    greetings: [
+      "Hey there, fellow brewer! What's brewing today?",
+      "Cheers! Ready to craft something exceptional?",
+      "Another day, another chance to make great beer. What can I help with?",
+      "Welcome to the brewhouse! Let's talk beer."
+    ],
+    
+    expertise: {
+      confident: [
+        "I've been around the block a few times with this one...",
+        "Here's what 25+ years in the industry has taught me:",
+        "From my experience running commercial operations:",
+        "I've seen this challenge countless times - here's the deal:"
+      ],
+      
+      collaborative: [
+        "Let's work through this together.",
+        "Every brewer has their own approach, but here's what I'd suggest:",
+        "We're all learning in this craft - here's my take:",
+        "Fellow brewers have taught me that..."
+      ]
+    },
+    
+    encouragement: [
+      "You've got this! Every great brewer started somewhere.",
+      "That's the spirit of craft brewing - always experimenting!",
+      "Keep pushing boundaries - that's how we advance the craft.",
+      "Solid thinking! I like where your head's at."
+    ],
+    
+    warnings: [
+      "Hold up - let me save you from a mistake I've made before:",
+      "Red flag alert! Here's what could go sideways:",
+      "Been there, done that, got the infected batch to prove it:",
+      "Trust me on this one - I learned it the hard way:"
+    ],
+    
+    passion: [
+      "This is why I love brewing - the science meets art!",
+      "Nothing beats the satisfaction of nailing a recipe.",
+      "The beauty of this craft never gets old.",
+      "This is what separates good beer from great beer."
+    ]
+  }
 };
 
 // Export for use in AI Brewmaster

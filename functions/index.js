@@ -436,3 +436,21 @@ exports.trackCustomerJourney = analyticsCapture.trackCustomerJourney;
 exports.captureRevenueImpact = analyticsCapture.captureRevenueImpact;
 exports.captureCompetitiveData = analyticsCapture.captureCompetitiveData;
 exports.generatePredictiveAnalytics = analyticsCapture.generatePredictiveAnalytics;
+
+// Import and export inventory functions
+const inventoryFunctions = require('./inventory-functions');
+exports.consumeIngredients = inventoryFunctions.consumeIngredients;
+// exports.checkReorderLevels = inventoryFunctions.checkReorderLevels;
+exports.generateInventoryReport = inventoryFunctions.generateInventoryReport;
+exports.calculateBatchCost = inventoryFunctions.calculateBatchCost;
+
+// Import and export brewery equipment functions
+const breweryEquipment = require('./brewery-equipment');
+exports.scaleRecipeForEquipment = breweryEquipment.scaleRecipeForEquipment;
+exports.generateEquipmentOptimizedRecipe = breweryEquipment.generateEquipmentOptimizedRecipe;
+exports.getBatchPhotos = breweryEquipment.getBatchPhotos;
+
+// Import and export demo account upgrade functions
+const demoUpgrade = require('./upgrade-demo-account');
+exports.upgradeDemoToPremium = demoUpgrade.upgradeDemoToPremium;
+exports.getUserSubscriptionTier = demoUpgrade.getUserSubscriptionTier;

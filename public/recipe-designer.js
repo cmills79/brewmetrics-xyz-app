@@ -871,7 +871,7 @@ class RecipeDesigner {
     this.updateIngredientDisplay();
   }
 
-  saveRecipe() {
+  async saveRecipe() {
     // Convert recipe to batch format compatible with existing system
     const batch = {
       beerName: this.recipe.name,
@@ -894,7 +894,7 @@ class RecipeDesigner {
     console.log('Saving recipe as batch:', batch);
     
     // Save recipe analytics to BigQuery
-    this.saveRecipeAnalytics(batch);
+    await this.saveRecipeAnalytics(batch);
     
     // For now, show success message and redirect
     alert('Recipe saved successfully! Redirecting to dashboard...');
@@ -963,9 +963,63 @@ class RecipeDesigner {
   }
 }
 
+// Load programmatic generator
+const script = document.createElement('script');
+script.src = 'programmatic-recipe-generator.js';
+document.head.appendChild(script);
+
 // Initialize recipe designer when DOM is loaded - only if enhanced version not loaded
 document.addEventListener('DOMContentLoaded', () => {
   if (!window.recipeDesigner) {
     window.recipeDesigner = new RecipeDesigner();
   }
 });
+
+// Add programmatic generation function for free tier
+async function generateRecipeWithFallback(style, batchSize, requirements) {
+  const userTier = await getUserTier();
+  
+  if (userTier === 'free') {
+    try {
+      const generator = new ProgrammaticRecipeGenerator();
+      return generator.generateRecipe(style, batchSize);
+    } catch (error) {
+      console.error('Programmatic generation failed:', error);
+      throw new Error('Recipe generation failed. Please try again.');
+    }
+  }
+  
+  // Premium users get AI generation
+  const response = await fetch('/generateRecipe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      beerStyle: style,
+      batchSize: batchSize,
+      customRequirements: requirements,
+      userId: getCurrentUserId()
+    })
+  });
+  
+  if (!response.ok) throw new Error('AI generation failed');
+  return await response.json();
+}
+
+async function getUserTier() {
+  // Check user subscription status
+  try {
+    const user = firebase.auth().currentUser;
+    if (!user) return 'free';
+    
+    const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
+    return userDoc.data()?.subscriptionTier || 'free';
+  } catch (error) {
+    console.warn('Could not determine user tier:', error);
+    return 'free';
+  }
+}
+
+function getCurrentUserId() {
+  const user = firebase.auth().currentUser;
+  return user ? user.uid : 'anonymous';
+}

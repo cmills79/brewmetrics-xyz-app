@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Offline AI Assistant - BrewMetrics</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .status { padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .status.loading { background: #fff3cd; border: 1px solid #ffeaa7; }
+        .status.ready { background: #d4edda; border: 1px solid #c3e6cb; }
+        .status.error { background: #f8d7da; border: 1px solid #f5c6cb; }
+        .test-area { margin: 30px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        input[type="text"] { width: 70%; padding: 10px; margin-right: 10px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .response { margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 5px; }
+        .stats { background: #e9ecef; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Offline AI Assistant Test</h1>
+        
+        <div id="status" class="status loading">
+            <strong>Status:</strong> <span id="status-text">Loading offline knowledge base...</span>
+        </div>
+        
+        <div id="stats" class="stats" style="display: none;">
+            <h3>Knowledge Base Statistics:</h3>
+            <div id="stats-content"></div>
+        </div>
+        
+        <div class="test-area">
+            <h3>Test AI Assistant</h3>
+            <p>Try asking questions about brewing, beer styles, or troubleshooting:</p>
+            
+            <div>
+                <input type="text" id="query" placeholder="Ask about brewing..." maxlength="500">
+                <button id="ask-btn" onclick="askAI()" disabled>Ask AI</button>
+            </div>
+            
+            <div class="response" id="response" style="display: none;">
+                <h4>AI Response:</h4>
+                <div id="response-content"></div>
+            </div>
+        </div>
+        
+        <div class="test-area">
+            <h3>Quick Tests</h3>
+            <button onclick="testQuery('What is a Hazy IPA?')">Test: Hazy IPA Info</button>
+            <button onclick="testQuery('How do I fix diacetyl off-flavors?')">Test: Troubleshooting</button>
+            <button onclick="testQuery('Tell me about Citra hops')">Test: Ingredient Info</button>
+            <button onclick="testQuery('How do I brew an American IPA?')">Test: Recipe Help</button>
+            <button onclick="testQuery('Create a recipe using only my current inventory')">Test: Inventory Recipe</button>
+            <button onclick="testQuery('Show me brewing calculations')">Test: Calculations</button>
+        </div>
+    </div>
+
+    <!-- Load the offline knowledge base and AI system -->
+    <script src="brewing_knowledge_expansion.js"></script>
+    <script src="offline-knowledge-base.js"></script>
+    <script src="ai-brewmaster.js"></script>
+    
+    <script>
+        let knowledgeBase = null;
+        let aiBrewmaster = null;
+        
+        // Initialize systems
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Initialize offline knowledge base
+                knowledgeBase = new OfflineKnowledgeBase();
+                await knowledgeBase.initialize();
+                
+                // Initialize AI Brewmaster
+                aiBrewmaster = new AIBrewmaster();
+                
+                // Wait for AI to be ready
+                let attempts = 0;
+                const waitForAI = () => {
+                    if (aiBrewmaster.isInitialized) {
+                        updateStatus('ready', 'Offline AI Assistant ready!');
+                        showStats();
+                        enableUI();
+                    } else if (attempts < 50) {
+                        attempts++;
+                        setTimeout(waitForAI, 100);
+                    } else {
+                        updateStatus('error', 'Failed to initialize AI Assistant');
+                    }
+                };
+                waitForAI();
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+                updateStatus('error', `Initialization failed: ${error.message}`);
+            }
+        });
+        
+        function updateStatus(type, message) {
+            const statusDiv = document.getElementById('status');
+            const statusText = document.getElementById('status-text');
+            
+            statusDiv.className = `status ${type}`;
+            statusText.textContent = message;
+        }
+        
+        function showStats() {
+            if (!knowledgeBase || !knowledgeBase.isLoaded) return;
+            
+            const stats = knowledgeBase.getStats();
+            const statsDiv = document.getElementById('stats');
+            const statsContent = document.getElementById('stats-content');
+            
+            statsContent.innerHTML = `
+                <p><strong>Total Documents:</strong> ${stats.totalDocuments}</p>
+                <p><strong>Search Terms:</strong> ${stats.searchTerms}</p>
+                <p><strong>Sections:</strong></p>
+                <ul>
+                    <li>Beer Styles: ${stats.sections.styles}</li>
+                    <li>Troubleshooting: ${stats.sections.troubleshooting}</li>
+                    <li>Ingredients: ${stats.sections.ingredients}</li>
+                    <li>Guides: ${stats.sections.guides}</li>
+                </ul>
+            `;
+            
+            statsDiv.style.display = 'block';
+        }
+        
+        function enableUI() {
+            document.getElementById('ask-btn').disabled = false;
+            document.getElementById('query').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') askAI();
+            });
+        }
+        
+        async function askAI() {
+            const query = document.getElementById('query').value.trim();
+            if (!query || !aiBrewmaster) return;
+            
+            const responseDiv = document.getElementById('response');
+            const responseContent = document.getElementById('response-content');
+            
+            // Show loading
+            responseContent.innerHTML = '<em>Thinking...</em>';
+            responseDiv.style.display = 'block';
+            
+            try {
+                const response = await aiBrewmaster.getBrewingAdvice(query);
+                
+                let html = `<p>${response.summary}</p>`;
+                
+                if (response.suggestions && response.suggestions.length > 0) {
+                    html += '<p><strong>Related suggestions:</strong></p><ul>';
+                    response.suggestions.forEach(suggestion => {
+                        html += `<li><a href="#" onclick="testQuery('${suggestion}')">${suggestion}</a></li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                if (response.results && response.results.length > 0) {
+                    html += '<p><strong>Knowledge base results:</strong></p><ul>';
+                    response.results.forEach(result => {
+                        html += `<li><strong>${result.title}</strong>: ${result.snippet}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                responseContent.innerHTML = html;
+                
+            } catch (error) {
+                console.error('AI query error:', error);
+                responseContent.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        function testQuery(query) {
+            document.getElementById('query').value = query;
+            askAI();
+        }
+    </script>
+</body>
+</html>

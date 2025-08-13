@@ -105,7 +105,7 @@ class AIBrewmaster {
 
       // Generate intelligent response based on query (always available)
       this.logger.info('Using intelligent response generation for query:', query);
-      return this.generateIntelligentResponse(query);
+      return await this.generateIntelligentResponse(query);
 
     } catch (error) {
       this.logger.error('Error getting brewing advice', error);
@@ -121,10 +121,46 @@ class AIBrewmaster {
 
   /**
    * Generate intelligent brewing response based on query analysis
+   * Now enhanced with offline knowledge base integration
    */
-  generateIntelligentResponse(query) {
+  async generateIntelligentResponse(query) {
     const lowerQuery = query.toLowerCase();
+    
+    // Check for inventory-specific requests
+    if (lowerQuery.includes('inventory') && lowerQuery.includes('recipe')) {
+      return await this.generateInventoryAwareResponse(query);
+    }
+    
+    // First try offline knowledge base if available
+    if (window.offlineKnowledgeBase && window.offlineKnowledgeBase.isLoaded) {
+      try {
+        const searchResults = window.offlineKnowledgeBase.search(query, 3);
+        if (searchResults && searchResults.length > 0) {
+          const knowledgeResponse = window.offlineKnowledgeBase.generateResponse(query, searchResults);
+          if (knowledgeResponse.summary && knowledgeResponse.summary.length > 100) {
+            this.logger.info('Using offline knowledge base response');
+            return knowledgeResponse;
+          }
+        }
+      } catch (error) {
+        this.logger.warn('Offline knowledge base search failed, using fallback:', error);
+      }
+    }
+
+    // Fallback to programmatic responses with personality
     let response = "";
+    
+    // Add brewmaster personality intro
+    const personality = window.expandedBrewingKnowledge?.personality;
+    if (personality) {
+      if (lowerQuery.includes('recipe')) {
+        response = this.getRandomPersonality(personality.expertise.confident) + ' ';
+      } else if (lowerQuery.includes('problem') || lowerQuery.includes('troubleshoot')) {
+        response = this.getRandomPersonality(personality.warnings) + ' ';
+      } else {
+        response = this.getRandomPersonality(personality.expertise.collaborative) + ' ';
+      }
+    }
     
     // Specific beer style recipes
     if (lowerQuery.includes('ipa') && lowerQuery.includes('recipe')) {
@@ -497,12 +533,49 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
     }
 
     return {
-    summary: response,
-    results: [],
-    suggestions: this.generateBrewingSuggestions(response),
-    totalResults: 1
+      summary: response,
+      results: [],
+      suggestions: this.generateBrewingSuggestions(response),
+      totalResults: 1
     };
     }
+
+  /**
+   * Generate inventory-aware recipe response
+   */
+  async generateInventoryAwareResponse(query) {
+    const lowerQuery = query.toLowerCase();
+    const useOnlyInventory = lowerQuery.includes('only') || lowerQuery.includes('current');
+    
+    // Extract beer style from query
+    let style = 'beer';
+    const styles = ['ipa', 'stout', 'porter', 'wheat', 'pilsner', 'lager', 'ale', 'saison'];
+    for (const s of styles) {
+      if (lowerQuery.includes(s)) {
+        style = s;
+        break;
+      }
+    }
+    
+    if (window.offlineKnowledgeBase) {
+      return await window.offlineKnowledgeBase.generateInventoryRecipe(style, useOnlyInventory);
+    }
+    
+    return {
+      summary: "I need access to your inventory system to create inventory-aware recipes. Please ensure you're logged in and have inventory items added.",
+      results: [],
+      suggestions: ['Show me a standard recipe instead', 'How do I add items to inventory?'],
+      totalResults: 0
+    };
+  }
+
+  /**
+   * Get random personality element
+   */
+  getRandomPersonality(array) {
+    if (!array || !Array.isArray(array)) return '';
+    return array[Math.floor(Math.random() * array.length)];
+  }
 
   /**
    * Generate conversational recipe response with personality
@@ -510,7 +583,6 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
   generateConversationalRecipeResponse(query, context) {
     const style = context.beerStyle || 'craft beer';
     const batchSize = context.batchSize || 5;
-    const experience = context.experienceLevel || 'intermediate';
     const special = context.specialRequests || '';
     
     let personality = "";
@@ -528,13 +600,8 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
       tips = "Focus on balance – every ingredient should have a purpose and contribute to the overall character.";
     }
     
-    // Adjust for experience level
-    let experienceNote = "";
-    if (experience === 'beginner') {
-      experienceNote = "Since you're newer to brewing, I've designed this recipe to be forgiving while still producing exceptional results. Don't worry if things don't go exactly as planned – brewing is both art and science!";
-    } else if (experience === 'advanced') {
-      experienceNote = "With your experience, you'll appreciate the nuances in this recipe. Feel free to make adjustments based on your water profile and equipment.";
-    }
+    // Professional brewing approach - all brewers are treated as professionals
+    const professionalNote = "This recipe is designed with professional brewing standards in mind, optimized for consistent results and exceptional quality.";
     
     // Include special requests
     let specialNote = "";
@@ -544,7 +611,7 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
     
     const response = `${personality}
 
-For your ${batchSize}-gallon batch, I've crafted something that balances tradition with innovation. ${experienceNote}
+For your ${batchSize}-gallon batch, I've crafted something that balances tradition with innovation. ${professionalNote}
 
 ${specialNote}
 
@@ -781,14 +848,13 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
         const result = await generateAIRecipe({
           beerStyle,
           batchSize: characteristics.batchSize || 5,
-          experienceLevel: characteristics.experienceLevel || 'intermediate',
           specialRequests: characteristics.specialRequests || ''
         });
         
         return result.data;
       }
       
-      // Fallback to local generation
+      // Fallback to local generation with proper batch size
       return this.generateFallbackRecipe(beerStyle, characteristics);
     } catch (error) {
       this.logger.error('Error generating recipe', error);
@@ -830,7 +896,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   }
 
   /**
-   * Extract fermentables from AI response
+   * Extract fermentables from AI response (base 5-gallon amounts)
    */
   extractFermentables(response, beerStyle) {
     const fermentables = [];
@@ -840,11 +906,33 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
         { name: 'Pale 2-Row', amount: 10.0, unit: 'lb', ppg: 37, lovibond: 2 },
         { name: 'Crystal 40L', amount: 1.0, unit: 'lb', ppg: 34, lovibond: 40 }
       );
+    } else if (beerStyle.toLowerCase().includes('hazy') || beerStyle.toLowerCase().includes('neipa')) {
+      fermentables.push(
+        { name: 'Pale 2-Row', amount: 8.0, unit: 'lb', ppg: 37, lovibond: 2 },
+        { name: 'Wheat Malt', amount: 2.0, unit: 'lb', ppg: 38, lovibond: 2 },
+        { name: 'Flaked Oats', amount: 1.0, unit: 'lb', ppg: 33, lovibond: 1 }
+      );
     } else if (beerStyle.toLowerCase().includes('stout')) {
       fermentables.push(
         { name: 'Pale 2-Row', amount: 8.0, unit: 'lb', ppg: 37, lovibond: 2 },
         { name: 'Roasted Barley', amount: 0.75, unit: 'lb', ppg: 25, lovibond: 300 },
         { name: 'Crystal 60L', amount: 0.5, unit: 'lb', ppg: 34, lovibond: 60 }
+      );
+    } else if (beerStyle.toLowerCase().includes('porter')) {
+      fermentables.push(
+        { name: 'Pale 2-Row', amount: 7.5, unit: 'lb', ppg: 37, lovibond: 2 },
+        { name: 'Crystal 60L', amount: 1.0, unit: 'lb', ppg: 34, lovibond: 60 },
+        { name: 'Chocolate Malt', amount: 0.75, unit: 'lb', ppg: 28, lovibond: 350 },
+        { name: 'Black Patent', amount: 0.25, unit: 'lb', ppg: 25, lovibond: 500 }
+      );
+    } else if (beerStyle.toLowerCase().includes('wheat')) {
+      fermentables.push(
+        { name: 'Wheat Malt', amount: 5.0, unit: 'lb', ppg: 38, lovibond: 2 },
+        { name: 'Pilsner Malt', amount: 4.0, unit: 'lb', ppg: 37, lovibond: 2 }
+      );
+    } else if (beerStyle.toLowerCase().includes('pilsner')) {
+      fermentables.push(
+        { name: 'Pilsner Malt', amount: 9.0, unit: 'lb', ppg: 37, lovibond: 2 }
       );
     } else {
       // Default pale ale grain bill
@@ -858,12 +946,20 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   }
 
   /**
-   * Extract hops from AI response
+   * Extract hops from AI response (base 5-gallon amounts)
    */
   extractHops(response, beerStyle) {
     const hops = [];
     
-    if (beerStyle.toLowerCase().includes('ipa')) {
+    if (beerStyle.toLowerCase().includes('ipa') && beerStyle.toLowerCase().includes('hazy')) {
+      hops.push(
+        { name: 'Magnum', amount: 0.5, unit: 'oz', time: 60, alpha: 14.0, use: 'Boil' },
+        { name: 'Citra', amount: 1.0, unit: 'oz', time: 10, alpha: 12.0, use: 'Whirlpool' },
+        { name: 'Mosaic', amount: 1.0, unit: 'oz', time: 0, alpha: 12.0, use: 'Whirlpool' },
+        { name: 'Citra', amount: 1.0, unit: 'oz', time: 3, alpha: 12.0, use: 'Dry Hop' },
+        { name: 'Mosaic', amount: 1.0, unit: 'oz', time: 3, alpha: 12.0, use: 'Dry Hop' }
+      );
+    } else if (beerStyle.toLowerCase().includes('ipa')) {
       hops.push(
         { name: 'Chinook', amount: 1.0, unit: 'oz', time: 60, alpha: 13.0, use: 'Boil' },
         { name: 'Centennial', amount: 1.0, unit: 'oz', time: 20, alpha: 10.0, use: 'Boil' },
@@ -874,6 +970,21 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
       hops.push(
         { name: 'East Kent Goldings', amount: 1.25, unit: 'oz', time: 60, alpha: 5.0, use: 'Boil' },
         { name: 'Fuggle', amount: 0.75, unit: 'oz', time: 15, alpha: 4.5, use: 'Boil' }
+      );
+    } else if (beerStyle.toLowerCase().includes('porter')) {
+      hops.push(
+        { name: 'Willamette', amount: 1.0, unit: 'oz', time: 60, alpha: 5.0, use: 'Boil' },
+        { name: 'Cascade', amount: 0.75, unit: 'oz', time: 15, alpha: 5.5, use: 'Boil' }
+      );
+    } else if (beerStyle.toLowerCase().includes('wheat')) {
+      hops.push(
+        { name: 'Hallertau', amount: 0.75, unit: 'oz', time: 60, alpha: 4.0, use: 'Boil' }
+      );
+    } else if (beerStyle.toLowerCase().includes('pilsner')) {
+      hops.push(
+        { name: 'Saaz', amount: 1.0, unit: 'oz', time: 60, alpha: 3.5, use: 'Boil' },
+        { name: 'Saaz', amount: 0.75, unit: 'oz', time: 20, alpha: 3.5, use: 'Boil' },
+        { name: 'Saaz', amount: 0.5, unit: 'oz', time: 5, alpha: 3.5, use: 'Boil' }
       );
     } else {
       // Default pale ale hops
@@ -888,12 +999,22 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   }
 
   /**
-   * Extract yeast from AI response
+   * Extract yeast from AI response (base amounts)
    */
   extractYeast(response, beerStyle) {
     const yeast = [];
     
-    if (beerStyle.toLowerCase().includes('ipa') || beerStyle.toLowerCase().includes('pale')) {
+    if (beerStyle.toLowerCase().includes('hazy') || beerStyle.toLowerCase().includes('neipa')) {
+      yeast.push({
+        name: 'Wyeast 1318 London Ale III',
+        type: 'Ale',
+        form: 'Liquid',
+        amount: 1,
+        unit: 'pkg',
+        attenuation: 75,
+        temperature: '66-70°F'
+      });
+    } else if (beerStyle.toLowerCase().includes('ipa') || beerStyle.toLowerCase().includes('pale')) {
       yeast.push({
         name: 'Safale US-05',
         type: 'Ale',
@@ -912,6 +1033,36 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
         unit: 'pkg',
         attenuation: 73,
         temperature: '62-72°F'
+      });
+    } else if (beerStyle.toLowerCase().includes('porter')) {
+      yeast.push({
+        name: 'Safale S-04',
+        type: 'Ale',
+        form: 'Dry',
+        amount: 1,
+        unit: 'pkg',
+        attenuation: 75,
+        temperature: '60-68°F'
+      });
+    } else if (beerStyle.toLowerCase().includes('wheat')) {
+      yeast.push({
+        name: 'Wyeast 3068 Weihenstephan',
+        type: 'Ale',
+        form: 'Liquid',
+        amount: 1,
+        unit: 'pkg',
+        attenuation: 76,
+        temperature: '64-68°F'
+      });
+    } else if (beerStyle.toLowerCase().includes('pilsner') || beerStyle.toLowerCase().includes('lager')) {
+      yeast.push({
+        name: 'Saflager W-34/70',
+        type: 'Lager',
+        form: 'Dry',
+        amount: 1,
+        unit: 'pkg',
+        attenuation: 83,
+        temperature: '46-57°F'
       });
     } else {
       yeast.push({
@@ -1002,10 +1153,33 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   }
 
   /**
-   * Generate fallback recipe when AI fails
+   * Generate fallback recipe when AI fails - now equipment-aware
    */
-  generateFallbackRecipe(beerStyle, characteristics) {
-    const recipe = {
+  async generateFallbackRecipe(beerStyle, characteristics) {
+    const batchSize = characteristics.batchSize || 5.0;
+    
+    try {
+      // Use equipment-aware recipe generator if available
+      if (window.EquipmentAwareRecipeGenerator) {
+        const equipmentGenerator = new EquipmentAwareRecipeGenerator();
+        const result = await equipmentGenerator.generateEquipmentAwareRecipe(beerStyle, batchSize, characteristics);
+        
+        return {
+          summary: `Generated equipment-optimized ${beerStyle} recipe for ${batchSize} gallon batch using your brewery's specifications.`,
+          recipe: result.recipe,
+          instructions: result.instructions,
+          equipmentNotes: result.equipmentNotes,
+          scalingFactors: result.scalingFactors,
+          suggestions: [`How do I adjust the ${beerStyle} recipe?`, `What variations work for ${beerStyle}?`],
+          totalResults: 1
+        };
+      }
+    } catch (error) {
+      console.warn('Equipment-aware generation failed, using basic scaling:', error);
+    }
+    
+    // Fallback to basic scaling if equipment-aware fails
+    const baseRecipe = {
       name: `${beerStyle} Recipe`,
       type: 'All Grain',
       batchSize: 5.0,
@@ -1017,8 +1191,31 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
       yeast: this.extractYeast('', beerStyle)
     };
 
+    // Scale recipe to target batch size if different from 5 gallons
+    let recipe = baseRecipe;
+    if (batchSize !== 5.0) {
+      const scaleFactor = batchSize / 5.0;
+      recipe = {
+        ...baseRecipe,
+        name: `${beerStyle} Recipe (${batchSize} gal)`,
+        batchSize: batchSize,
+        fermentables: baseRecipe.fermentables.map(f => ({
+          ...f,
+          amount: Math.round((f.amount * scaleFactor) * 100) / 100
+        })),
+        hops: baseRecipe.hops.map(h => ({
+          ...h,
+          amount: Math.round((h.amount * scaleFactor) * 100) / 100
+        })),
+        yeast: baseRecipe.yeast.map(y => ({
+          ...y,
+          amount: scaleFactor > 2 ? Math.ceil(y.amount * scaleFactor) : y.amount
+        }))
+      };
+    }
+
     return {
-      summary: `Generated ${beerStyle} recipe with standard ingredients and proportions.`,
+      summary: `Generated ${beerStyle} recipe for ${batchSize} gallon batch with standard ingredients and proportions.`,
       recipe: recipe,
       instructions: this.generateBrewingInstructions(recipe),
       suggestions: [`How do I adjust the ${beerStyle} recipe?`, `What variations work for ${beerStyle}?`],
@@ -1062,9 +1259,34 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   }
 
   /**
-   * Scale recipe to different batch size
+   * Scale recipe to different batch size - now equipment-aware
    */
   async scaleRecipe(recipe, newBatchSize, conversational = true) {
+    try {
+      // Use equipment-aware scaling if available
+      if (window.EquipmentAwareRecipeGenerator) {
+        const equipmentGenerator = new EquipmentAwareRecipeGenerator();
+        const result = await equipmentGenerator.generateEquipmentAwareRecipe(recipe.style, newBatchSize, {
+          specialRequests: `Scale existing ${recipe.name} recipe`
+        });
+        
+        if (conversational) {
+          const advice = this.generateEquipmentScalingAdvice(recipe.batchSize, newBatchSize, result.scalingFactors);
+          return {
+            recipe: result.recipe,
+            advice: advice,
+            equipmentNotes: result.equipmentNotes,
+            summary: `Recipe scaled from ${recipe.batchSize} to ${newBatchSize} gallons using your equipment specifications.`
+          };
+        }
+        
+        return { recipe: result.recipe };
+      }
+    } catch (error) {
+      console.warn('Equipment-aware scaling failed, using basic scaling:', error);
+    }
+    
+    // Fallback to basic scaling
     const scaleFactor = newBatchSize / recipe.batchSize;
     
     const scaledRecipe = {
@@ -1098,7 +1320,42 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   }
 
   /**
-   * Generate scaling advice
+   * Generate equipment-aware scaling advice
+   */
+  generateEquipmentScalingAdvice(originalSize, newSize, scalingFactors) {
+    let advice = `🔧 **Equipment-Optimized Scaling: ${originalSize} → ${newSize} gallons**\n\n`;
+    
+    advice += `**Equipment Considerations:**\n`;
+    advice += `- Volume Scale Factor: ${scalingFactors.volumeScale.toFixed(2)}x\n`;
+    advice += `- Efficiency Adjustment: ${(scalingFactors.efficiencyAdjustment * 100).toFixed(1)}%\n`;
+    advice += `- Equipment Capacity: ${scalingFactors.equipmentCapacity.toFixed(1)} gallons max\n\n`;
+    
+    if (newSize > scalingFactors.equipmentCapacity) {
+      advice += `**⚠️ Capacity Warning:**\n`;
+      advice += `- Target size (${newSize} gal) exceeds equipment capacity\n`;
+      advice += `- Recommended batch size: ${scalingFactors.recommendedBatchSize.toFixed(1)} gallons\n`;
+      advice += `- Consider multiple smaller batches or equipment upgrade\n\n`;
+    }
+    
+    if (scalingFactors.volumeScale > 3) {
+      advice += `**⚠️ Large Scale-Up Considerations:**\n`;
+      advice += `- Mash tun capacity and heat distribution\n`;
+      advice += `- Boil kettle volume and heating efficiency\n`;
+      advice += `- Fermentation vessel availability\n`;
+      advice += `- Yeast pitch rate calculations adjusted for equipment\n\n`;
+    }
+    
+    advice += `**Equipment-Specific Adjustments:**\n`;
+    advice += `- Ingredient amounts optimized for your mash efficiency\n`;
+    advice += `- Hop utilization adjusted for your boil kettle type\n`;
+    advice += `- Yeast pitch rates calculated for your fermentation setup\n`;
+    advice += `- Process timing optimized for your equipment characteristics`;
+
+    return advice;
+  }
+  
+  /**
+   * Generate basic scaling advice (fallback)
    */
   generateScalingAdvice(originalSize, newSize, scaleFactor) {
     let advice = `🔧 **Scaling from ${originalSize} to ${newSize} gallons (${scaleFactor.toFixed(2)}x)**\n\n`;

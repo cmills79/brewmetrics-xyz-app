@@ -69,8 +69,13 @@ class AIBrewmasterUI {
               <div class="ai-message ai-message-system">
                 <div class="ai-avatar">🍺</div>
                 <div class="ai-text">
-                  Hi! I'm your AI Brewmaster assistant. Ask me about brewing techniques, 
-                  ingredient suggestions, troubleshooting, or anything beer-related!
+                  Hey there, fellow brewer! I'm your AI Brewmaster with 25+ years of brewing experience. 
+                  Whether you're crafting your first batch or perfecting a flagship recipe, I'm here to help!
+                  <br><br>
+                  <strong>What I bring to the brewhouse:</strong> Professional brewing expertise, troubleshooting wisdom, 
+                  recipe formulation, and that passion we all share for great beer. Plus, I work offline!
+                  <br><br>
+                  What's brewing today? Let's make something exceptional together.
                 </div>
               </div>
             </div>
@@ -78,6 +83,9 @@ class AIBrewmasterUI {
             <div class="ai-quick-actions">
               <button class="ai-quick-btn" data-action="recipe-suggestions">
                 📝 Recipe Ideas
+              </button>
+              <button class="ai-quick-btn" data-action="inventory-recipe">
+                📦 Use My Inventory
               </button>
               <button class="ai-quick-btn" data-action="troubleshooting">
                 🔧 Troubleshooting
@@ -553,6 +561,9 @@ class AIBrewmasterUI {
           `Give me recipe suggestions for ${context.beerStyle}` : 
           'What are some popular beer recipe ideas?';
         break;
+      case 'inventory-recipe':
+        query = 'Create a recipe using only my current inventory';
+        break;
       case 'troubleshooting':
         query = 'What are common brewing problems and how to fix them?';
         break;
@@ -590,7 +601,19 @@ class AIBrewmasterUI {
     
     statusIndicator.classList.remove('offline');
     toggleBtn.disabled = false;
-    toggleBtn.title = 'Ask AI Brewmaster (Ready)';
+    
+    // Check offline knowledge base status
+    if (window.offlineKnowledgeBase && window.offlineKnowledgeBase.isLoaded) {
+      const stats = window.offlineKnowledgeBase.getStats();
+      toggleBtn.title = `AI Brewmaster (Ready - ${stats.totalDocuments} knowledge docs loaded)`;
+      
+      // Add knowledge base status to welcome message
+      setTimeout(() => {
+        this.addKnowledgeBaseStatus(stats);
+      }, 1000);
+    } else {
+      toggleBtn.title = 'Ask AI Brewmaster (Ready - Online mode)';
+    }
   }
 
   showError(message) {
@@ -601,6 +624,30 @@ class AIBrewmasterUI {
     toggleBtn.title = `AI Brewmaster Error: ${message}`;
     
     console.error('AI Brewmaster UI Error:', message);
+  }
+
+  addKnowledgeBaseStatus(stats) {
+    const conversation = document.getElementById('ai-conversation');
+    const statusDiv = document.createElement('div');
+    
+    statusDiv.className = 'ai-message ai-message-system';
+    statusDiv.innerHTML = `
+      <div class="ai-avatar">📚</div>
+      <div class="ai-text">
+        <strong>Offline Knowledge Base Loaded!</strong><br>
+        I have access to ${stats.totalDocuments} brewing documents including:
+        <ul style="margin: 8px 0; padding-left: 20px; font-size: 12px;">
+          <li>${stats.sections.styles} beer style guides</li>
+          <li>${stats.sections.troubleshooting} troubleshooting guides</li>
+          <li>${stats.sections.ingredients} ingredient profiles</li>
+          <li>${stats.sections.guides} brewing technique guides</li>
+        </ul>
+        I can help even when you're offline!
+      </div>
+    `;
+    
+    conversation.appendChild(statusDiv);
+    conversation.scrollTop = conversation.scrollHeight;
   }
 }
 

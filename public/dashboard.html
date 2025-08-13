@@ -485,6 +485,12 @@
                             <button class="btn btn-secondary" onclick="window.open('recipe-designer.html', '_blank')">
                                 <i class="fas fa-flask"></i> Recipe Designer
                             </button>
+                            <button class="btn btn-secondary" onclick="window.open('inventory.html', '_blank')">
+                                <i class="fas fa-boxes"></i> Inventory
+                            </button>
+                            <button class="btn btn-secondary" onclick="window.open('brewery-setup.html', '_blank')">
+                                <i class="fas fa-cogs"></i> Equipment
+                            </button>
                             <button class="btn btn-new-batch"><i class="fas fa-plus"></i> New Batch</button>
                         </div>
                     </div>
@@ -548,9 +554,19 @@
                                     <li>Loading...</li>
                                 </ul>
                             </div>
-                            <div class="dashboard-section card hover-lift" data-aos="fade-up" data-aos-delay="600" style="display:block; border-top: 4px solid var(--brew-link-blue);">
-                                <h2><i class="fas fa-chart-bar"></i> Flavor Profile Trends</h2>
-                                <p>Overall flavor profile trends across your brewery will be displayed here. (Coming Soon)</p>
+                            <div class="dashboard-section card hover-lift" data-aos="fade-up" data-aos-delay="600" style="display:block; border-top: 4px solid var(--brew-link-blue);" onclick="window.location.href='inventory.html'" style="cursor: pointer;">
+                                <h2><i class="fas fa-boxes"></i> Inventory Management</h2>
+                                <p>Track ingredients, manage stock levels, and generate shopping lists for your brewery operations.</p>
+                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+                                    <small style="color: var(--brew-amber); font-weight: bold;">Click to manage inventory →</small>
+                                </div>
+                            </div>
+                            <div class="dashboard-section card hover-lift" data-aos="fade-up" data-aos-delay="700" style="display:block; border-top: 4px solid var(--brew-muted-green);" onclick="window.location.href='brewery-setup.html'" style="cursor: pointer;">
+                                <h2><i class="fas fa-cogs"></i> Equipment Setup</h2>
+                                <p>Configure your brewery equipment for optimized AI recipe generation and brewing efficiency.</p>
+                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+                                    <small style="color: var(--brew-amber); font-weight: bold;">Click to configure equipment →</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -592,7 +608,7 @@
                         <h2><i class="fas fa-robot"></i> Master Brewer AI Assistant</h2>
                         <div class="ai-status-indicator">
                             <span class="ai-status-dot"></span>
-                            <span class="ai-status-text">Ready</span>
+                            <span class="ai-status-text" id="ai-status-text">Loading...</span>
                         </div>
                     </div>
                     
@@ -603,14 +619,16 @@
                                     <i class="fas fa-user-tie"></i>
                                 </div>
                                 <div class="ai-message-content">
-                                    <p>Welcome! I'm your Master Brewer AI assistant with 25+ years of brewing experience. I can help you with:</p>
+                                    <p><strong>Cheers! I'm your Master Brewer AI with 25+ years of professional brewing experience.</strong></p>
+                                    <p>From grain to glass, I've got your back with expertise in:</p>
                                     <ul>
-                                        <li>Recipe creation and enhancement</li>
-                                        <li>Troubleshooting brewing issues</li>
-                                        <li>Ingredient and equipment recommendations</li>
-                                        <li>Process optimization</li>
+                                        <li><strong>Recipe Development:</strong> Grain bills, hop schedules, yeast selection for any style</li>
+                                        <li><strong>Troubleshooting:</strong> Off-flavors, fermentation issues, process optimization</li>
+                                        <li><strong>Professional Techniques:</strong> Water chemistry, advanced mashing, commercial scaling</li>
+                                        <li><strong>Inventory Integration:</strong> Create recipes using your current ingredients</li>
                                     </ul>
-                                    <p>How can I help improve your brewing today?</p>
+                                    <p><strong>🍺 Fellow brewer to brewer:</strong> I work offline and understand the passion we share for exceptional beer.</p>
+                                    <p>What's brewing? Let's craft something amazing together!</p>
                                 </div>
                             </div>
                         </div>
@@ -634,14 +652,14 @@
                             <button class="ai-action-btn" data-action="generate-recipe">
                                 <i class="fas fa-magic"></i> Generate Recipe
                             </button>
+                            <button class="ai-action-btn" data-action="inventory-recipe">
+                                <i class="fas fa-boxes"></i> Use My Inventory
+                            </button>
                             <button class="ai-action-btn" data-action="enhance-recipe">
                                 <i class="fas fa-star"></i> Enhance Recipe
                             </button>
                             <button class="ai-action-btn" data-action="troubleshoot">
                                 <i class="fas fa-tools"></i> Troubleshoot Batch
-                            </button>
-                            <button class="ai-action-btn" data-action="recommend-products">
-                                <i class="fas fa-shopping-cart"></i> Product Recommendations
                             </button>
                         </div>
                     </div>
@@ -966,6 +984,8 @@
     <script src="dashboard.js"></script>
     
     <!-- AI Brewmaster Integration -->
+    <script src="brewing_knowledge_expansion.js"></script>
+    <script src="offline-knowledge-base.js"></script>
     <script src="ai-brewmaster.js"></script>
     <script src="ai-brewmaster-ui.js"></script>
     
@@ -981,6 +1001,7 @@
     
     <!-- Enhanced UI Scripts -->
     <script src="enhanced-ui.js"></script>
+    <script src="demo-upgrade.js"></script>
     <script src="advanced-components.js"></script>
     
     <!-- Brewery Theme Scripts -->
@@ -1008,6 +1029,31 @@
                     animation: 'scale'
                 });
             }
+            
+            // Monitor AI Assistant and Knowledge Base status
+            function updateAIStatus() {
+                const statusText = document.getElementById('ai-status-text');
+                if (!statusText) return;
+                
+                if (window.offlineKnowledgeBase && window.offlineKnowledgeBase.isLoaded) {
+                    const stats = window.offlineKnowledgeBase.getStats();
+                    statusText.textContent = `Ready (${stats.totalDocuments} docs loaded)`;
+                    statusText.title = `Offline knowledge base loaded with ${stats.totalDocuments} brewing documents`;
+                } else if (window.AIBrewmaster && window.AIBrewmaster.isInitialized) {
+                    statusText.textContent = 'Ready (Online mode)';
+                    statusText.title = 'AI Assistant ready - online mode';
+                } else {
+                    statusText.textContent = 'Loading...';
+                }
+            }
+            
+            // Check status periodically
+            const statusInterval = setInterval(() => {
+                updateAIStatus();
+                if (window.offlineKnowledgeBase && window.offlineKnowledgeBase.isLoaded) {
+                    clearInterval(statusInterval);
+                }
+            }, 500);
             
             // Enhanced button interactions
             setTimeout(() => {
