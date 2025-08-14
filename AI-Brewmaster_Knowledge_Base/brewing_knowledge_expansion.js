@@ -2,54 +2,6 @@
 // Additional brewing patterns and responses
 
 const expandedBrewingKnowledge = {
-  // Additional beer style recipes
-  recipes: {
-    porter: `Here's a classic English Porter recipe:
-
-**5-Gallon English Porter Recipe:**
-
-**Grain Bill:**
-- 8 lbs English Pale Malt
-- 1 lb Crystal 60L
-- 0.75 lb Chocolate Malt
-- 0.5 lb Brown Malt
-
-**Hop Schedule:**
-- 1.5 oz Fuggle (4.5% AA) @ 60 min
-- 0.75 oz East Kent Goldings (5% AA) @ 15 min
-
-**Yeast & Process:**
-- Wyeast 1968 London ESB or S-04
-- Mash at 154°F for 60 minutes
-- Ferment at 66-68°F for 7-10 days
-
-**Target Stats:**
-- OG: 1.052, FG: 1.013
-- ABV: 5.1%, IBU: 28, SRM: 22`,
-
-    brownAle: `Here's a Northern English Brown Ale recipe:
-
-**5-Gallon Brown Ale Recipe:**
-
-**Grain Bill:**
-- 7 lbs English Pale Malt
-- 1.5 lbs Crystal 60L
-- 0.5 lb Chocolate Malt
-- 0.25 lb Victory Malt
-
-**Hop Schedule:**
-- 1 oz Fuggle (4.5% AA) @ 60 min
-- 0.5 oz East Kent Goldings (5% AA) @ 15 min
-
-**Yeast & Process:**
-- Wyeast 1968 London ESB
-- Mash at 154°F for 60 minutes
-- Ferment at 66-68°F for 7-10 days
-
-**Target Stats:**
-- OG: 1.048, FG: 1.012
-- ABV: 4.7%, IBU: 22, SRM: 18`
-  },
 
   // Brewing calculations and formulas
   calculations: `Key brewing calculations and formulas:
@@ -95,29 +47,6 @@ const expandedBrewingKnowledge = {
 - **US-05 ↔ Wyeast 1056**: Same strain, different form
 - **S-04 ↔ Wyeast 1084**: English ale character
 - **34/70 ↔ Wyeast 2124**: Lager strains`,
-
-  // Beginner guidance
-  beginner: `Getting started with homebrewing:
-
-**Start with Extract Brewing:**
-- **Equipment**: 5+ gallon pot, fermenter, airlock, hydrometer
-- **First Recipe**: American Pale Ale or Wheat Beer
-- **Process**: Steep specialty grains, add extract, boil hops, ferment
-- **Timeline**: 4-6 weeks grain to glass
-
-**Essential First Steps:**
-1. **Join a homebrew club** - invaluable learning resource
-2. **Read "How to Brew" by John Palmer** - brewing bible
-3. **Start simple** - master basics before advanced techniques
-4. **Take detailed notes** - track what works
-5. **Sanitize everything** - most critical success factor
-
-**Common Beginner Mistakes:**
-- Skipping sanitization steps
-- Not controlling fermentation temperature
-- Rushing the process (patience is key)
-- Over-complicating first recipes
-- Not taking gravity readings`,
 
   // Advanced techniques
   advanced: `Advanced brewing techniques:

@@ -23,7 +23,7 @@ Built complete demo brewery setup with sample data and interactive sales tour fo
 ### Advanced Analytics Suite
 Implemented comprehensive analytics dashboard with revenue impact analysis, customer intelligence, predictive analytics, and competitive positioning
 
-## Key Files and Components
+```## Key Files and Components
 
 ### Backend Functions
 - **c:\Users\Clay\source\repos\brewmetrics-xyz-app\functions\index.js**: Contains Firebase functions for AI recipe generation, Google Reviews integration, and demo brewery creation
