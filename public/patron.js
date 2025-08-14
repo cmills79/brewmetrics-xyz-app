@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         if (db && db.app && db.app.options) {
             console.log(`--- [DEBUG] Firestore Project ID used by JS: ${db.app.options.projectId} ---`);
-            if (db.app.options.projectId !== 'brewmetrics-xyz-app-e8d51') { // Verify this is your correct project ID
+            if (db.app.options.projectId !== 'brewmetrics-xyz-web') { // Verify this is your correct project ID
                 console.error("!!!! PROJECT ID MISMATCH DETECTED IN JS !!!!");
                 displayError("Configuration Error: Application connected to wrong project.");
                 return;

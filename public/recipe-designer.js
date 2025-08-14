@@ -33,6 +33,16 @@ class RecipeDesigner {
     this.init();
   }
 
+  isAuthorized() {
+    // Check if user is authenticated and has recipe editing permissions
+    if (typeof window.firebase !== 'undefined' && window.firebase.auth) {
+      const user = window.firebase.auth().currentUser;
+      return user !== null;
+    }
+    // Fallback for development/demo mode
+    return true;
+  }
+
   init() {
     this.setupEventListeners();
     
@@ -62,6 +72,10 @@ class RecipeDesigner {
     const batchVolInput = document.getElementById('batch-vol');
     if (batchVolInput) {
       batchVolInput.addEventListener('input', (e) => {
+        if (!this.isAuthorized()) {
+          e.preventDefault();
+          return;
+        }
         this.recipe.batchSize = parseFloat(e.target.value) || 5.0;
         this.calculateStats();
         this.updateDisplay();
@@ -71,6 +85,10 @@ class RecipeDesigner {
     const efficiencyInput = document.getElementById('efficiency');
     if (efficiencyInput) {
       efficiencyInput.addEventListener('input', (e) => {
+        if (!this.isAuthorized()) {
+          e.preventDefault();
+          return;
+        }
         this.recipe.efficiency = parseFloat(e.target.value) || 72.0;
         this.calculateStats();
         this.updateDisplay();
@@ -80,6 +98,10 @@ class RecipeDesigner {
     const boilTimeInput = document.getElementById('boil-time');
     if (boilTimeInput) {
       boilTimeInput.addEventListener('input', (e) => {
+        if (!this.isAuthorized()) {
+          e.preventDefault();
+          return;
+        }
         this.recipe.boilTime = parseInt(e.target.value) || 60;
         this.calculateStats();
         this.updateDisplay();
@@ -90,6 +112,10 @@ class RecipeDesigner {
     const beerStyleSelect = document.getElementById('beer-style');
     if (beerStyleSelect) {
       beerStyleSelect.addEventListener('change', (e) => {
+        if (!this.isAuthorized()) {
+          e.preventDefault();
+          return;
+        }
         this.recipe.style = e.target.value;
         this.updateStyleGuidelines();
         
@@ -98,7 +124,7 @@ class RecipeDesigner {
           window.updateStyleDefaults(e.target.value);
         }
         
-        console.log('Style changed to:', e.target.value);
+        console.log('Style changed to:', encodeURIComponent(e.target.value || ''));
       });
     }
 
@@ -106,6 +132,10 @@ class RecipeDesigner {
     const recipeTypeSelect = document.getElementById('recipe-type');
     if (recipeTypeSelect) {
       recipeTypeSelect.addEventListener('change', (e) => {
+        if (!this.isAuthorized()) {
+          e.preventDefault();
+          return;
+        }
         this.recipe.type = e.target.value;
         this.calculateStats();
         this.updateDisplay();
@@ -115,6 +145,10 @@ class RecipeDesigner {
     const brewerInput = document.getElementById('brewer');
     if (brewerInput) {
       brewerInput.addEventListener('input', (e) => {
+        if (!this.isAuthorized()) {
+          e.preventDefault();
+          return;
+        }
         this.recipe.brewer = e.target.value;
       });
     }
@@ -124,6 +158,9 @@ class RecipeDesigner {
       const element = document.getElementById(id);
       if (element) {
         element.addEventListener('input', () => {
+          if (!this.isAuthorized()) {
+            return;
+          }
           this.calculateStats();
           this.updateDisplay();
         });
@@ -158,7 +195,12 @@ class RecipeDesigner {
     // Save/Cancel buttons
     const saveBtn = document.querySelector('.btn-success');
     const cancelBtn = document.querySelector('.btn-danger');
-    if (saveBtn) saveBtn.addEventListener('click', () => this.saveRecipe());
+    if (saveBtn) saveBtn.addEventListener('click', () => {
+      if (!this.isAuthorized()) {
+        return;
+      }
+      this.saveRecipe();
+    });
     if (cancelBtn) cancelBtn.addEventListener('click', () => this.cancelRecipe());
   }
 
@@ -184,7 +226,7 @@ class RecipeDesigner {
   }
 
   calculateStats() {
-    console.log('Calculating stats with recipe:', this.recipe);
+    console.log('Calculating stats with recipe:', JSON.stringify(this.recipe).replace(/[&<>"']/g, ''));
     
     // Calculate Original Gravity
     this.calculations.og = this.calculateOG();
@@ -208,7 +250,7 @@ class RecipeDesigner {
       this.calculations.bitterness_ratio = 0;
     }
 
-    console.log('Calculated stats:', this.calculations);
+    console.log('Calculated stats:', JSON.stringify(this.calculations).replace(/[&<>"']/g, ''));
     
     // Always update display after calculations
     this.updateDisplay();
@@ -286,7 +328,7 @@ class RecipeDesigner {
   }
 
   updateDisplay() {
-    console.log('Updating display with calculations:', this.calculations);
+    console.log('Updating display with calculations:', JSON.stringify(this.calculations).replace(/[&<>"']/g, ''));
     
     // Update brewing statistics (main stats cards)
     const ogElement = document.getElementById('estimated-og');
@@ -601,14 +643,17 @@ class RecipeDesigner {
     const brewingData = window.CommercialBrewingData?.getIngredientDatabase() || {};
     const items = brewingData[type === 'fermentable' ? 'fermentables' : type] || [];
     
+    const sanitizeHtml = (str) => str.replace(/[&<>"']/g, (match) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[match]));
+    const safeType = sanitizeHtml(type);
+    
     modal.innerHTML = `
       <div style="background: white; padding: 20px; border-radius: 8px; max-width: 600px; width: 95%; max-height: 80vh; overflow-y: auto;">
-        <h3>Add ${type.charAt(0).toUpperCase() + type.slice(1)}</h3>
+        <h3>Add ${safeType.charAt(0).toUpperCase() + safeType.slice(1)}</h3>
         
         <div style="margin: 15px 0;">
-          <label>Select ${type}:</label>
+          <label>Select ${safeType}:</label>
           <select id="ingredient-select" style="width: 100%; padding: 8px; margin-top: 5px;">
-            ${items.map(item => `<option value="${item.name}" data-info='${JSON.stringify(item)}'>${item.name}${item.supplier ? ` (${item.supplier})` : ''}</option>`).join('')}
+            ${items.map(item => `<option value="${sanitizeHtml(item.name || '')}" data-info='${sanitizeHtml(JSON.stringify(item))}'>${sanitizeHtml(item.name || '')}${item.supplier ? ` (${sanitizeHtml(item.supplier)})` : ''}</option>`).join('')}
           </select>
           <div id="ingredient-info" style="margin-top: 5px; font-size: 0.85em; color: #666;"></div>
         </div>
@@ -643,7 +688,7 @@ class RecipeDesigner {
         
         <div style="display: flex; gap: 10px; margin-top: 20px;">
           <button onclick="this.closest('.ingredient-modal').remove()" style="flex: 1; padding: 10px; background: #ccc; border: none; border-radius: 4px;">Cancel</button>
-          <button onclick="window.recipeDesigner.addIngredient('${type}', this)" style="flex: 1; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px;">Add</button>
+          <button onclick="window.recipeDesigner.addIngredient('${sanitizeHtml(type)}', this)" style="flex: 1; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px;">Add</button>
         </div>
       </div>
     `;
@@ -790,14 +835,16 @@ class RecipeDesigner {
       return;
     }
 
+    const sanitizeHtml = (str) => String(str || '').replace(/[&<>"']/g, (match) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[match]));
+    
     container.innerHTML = '';
     this.recipe.hops.forEach((hop, index) => {
       const item = document.createElement('div');
       item.className = 'ingredient-item';
       item.innerHTML = `
         <div class="ingredient-info">
-          <div class="ingredient-name">${hop.name}</div>
-          <div class="ingredient-details">${hop.amount} oz - ${hop.alpha}% AA - ${hop.time} min</div>
+          <div class="ingredient-name">${sanitizeHtml(hop.name)}</div>
+          <div class="ingredient-details">${sanitizeHtml(hop.amount)} oz - ${sanitizeHtml(hop.alpha)}% AA - ${sanitizeHtml(hop.time)} min</div>
         </div>
         <div class="ingredient-actions">
           <button class="btn-icon" onclick="window.recipeDesigner.editIngredient('hops', ${index})">

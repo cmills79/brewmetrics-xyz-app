@@ -13,30 +13,11 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="google-reviews-styles.css">
-    <link rel="stylesheet" href="advanced-analytics-styles.css">
-    
-    <!-- Enhanced UI Libraries -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.css" rel="stylesheet">
-    
-    <!-- Enhanced UI Styles -->
-    <link href="enhanced-ui.css" rel="stylesheet">
-    <link href="advanced-components.css" rel="stylesheet">
-    
-    <!-- Brewery Theme -->
-    <link href="brewery-theme.css" rel="stylesheet">
+    <link rel="stylesheet" href="enhanced-ui.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Enhanced UI Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy-bundle.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+
 
     <style>
         /* Existing styles from your HTML for modals and feedback items - Preserved */
@@ -485,11 +466,8 @@
                             <button class="btn btn-secondary" onclick="window.open('recipe-designer.html', '_blank')">
                                 <i class="fas fa-flask"></i> Recipe Designer
                             </button>
-                            <button class="btn btn-secondary" onclick="window.open('inventory.html', '_blank')">
-                                <i class="fas fa-boxes"></i> Inventory
-                            </button>
-                            <button class="btn btn-secondary" onclick="window.open('brewery-setup.html', '_blank')">
-                                <i class="fas fa-cogs"></i> Equipment
+                            <button class="btn btn-warning" onclick="loadDemoBrewery()">
+                                <i class="fas fa-database"></i> Load Demo Data
                             </button>
                             <button class="btn btn-new-batch"><i class="fas fa-plus"></i> New Batch</button>
                         </div>
@@ -554,18 +532,18 @@
                                     <li>Loading...</li>
                                 </ul>
                             </div>
-                            <div class="dashboard-section card hover-lift" data-aos="fade-up" data-aos-delay="600" style="display:block; border-top: 4px solid var(--brew-link-blue);" onclick="window.location.href='inventory.html'" style="cursor: pointer;">
-                                <h2><i class="fas fa-boxes"></i> Inventory Management</h2>
-                                <p>Track ingredients, manage stock levels, and generate shopping lists for your brewery operations.</p>
+                            <div class="dashboard-section card hover-lift" style="display:block; border-top: 4px solid var(--brew-link-blue);">
+                                <h2><i class="fas fa-chart-bar"></i> Advanced Analytics</h2>
+                                <p>View detailed brewing analytics and batch comparisons in the Batch Management section.</p>
                                 <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
-                                    <small style="color: var(--brew-amber); font-weight: bold;">Click to manage inventory →</small>
+                                    <small style="color: var(--brew-amber); font-weight: bold;">Available in Batch Management →</small>
                                 </div>
                             </div>
-                            <div class="dashboard-section card hover-lift" data-aos="fade-up" data-aos-delay="700" style="display:block; border-top: 4px solid var(--brew-muted-green);" onclick="window.location.href='brewery-setup.html'" style="cursor: pointer;">
-                                <h2><i class="fas fa-cogs"></i> Equipment Setup</h2>
-                                <p>Configure your brewery equipment for optimized AI recipe generation and brewing efficiency.</p>
+                            <div class="dashboard-section card hover-lift" style="display:block; border-top: 4px solid var(--brew-muted-green);">
+                                <h2><i class="fas fa-robot"></i> AI Brewing Assistant</h2>
+                                <p>Get professional brewing advice and recipe suggestions from our AI assistant.</p>
                                 <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
-                                    <small style="color: var(--brew-amber); font-weight: bold;">Click to configure equipment →</small>
+                                    <small style="color: var(--brew-amber); font-weight: bold;">Try the AI Assistant section →</small>
                                 </div>
                             </div>
                         </div>
@@ -951,34 +929,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDmvUqgMlnaQFiyqlo50D66fX0Bwav3j1k",
-            authDomain: "brewmetrics-xyz-app-e8d51.firebaseapp.com",
-            projectId: "brewmetrics-xyz-app-e8d51",
-            storageBucket: "brewmetrics-xyz-app-e8d51.appspot.com",
-            messagingSenderId: "391623246374",
-            appId: "1:391623246374:web:3b8e39db5fff674befdce7",
-            measurementId: "G-MHT3H2ZVRY"
-        };
-
-        let auth, db, functions; 
-        try {
-            if (!firebase.apps.length) {
-                 firebase.initializeApp(firebaseConfig);
-            } else {
-                 firebase.app(); 
-            }
-            auth = firebase.auth();
-            db = firebase.firestore();
-            functions = firebase.functions();
-            console.log("Firebase Initialized on Dashboard Page with Functions!");
-        } catch (e) {
-            console.error("Error initializing Firebase:", e);
-            const loadingDiv = document.getElementById('loading-indicator');
-            if(loadingDiv) loadingDiv.innerHTML = '<p class="error-message" style="padding:20px;">Critical Error: Could not connect to Firebase services. Please ensure your Firebase configuration is correct and try refreshing.</p>';
-        }
-    </script>
+    <!-- Unified Firebase Configuration -->
+    <script src="firebase-config.js"></script>
     <script>
         const currentYear = new Date().getFullYear();
         const copyrightYearSpan = document.getElementById('copyright-year');
@@ -990,55 +942,26 @@
     <script src="dashboard.js"></script>
     
     <!-- AI Brewmaster Integration -->
-    <script src="brewing_knowledge_expansion.js"></script>
-    <script src="AI-Brewmaster_Knowledge_Base/advanced_brewing_mastery.js"></script>
     <script src="offline-knowledge-base.js"></script>
     <script src="ai-brewmaster.js"></script>
-    <script src="ai-brewmaster-functions.js"></script>
-    <script src="ai-brewmaster-ui.js"></script>
     
     <!-- Google Reviews Integration -->
     <script src="google-reviews.js"></script>
     
-    <!-- Demo Tour System -->
-    <script src="demo-tour.js"></script>
-    
-    <!-- Advanced Analytics System -->
-    <script src="real-analytics.js"></script>
-    <script src="advanced-analytics.js"></script>
-    
-    <!-- Enhanced UI Scripts -->
+    <!-- Enhanced UI -->
     <script src="enhanced-ui.js"></script>
-    <script src="demo-upgrade.js"></script>
-    <script src="advanced-components.js"></script>
     
-    <!-- Brewery Theme Scripts -->
-    <script src="brewery-animations.js"></script>
+    <!-- Demo System -->
+    <script src="demo-data-loader.js"></script>
     
     <script>
-        // Initialize Enhanced UI Features
+        // Initialize Enhanced Features
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize AOS (Animate On Scroll)
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 800,
-                    easing: 'ease-out-cubic',
-                    once: true,
-                    offset: 100
-                });
+            // Initialize enhanced UI
+            if (window.enhancedUI) {
+                window.enhancedUI.enhance();
             }
-            
-            // Brewery particles will be initialized by brewery-animations.js
-            
-            // Initialize Tooltips
-            if (typeof tippy !== 'undefined') {
-                tippy('[title]', {
-                    theme: 'brewmetrics',
-                    animation: 'scale'
-                });
-            }
-            
-            // Monitor AI Assistant and Knowledge Base status
+            // Monitor AI Assistant status
             function updateAIStatus() {
                 const statusText = document.getElementById('ai-status-text');
                 if (!statusText) return;
@@ -1046,10 +969,8 @@
                 if (window.offlineKnowledgeBase && window.offlineKnowledgeBase.isLoaded) {
                     const stats = window.offlineKnowledgeBase.getStats();
                     statusText.textContent = `Ready (${stats.totalDocuments} docs loaded)`;
-                    statusText.title = `Offline knowledge base loaded with ${stats.totalDocuments} brewing documents`;
                 } else if (window.AIBrewmaster && window.AIBrewmaster.isInitialized) {
                     statusText.textContent = 'Ready (Online mode)';
-                    statusText.title = 'AI Assistant ready - online mode';
                 } else {
                     statusText.textContent = 'Loading...';
                 }
@@ -1062,18 +983,6 @@
                     clearInterval(statusInterval);
                 }
             }, 500);
-            
-            // Enhanced button interactions
-            setTimeout(() => {
-                if (window.enhancedUI) {
-                    window.enhancedUI.enhance();
-                }
-                
-                // Initialize brewery enhancements
-                if (window.breweryAnimations) {
-                    window.breweryAnimations.enhanceBreweryElements();
-                }
-            }, 1000);
             
             // Dashboard AI action handler
             window.handleDashboardAIAction = async function(action) {
@@ -1091,6 +1000,29 @@
                 aiMessages.appendChild(aiMsg);
                 
                 aiMessages.scrollTop = aiMessages.scrollHeight;
+            };
+            
+            // Demo data loader function
+            window.loadDemoBrewery = async function() {
+                if (!window.DemoDataLoader) {
+                    // Load the demo data loader script
+                    const script = document.createElement('script');
+                    script.src = './demo-data-loader.js';
+                    document.head.appendChild(script);
+                    
+                    // Wait for it to load
+                    await new Promise(resolve => {
+                        script.onload = resolve;
+                    });
+                }
+                
+                const loader = new DemoDataLoader();
+                await loader.loadDemoData();
+                
+                // Refresh the page to show new data
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             };
         });
     </script>

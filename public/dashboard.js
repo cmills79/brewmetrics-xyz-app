@@ -2,16 +2,7 @@
 // Enhanced logging added to verify script loading and version.
 console.log("Executing dashboard.js - Version: May 29, 2025 (Includes setTimeout fix & enhanced logging)");
 
-// Firebase is loaded via CDN scripts in dashboard.html
-// Using global firebase object instead of imports
-
-// CACHE BUSTING RECOMMENDATION:
-// To ensure the browser always loads the latest version of this script,
-// modify the script tag in your dashboard.html file to include a version parameter.
-// Example: <script src="dashboard.js?v=2025052901"></script>
-// Update the 'v' parameter whenever you make changes to this file.
-
-// Original file content starts below:
+// Firebase loaded via CDN - see dashboard.html for script tags
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Dashboard DOM loaded. (Full Integration Attempt with Advanced Analytics)");
 
@@ -207,28 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const feedbackDetailTbody = document.getElementById("feedback-detail-tbody");
     const feedbackDetailThead = feedbackDetailTable ? feedbackDetailTable.querySelector("thead tr") : null;
 
-    // =========================================================================
-    // CRITICAL TROUBLESHOOTING: Enable Firebase Debug Logging
-    // =========================================================================
-    if (firebase && typeof firebase.firestore === 'function') {
-        // Enable debug logging for Firestore (if still needed)
-        firebase.firestore.setLogLevel('debug');
-        console.log("TROUBLESHOOTING: Firebase Firestore debug logging enabled");
-        
-        // Also try to clear persistence and enable network as per troubleshooting
-        const firestoreInstance = firebase.firestore();
-        firestoreInstance.clearPersistence()
-            .then(() => {
-                console.warn("TROUBLESHOOTING: Firestore persistence cleared for this session.");
-                return firestoreInstance.enableNetwork();
-            })
-            .then(() => {
-                console.warn("TROUBLESHOOTING: Firestore network explicitly enabled.");
-            })
-            .catch((err) => {
-                console.error("TROUBLESHOOTING: Error with persistence/network management:", err);
-            });
-    }
+
 
     // =========================================================================
     // SECTION: Event Listeners Setup (NEWLY DEFINED)
@@ -377,96 +347,109 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Auth object initial state:", typeof auth !== "undefined" ? auth : "Auth object not defined yet"); // Enhanced logging
 
     // Initial UI state: show loading, hide app content
-    // This assumes CSS initially hides appContainer and shows loadingIndicator,
-    // or you can manage it here if not.
-    if (appContainer) appContainer.classList.add("hidden"); // Ensure app is hidden initially
+    if (appContainer) appContainer.classList.add("hidden");
     if (loadingIndicator) {
-        loadingIndicator.textContent = "Initializing Dashboard..."; // Generic initial message
-        loadingIndicator.style.display = "flex"; // Ensure loader is visible
+        loadingIndicator.innerHTML = `
+            <div class="loading-content animate__animated animate__fadeIn">
+                <div class="loading-spinner"></div>
+                <p style="margin-top: 20px;">Initializing Dashboard...</p>
+            </div>
+        `;
+        loadingIndicator.style.display = "flex";
     }
 
-    if (typeof auth !== "undefined") {
-        // Verify persistence setting (optional, for debugging)
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-         .then(() => {
-            console.log("Firebase Auth persistence set to LOCAL.");
-         })
-         .catch((error) => {
-            console.error("Error setting Firebase Auth persistence:", error);
-         });
+    // Wait for Firebase to be fully initialized before setting up auth listener
+    function initializeAuthListener() {
+        if (typeof auth === "undefined" || !auth) {
+            console.log("Auth object not ready, retrying in 100ms...");
+            setTimeout(initializeAuthListener, 100);
+            return;
+        }
 
-        auth.onAuthStateChanged(user => {
-            console.log("Auth: onAuthStateChanged event fired. User object:", user); // Enhanced logging
-            // This 'user' object is the definitive state from Firebase.
-            if (user) {
-                console.log("Auth: User is authenticated via onAuthStateChanged:", user.uid);
-                currentUserId = user.uid;
+        console.log("Setting up auth state listener...");
+        
+        // Add a small delay to ensure Firebase auth state is properly restored
+        setTimeout(() => {
+            auth.onAuthStateChanged(user => {
+                console.log("Auth: onAuthStateChanged event fired. User object:", user);
                 
-                // CRITICAL TROUBLESHOOTING: Expose variables to window for console testing
-                window.db = db;
-                window.currentUserId = currentUserId;
-                window.firebase = firebase;
-                console.log("TROUBLESHOOTING: window.db, window.currentUserId, and window.firebase are now available for console testing.");
+                if (user) {
+                    console.log("Auth: User is authenticated:", user.uid);
+                    currentUserId = user.uid;
+                    
+                    // Set global variables for other scripts
+                    window.db = db;
+                    window.currentUserId = currentUserId;
+                    window.firebase = firebase;
 
-                if (loadingIndicator) loadingIndicator.style.display = "none";
-                if (appContainer) appContainer.classList.remove("hidden");
+                    // Hide loading and show app
+                    if (loadingIndicator) loadingIndicator.style.display = "none";
+                    if (appContainer) appContainer.classList.remove("hidden");
 
-                // Initialize dashboard components
-                fetchBreweryData(currentUserId);
-                generateQrCode(currentUserId);
-                loadFeedbackSummary(currentUserId);
-                loadDashboardOverviewData(currentUserId);
-                setupEventListeners(currentUserId); // Setup listeners after confirming user
+                    // Initialize dashboard data
+                    fetchBreweryData(currentUserId);
+                    generateQrCode(currentUserId);
+                    loadFeedbackSummary(currentUserId);
+                    loadDashboardOverviewData(currentUserId);
+                    setupEventListeners(currentUserId);
 
-                setActiveSection("dashboard-overview-section"); // Default view
+                    setActiveSection("dashboard-overview-section");
 
-                if (compareBatchesButton) compareBatchesButton.disabled = true;
+                    if (compareBatchesButton) compareBatchesButton.disabled = true;
 
-            } else {
-                // User is signed out or session is not yet restored.
-                console.log("Auth: onAuthStateChanged reported no user. Waiting briefly for session restoration...");
+                } else {
+                    console.log("Auth: No user authenticated. Redirecting to login.");
+                    
+                    // Clean up state
+                    currentUserId = null; 
+                    currentBreweryData = null; 
+                    currentSurveyUrl = null;
+                    currentBatchResponses = []; 
+                    currentViewedBatchId = null; 
+                    fetchedAnalyticsData = {};
+                    
+                    // Clean up charts
+                    Object.values(window.chartInstances || {}).forEach(chart => { 
+                        if(chart && typeof chart.destroy === "function") chart.destroy(); 
+                    });
+                    window.chartInstances = {};
 
-                if (appContainer) appContainer.classList.add("hidden");
-                if (loadingIndicator) {
-                    loadingIndicator.textContent = "Verifying session..."; // Updated message
-                    loadingIndicator.style.display = "flex";
-                }
-
-                setTimeout(() => {
-                    console.log("Auth: Checking auth.currentUser after delay..."); // Enhanced logging
-                    if (!auth.currentUser) {
-                        console.log("Auth: No user session found after delay (auth.currentUser is null). Redirecting to login.");
-                        
-                        // Reset state (copied from your original else block)
-                        currentUserId = null; currentBreweryData = null; currentSurveyUrl = null;
-                        currentBatchResponses = []; currentViewedBatchId = null; fetchedAnalyticsData = {};
-                        Object.values(window.chartInstances).forEach(chart => { if(chart && typeof chart.destroy === "function") chart.destroy(); });
-                        window.chartInstances = {};
-
-                        if (appContainer) appContainer.classList.add("hidden"); // Re-ensure hidden
-                        if (loadingIndicator) {
-                            loadingIndicator.textContent = "Redirecting to login...";
-                            loadingIndicator.style.display = "flex"; // Re-ensure visible
-                        }
-                        // Ensure this redirect only happens once if onAuthStateChanged fires multiple times during logout
-                        if (window.location.pathname.includes("dashboard.html")) { // Avoid redirect loop if already on index
-                            console.log("Redirecting from dashboard.html to index.html"); // Enhanced logging
-                            window.location.href = "index.html";
-                        }
-                    } else {
-                        // User session was confirmed by auth.currentUser after the delay.
-                        // onAuthStateChanged should fire again with the 'user' object,
-                        // which will then be handled by the `if (user)` block above.
-                        console.log("Auth: User session confirmed by auth.currentUser after delay or by subsequent event. UID:", auth.currentUser.uid);
-                        // No redirect needed, the other branch of onAuthStateChanged will handle UI update.
+                    // Hide app and show loading with redirect message
+                    if (appContainer) appContainer.classList.add("hidden");
+                    if (loadingIndicator) {
+                        loadingIndicator.innerHTML = `
+                            <div class="loading-content animate__animated animate__fadeIn">
+                                <div class="loading-spinner"></div>
+                                <p style="margin-top: 20px;">Redirecting to login...</p>
+                            </div>
+                        `;
+                        loadingIndicator.style.display = "flex";
                     }
-                }, 1500); // 1.5 second delay to allow Firebase time to restore session
-            }
-        });
-    } else {
-        console.error("CRITICAL: Firebase auth object is not defined. Dashboard cannot function.");
+                    
+                    // Only redirect if we're actually on the dashboard page
+                    if (window.location.pathname.includes("dashboard.html")) {
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 1000); // Small delay to show the message
+                    }
+                }
+            });
+        }, 250); // Give Firebase time to restore auth state
+    }
+
+    // Initialize auth listener with fallback error handling
+    try {
+        initializeAuthListener();
+    } catch (error) {
+        console.error("CRITICAL: Error initializing auth listener:", error);
         if (loadingIndicator) {
-            loadingIndicator.innerHTML = "<p class=\"error-message\">Critical Error: Firebase unavailable. Please refresh.</p>";
+            loadingIndicator.innerHTML = `
+                <div class="loading-content animate__animated animate__fadeIn">
+                    <p class="error-message" style="padding: 20px; text-align: center; color: #c62828;">
+                        Critical Error: Firebase unavailable. Please refresh the page.
+                    </p>
+                </div>
+            `;
             loadingIndicator.style.display = "flex";
         }
         if (appContainer) appContainer.classList.add("hidden");

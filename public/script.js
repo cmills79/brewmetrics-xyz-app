@@ -60,6 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         uid: userCredential.user.uid, 
                         email: userCredential.user.email 
                     });
+                    
+                    // Redirect to dashboard page
                     window.location.href = 'dashboard.html';
                 })
                 .catch((error) => {

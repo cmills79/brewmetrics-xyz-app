@@ -7,7 +7,7 @@ class AIBrewmaster {
     this.isInitialized = false;
     this.cache = new Map();
     this.cacheTimeout = 10 * 60 * 1000; // 10 minutes
-    
+
     this.init();
   }
 
@@ -31,7 +31,7 @@ class AIBrewmaster {
         this.logger = this.utils.logger;
         this.errorHandler = this.utils.errorHandler;
       }
-      
+
       this.isInitialized = true;
       this.logger.info('AI Brewmaster initialized');
     } catch (error) {
@@ -58,9 +58,9 @@ class AIBrewmaster {
 
       // Enhance query with context
       const enhancedQuery = this.enhanceQuery(query, context);
-      
+
       const response = await this.searchBrewingKnowledge(enhancedQuery);
-      
+
       // Cache the response
       this.cache.set(cacheKey, {
         data: response,
@@ -125,12 +125,12 @@ class AIBrewmaster {
    */
   async generateIntelligentResponse(query) {
     const lowerQuery = query.toLowerCase();
-    
+
     // Check for inventory-specific requests
     if (lowerQuery.includes('inventory') && lowerQuery.includes('recipe')) {
       return await this.generateInventoryAwareResponse(query);
     }
-    
+
     // First try offline knowledge base if available
     if (window.offlineKnowledgeBase && window.offlineKnowledgeBase.isLoaded) {
       try {
@@ -149,7 +149,7 @@ class AIBrewmaster {
 
     // Fallback to programmatic responses with personality
     let response = "";
-    
+
     // Add brewmaster personality intro
     const personality = window.expandedBrewingKnowledge?.personality;
     if (personality) {
@@ -161,7 +161,7 @@ class AIBrewmaster {
         response = this.getRandomPersonality(personality.expertise.collaborative) + ' ';
       }
     }
-    
+
     // Specific beer style recipes
     if (lowerQuery.includes('ipa') && lowerQuery.includes('recipe')) {
       response = `Here's a solid American IPA recipe:
@@ -299,9 +299,9 @@ class AIBrewmaster {
 
 **Grain Bill:** 90-95% pale malt base with 5-10% crystal/caramel malts (40-60L) for color and slight sweetness.
 
-**Process:** 
+**Process:**
 - Bitter hop additions at 60 minutes
-- Flavor additions at 15-20 minutes  
+- Flavor additions at 15-20 minutes
 - Aroma/whirlpool additions at flameout
 - Dry hop 3-4 days into fermentation
 
@@ -546,7 +546,7 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
   async generateInventoryAwareResponse(query) {
     const lowerQuery = query.toLowerCase();
     const useOnlyInventory = lowerQuery.includes('only') || lowerQuery.includes('current');
-    
+
     // Extract beer style from query
     let style = 'beer';
     const styles = ['ipa', 'stout', 'porter', 'wheat', 'pilsner', 'lager', 'ale', 'saison'];
@@ -556,11 +556,11 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
         break;
       }
     }
-    
+
     if (window.offlineKnowledgeBase) {
       return await window.offlineKnowledgeBase.generateInventoryRecipe(style, useOnlyInventory);
     }
-    
+
     return {
       summary: "I need access to your inventory system to create inventory-aware recipes. Please ensure you're logged in and have inventory items added.",
       results: [],
@@ -584,10 +584,10 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
     const style = context.beerStyle || 'craft beer';
     const batchSize = context.batchSize || 5;
     const special = context.specialRequests || '';
-    
+
     let personality = "";
     let tips = "";
-    
+
     // Add personality based on beer style
     if (style.toLowerCase().includes('ipa')) {
       personality = "Excellent choice! IPAs are one of my favorite styles to design. There's something magical about balancing hop character with malt backbone.";
@@ -599,16 +599,16 @@ Consider hop oil content, alpha acids, and flavor profiles when selecting variet
       personality = `${style} is a fantastic choice! This style offers great flexibility for creativity while staying true to tradition.`;
       tips = "Focus on balance – every ingredient should have a purpose and contribute to the overall character.";
     }
-    
+
     // Professional brewing approach - all brewers are treated as professionals
     const professionalNote = "This recipe is designed with professional brewing standards in mind, optimized for consistent results and exceptional quality.";
-    
+
     // Include special requests
     let specialNote = "";
     if (special) {
       specialNote = `I've incorporated your request for "${special}" into the recipe design. This adds a unique twist that should really make this beer special!`;
     }
-    
+
     const response = `${personality}
 
 For your ${batchSize}-gallon batch, I've crafted something that balances tradition with innovation. ${professionalNote}
@@ -642,7 +642,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
       }
 
       const auth = firebase.auth();
-      
+
       // Check if already authenticated
       if (auth.currentUser) {
         resolve(auth.currentUser);
@@ -674,7 +674,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    */
   processCloudFunctionResponse(data) {
     const response = data.response || '';
-    
+
     return {
       summary: response,
       results: [],
@@ -688,7 +688,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    */
   processSearchResults(data) {
     const results = data.results || [];
-    
+
     return {
       summary: this.generateSummary(results),
       results: results.map(result => ({
@@ -707,15 +707,15 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    */
   generateSummary(results) {
     if (!results.length) return "I couldn't find specific information about that. Try asking about brewing techniques, ingredients, or troubleshooting.";
-    
+
     // Extract key snippets
     const snippets = results
       .slice(0, 3)
       .map(r => r.document?.derivedStructData?.snippets?.[0]?.snippet)
       .filter(Boolean);
-    
+
     if (snippets.length === 0) return "I found some relevant brewing information. Check the detailed results below.";
-    
+
     return snippets.join(' ');
   }
 
@@ -725,28 +725,28 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   generateBrewingSuggestions(response) {
     const suggestions = [];
     const lowerResponse = response.toLowerCase();
-    
+
     // Context-aware suggestions based on response content
     if (lowerResponse.includes('hop') || lowerResponse.includes('bitter')) {
       suggestions.push("How can I balance hop bitterness?");
       suggestions.push("What are the best hop varieties for my style?");
     }
-    
+
     if (lowerResponse.includes('malt') || lowerResponse.includes('grain')) {
       suggestions.push("How do I choose the right grain bill?");
       suggestions.push("What malt substitutions can I make?");
     }
-    
+
     if (lowerResponse.includes('yeast') || lowerResponse.includes('ferment')) {
       suggestions.push("How do I troubleshoot fermentation issues?");
       suggestions.push("What yeast strain should I use?");
     }
-    
+
     if (lowerResponse.includes('water') || lowerResponse.includes('chemistry')) {
       suggestions.push("How do I adjust my water chemistry?");
       suggestions.push("What water profile fits my beer style?");
     }
-    
+
     // Default suggestions if no specific context found
     if (suggestions.length === 0) {
       suggestions.push(
@@ -755,7 +755,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
         "How do I troubleshoot off-flavors?"
       );
     }
-    
+
     return suggestions.slice(0, 3);
   }
 
@@ -770,7 +770,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
       "Troubleshooting fermentation issues",
       "Grain bill recommendations for IPAs"
     ];
-    
+
     return suggestions.slice(0, 3);
   }
 
@@ -779,20 +779,20 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    */
   enhanceQuery(query, context) {
     let enhanced = query;
-    
+
     // Add recipe context if available
     if (context.beerStyle) {
       enhanced += ` for ${context.beerStyle}`;
     }
-    
+
     if (context.abv) {
       enhanced += ` with ${context.abv}% ABV`;
     }
-    
+
     if (context.ibu) {
       enhanced += ` and ${context.ibu} IBU`;
     }
-    
+
     return enhanced;
   }
 
@@ -800,11 +800,11 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    * Get specific recipe recommendations
    */
   async getRecipeRecommendations(style, characteristics = {}) {
-    const query = `recipe recommendations for ${style} beer` + 
+    const query = `recipe recommendations for ${style} beer` +
       (characteristics.abv ? ` with ${characteristics.abv}% alcohol` : '') +
       (characteristics.ibu ? ` and ${characteristics.ibu} IBU` : '') +
       (characteristics.flavor ? ` with ${characteristics.flavor} flavors` : '');
-    
+
     return await this.getBrewingAdvice(query, { beerStyle: style, ...characteristics });
   }
 
@@ -839,21 +839,21 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
     try {
       // Ensure user is authenticated
       await this.ensureAuthenticated();
-      
+
       // Use Firebase function for recipe generation
       if (typeof firebase !== 'undefined' && firebase.functions) {
         const functions = firebase.functions('us-central1');
         const generateAIRecipe = functions.httpsCallable('generateAIRecipe');
-        
+
         const result = await generateAIRecipe({
           beerStyle,
           batchSize: characteristics.batchSize || 5,
           specialRequests: characteristics.specialRequests || ''
         });
-        
+
         return result.data;
       }
-      
+
       // Fallback to local generation with proper batch size
       return this.generateFallbackRecipe(beerStyle, characteristics);
     } catch (error) {
@@ -885,13 +885,13 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
 
     // Parse fermentables from response
     recipe.fermentables = this.extractFermentables(response, beerStyle);
-    
+
     // Parse hops from response
     recipe.hops = this.extractHops(response, beerStyle);
-    
+
     // Parse yeast from response
     recipe.yeast = this.extractYeast(response, beerStyle);
-    
+
     return recipe;
   }
 
@@ -900,7 +900,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    */
   extractFermentables(response, beerStyle) {
     const fermentables = [];
-    
+
     if (beerStyle.toLowerCase().includes('ipa')) {
       fermentables.push(
         { name: 'Pale 2-Row', amount: 10.0, unit: 'lb', ppg: 37, lovibond: 2 },
@@ -941,7 +941,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
         { name: 'Munich Malt', amount: 1.0, unit: 'lb', ppg: 37, lovibond: 10 }
       );
     }
-    
+
     return fermentables;
   }
 
@@ -950,7 +950,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    */
   extractHops(response, beerStyle) {
     const hops = [];
-    
+
     if (beerStyle.toLowerCase().includes('ipa') && beerStyle.toLowerCase().includes('hazy')) {
       hops.push(
         { name: 'Magnum', amount: 0.5, unit: 'oz', time: 60, alpha: 14.0, use: 'Boil' },
@@ -994,7 +994,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
         { name: 'Cascade', amount: 0.5, unit: 'oz', time: 0, alpha: 5.5, use: 'Aroma' }
       );
     }
-    
+
     return hops;
   }
 
@@ -1003,7 +1003,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    */
   extractYeast(response, beerStyle) {
     const yeast = [];
-    
+
     if (beerStyle.toLowerCase().includes('hazy') || beerStyle.toLowerCase().includes('neipa')) {
       yeast.push({
         name: 'Wyeast 1318 London Ale III',
@@ -1075,7 +1075,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
         temperature: '64-72°F'
       });
     }
-    
+
     return yeast;
   }
 
@@ -1106,7 +1106,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
       "Bring wort to a rolling boil",
       "Add bittering hops at start of boil"
     ];
-    
+
     // Add hop additions based on recipe
     recipe.hops.forEach(hop => {
       if (hop.time > 0 && hop.time < 60) {
@@ -1115,9 +1115,9 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
         boilSteps.push(`Add ${hop.amount} oz ${hop.name} at flameout`);
       }
     });
-    
+
     boilSteps.push("Cool wort to 65°F using immersion chiller or ice bath");
-    
+
     instructions.sections.push({
       title: "Boil",
       steps: boilSteps
@@ -1153,17 +1153,76 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   }
 
   /**
+   * Helper function for precise amount rounding
+   */
+  roundAmount(amount) {
+    return Math.round(amount * 100) / 100;
+  }
+
+  /**
+   * Calculate equipment efficiency adjustment
+   */
+  getEquipmentEfficiency(originalSize, newSize, baseEfficiency = 72) {
+    const sizeRatio = newSize / originalSize;
+    
+    // Efficiency typically decreases with larger batches due to:
+    // - Heat distribution issues
+    // - Mash bed depth
+    // - Sparge efficiency
+    if (sizeRatio > 2) {
+      return baseEfficiency * 0.95; // 5% efficiency loss for large batches
+    } else if (sizeRatio < 0.5) {
+      return Math.min(baseEfficiency * 1.05, 85); // Small batches can be more efficient
+    }
+    return baseEfficiency;
+  }
+
+  /**
+   * Scale ingredient amounts efficiently with equipment considerations
+   */
+  scaleIngredients(ingredients, scaleFactor, type, efficiencyAdjustment = 1) {
+    const scaled = new Array(ingredients.length);
+    for (let i = 0; i < ingredients.length; i++) {
+      const ingredient = ingredients[i];
+      let scaledAmount = ingredient.amount * scaleFactor;
+      
+      // Apply efficiency adjustment to fermentables
+      if (type === 'fermentables' && efficiencyAdjustment !== 1) {
+        scaledAmount *= (1 / efficiencyAdjustment);
+      }
+      
+      scaled[i] = {
+        name: ingredient.name,
+        amount: type === 'yeast' && scaleFactor > 2 
+          ? Math.ceil(scaledAmount)
+          : this.roundAmount(scaledAmount),
+        unit: ingredient.unit,
+        ppg: ingredient.ppg,
+        lovibond: ingredient.lovibond,
+        alpha: ingredient.alpha,
+        time: ingredient.time,
+        use: ingredient.use,
+        type: ingredient.type,
+        form: ingredient.form,
+        attenuation: ingredient.attenuation,
+        temperature: ingredient.temperature
+      };
+    }
+    return scaled;
+  }
+
+  /**
    * Generate fallback recipe when AI fails - now equipment-aware
    */
-  async generateFallbackRecipe(beerStyle, characteristics) {
+  generateFallbackRecipe(beerStyle, characteristics) {
     const batchSize = characteristics.batchSize || 5.0;
-    
+
     try {
       // Use equipment-aware recipe generator if available
       if (window.EquipmentAwareRecipeGenerator) {
         const equipmentGenerator = new EquipmentAwareRecipeGenerator();
-        const result = await equipmentGenerator.generateEquipmentAwareRecipe(beerStyle, batchSize, characteristics);
-        
+        const result = equipmentGenerator.generateEquipmentAwareRecipe(beerStyle, batchSize, characteristics);
+
         return {
           summary: `Generated equipment-optimized ${beerStyle} recipe for ${batchSize} gallon batch using your brewery's specifications.`,
           recipe: result.recipe,
@@ -1177,8 +1236,8 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
     } catch (error) {
       console.warn('Equipment-aware generation failed, using basic scaling:', error);
     }
-    
-    // Fallback to basic scaling if equipment-aware fails
+
+    // Create base recipe
     const baseRecipe = {
       name: `${beerStyle} Recipe`,
       type: 'All Grain',
@@ -1191,33 +1250,24 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
       yeast: this.extractYeast('', beerStyle)
     };
 
-    // Scale recipe to target batch size if different from 5 gallons
-    let recipe = baseRecipe;
+    // Scale recipe if needed
     if (batchSize !== 5.0) {
       const scaleFactor = batchSize / 5.0;
-      recipe = {
-        ...baseRecipe,
-        name: `${beerStyle} Recipe (${batchSize} gal)`,
-        batchSize: batchSize,
-        fermentables: baseRecipe.fermentables.map(f => ({
-          ...f,
-          amount: Math.round((f.amount * scaleFactor) * 100) / 100
-        })),
-        hops: baseRecipe.hops.map(h => ({
-          ...h,
-          amount: Math.round((h.amount * scaleFactor) * 100) / 100
-        })),
-        yeast: baseRecipe.yeast.map(y => ({
-          ...y,
-          amount: scaleFactor > 2 ? Math.ceil(y.amount * scaleFactor) : y.amount
-        }))
-      };
+      const newEfficiency = this.getEquipmentEfficiency(5.0, batchSize, baseRecipe.efficiency);
+      const efficiencyAdjustment = baseRecipe.efficiency / newEfficiency;
+      
+      baseRecipe.name = `${beerStyle} Recipe (${batchSize} gal)`;
+      baseRecipe.batchSize = batchSize;
+      baseRecipe.efficiency = newEfficiency;
+      baseRecipe.fermentables = this.scaleIngredients(baseRecipe.fermentables, scaleFactor, 'fermentables', efficiencyAdjustment);
+      baseRecipe.hops = this.scaleIngredients(baseRecipe.hops, scaleFactor, 'hops');
+      baseRecipe.yeast = this.scaleIngredients(baseRecipe.yeast, scaleFactor, 'yeast');
     }
 
     return {
       summary: `Generated ${beerStyle} recipe for ${batchSize} gallon batch with standard ingredients and proportions.`,
-      recipe: recipe,
-      instructions: this.generateBrewingInstructions(recipe),
+      recipe: baseRecipe,
+      instructions: this.generateBrewingInstructions(baseRecipe),
       suggestions: [`How do I adjust the ${beerStyle} recipe?`, `What variations work for ${beerStyle}?`],
       totalResults: 1
     };
@@ -1261,15 +1311,15 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   /**
    * Scale recipe to different batch size - now equipment-aware
    */
-  async scaleRecipe(recipe, newBatchSize, conversational = true) {
+  scaleRecipe(recipe, newBatchSize, conversational = true) {
     try {
       // Use equipment-aware scaling if available
       if (window.EquipmentAwareRecipeGenerator) {
         const equipmentGenerator = new EquipmentAwareRecipeGenerator();
-        const result = await equipmentGenerator.generateEquipmentAwareRecipe(recipe.style, newBatchSize, {
+        const result = equipmentGenerator.generateEquipmentAwareRecipe(recipe.style, newBatchSize, {
           specialRequests: `Scale existing ${recipe.name} recipe`
         });
-        
+
         if (conversational) {
           const advice = this.generateEquipmentScalingAdvice(recipe.batchSize, newBatchSize, result.scalingFactors);
           return {
@@ -1279,32 +1329,34 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
             summary: `Recipe scaled from ${recipe.batchSize} to ${newBatchSize} gallons using your equipment specifications.`
           };
         }
-        
+
         return { recipe: result.recipe };
       }
     } catch (error) {
       console.warn('Equipment-aware scaling failed, using basic scaling:', error);
     }
-    
-    // Fallback to basic scaling
+
+    // Optimized basic scaling with equipment efficiency
     const scaleFactor = newBatchSize / recipe.batchSize;
+    const newEfficiency = this.getEquipmentEfficiency(recipe.batchSize, newBatchSize, recipe.efficiency);
+    const efficiencyAdjustment = recipe.efficiency / newEfficiency;
     
     const scaledRecipe = {
-      ...recipe,
       name: `${recipe.name} (${newBatchSize} gal)`,
+      type: recipe.type,
       batchSize: newBatchSize,
-      fermentables: recipe.fermentables.map(f => ({
-        ...f,
-        amount: Math.round((f.amount * scaleFactor) * 100) / 100
-      })),
-      hops: recipe.hops.map(h => ({
-        ...h,
-        amount: Math.round((h.amount * scaleFactor) * 100) / 100
-      })),
-      yeast: recipe.yeast.map(y => ({
-        ...y,
-        amount: scaleFactor > 2 ? Math.ceil(y.amount * scaleFactor) : y.amount
-      }))
+      efficiency: newEfficiency,
+      boilTime: recipe.boilTime,
+      style: recipe.style,
+      targetOG: recipe.targetOG,
+      targetFG: recipe.targetFG,
+      targetABV: recipe.targetABV,
+      targetIBU: recipe.targetIBU,
+      notes: recipe.notes,
+      fermentables: this.scaleIngredients(recipe.fermentables, scaleFactor, 'fermentables', efficiencyAdjustment),
+      hops: this.scaleIngredients(recipe.hops, scaleFactor, 'hops'),
+      yeast: this.scaleIngredients(recipe.yeast, scaleFactor, 'yeast'),
+      misc: recipe.misc || []
     };
 
     if (conversational) {
@@ -1324,19 +1376,19 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
    */
   generateEquipmentScalingAdvice(originalSize, newSize, scalingFactors) {
     let advice = `🔧 **Equipment-Optimized Scaling: ${originalSize} → ${newSize} gallons**\n\n`;
-    
+
     advice += `**Equipment Considerations:**\n`;
     advice += `- Volume Scale Factor: ${scalingFactors.volumeScale.toFixed(2)}x\n`;
     advice += `- Efficiency Adjustment: ${(scalingFactors.efficiencyAdjustment * 100).toFixed(1)}%\n`;
     advice += `- Equipment Capacity: ${scalingFactors.equipmentCapacity.toFixed(1)} gallons max\n\n`;
-    
+
     if (newSize > scalingFactors.equipmentCapacity) {
       advice += `**⚠️ Capacity Warning:**\n`;
       advice += `- Target size (${newSize} gal) exceeds equipment capacity\n`;
       advice += `- Recommended batch size: ${scalingFactors.recommendedBatchSize.toFixed(1)} gallons\n`;
       advice += `- Consider multiple smaller batches or equipment upgrade\n\n`;
     }
-    
+
     if (scalingFactors.volumeScale > 3) {
       advice += `**⚠️ Large Scale-Up Considerations:**\n`;
       advice += `- Mash tun capacity and heat distribution\n`;
@@ -1344,7 +1396,7 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
       advice += `- Fermentation vessel availability\n`;
       advice += `- Yeast pitch rate calculations adjusted for equipment\n\n`;
     }
-    
+
     advice += `**Equipment-Specific Adjustments:**\n`;
     advice += `- Ingredient amounts optimized for your mash efficiency\n`;
     advice += `- Hop utilization adjusted for your boil kettle type\n`;
@@ -1353,42 +1405,47 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
 
     return advice;
   }
-  
+
   /**
    * Generate basic scaling advice (fallback)
    */
   generateScalingAdvice(originalSize, newSize, scaleFactor) {
-    let advice = `🔧 **Scaling from ${originalSize} to ${newSize} gallons (${scaleFactor.toFixed(2)}x)**\n\n`;
+    const newEfficiency = this.getEquipmentEfficiency(originalSize, newSize);
+    const efficiencyChange = ((newEfficiency / 72) - 1) * 100;
     
+    let advice = `🔧 **Scaling from ${originalSize} to ${newSize} gallons (${scaleFactor.toFixed(2)}x)**\n\n`;
+
     if (scaleFactor > 3) {
       advice += `**⚠️ Large Scale-Up Tips:**
 - Consider split boils if your kettle can't handle the volume
 - You may need multiple fermenters
 - Yeast starter highly recommended for this size
-- Watch your efficiency - it may drop with larger grain bills\n\n`;
+- Efficiency adjusted to ${newEfficiency.toFixed(1)}% (${efficiencyChange > 0 ? '+' : ''}${efficiencyChange.toFixed(1)}%)\n\n`;
     } else if (scaleFactor < 0.5) {
       advice += `**⚠️ Scaling Down Tips:**
 - Small amounts can be tricky to measure - consider percentages
 - Watch out for hop utilization changes in smaller volumes
-- Single yeast pack should still be sufficient\n\n`;
+- Single yeast pack should still be sufficient
+- Efficiency may improve to ${newEfficiency.toFixed(1)}%\n\n`;
     }
 
-    advice += `**Scaling Notes:**
-- All fermentables and hops scaled linearly
-- Yeast amounts adjusted for larger batches
-- Timing remains the same
+    advice += `**Equipment-Adjusted Scaling:**
+- Fermentables adjusted for ${newEfficiency.toFixed(1)}% efficiency
+- Grain bill compensated for equipment size effects
+- Hops and yeast scaled linearly
 - Water chemistry may need adjustment for volume`;
 
     return advice;
   }
 
   /**
-   * Adjust recipe gravity (OG/FG)
+   * Adjust recipe gravity (OG/FG) with equipment efficiency
    */
-  async adjustGravity(recipe, targetOG, conversational = true) {
+  adjustGravity(recipe, targetOG, conversational = true) {
     const currentOG = this.calculateOG(recipe);
     const adjustment = targetOG - currentOG;
-    
+
+    // Early exit for minimal changes
     if (Math.abs(adjustment) < 0.002) {
       return {
         recipe: recipe,
@@ -1398,8 +1455,8 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
     }
 
     // Calculate base malt adjustment needed
-    const baseMaltIndex = recipe.fermentables.findIndex(f => 
-      f.name.toLowerCase().includes('pale') || 
+    const baseMaltIndex = recipe.fermentables.findIndex(f =>
+      f.name.toLowerCase().includes('pale') ||
       f.name.toLowerCase().includes('2-row') ||
       f.name.toLowerCase().includes('pilsner')
     );
@@ -1412,16 +1469,29 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
     const pointsNeeded = adjustment * 1000 * recipe.batchSize;
     const poundsToAdd = pointsNeeded / (baseMalt.ppg * recipe.efficiency / 100);
 
+    // Optimized object creation with direct property assignment
     const adjustedRecipe = {
-      ...recipe,
       name: `${recipe.name} (OG ${targetOG.toFixed(3)})`,
-      fermentables: recipe.fermentables.map((f, index) => 
-        index === baseMaltIndex 
-          ? { ...f, amount: Math.round((f.amount + poundsToAdd) * 100) / 100 }
-          : f
-      ),
-      targetOG: targetOG
+      type: recipe.type,
+      batchSize: recipe.batchSize,
+      efficiency: recipe.efficiency,
+      boilTime: recipe.boilTime,
+      style: recipe.style,
+      targetOG: targetOG,
+      targetFG: recipe.targetFG,
+      targetABV: recipe.targetABV,
+      targetIBU: recipe.targetIBU,
+      notes: recipe.notes,
+      hops: recipe.hops,
+      yeast: recipe.yeast,
+      misc: recipe.misc,
+      fermentables: recipe.fermentables.slice()
     };
+    
+    // Direct property modification on cloned array
+    adjustedRecipe.fermentables[baseMaltIndex] = Object.assign({}, baseMalt, {
+      amount: this.roundAmount(baseMalt.amount + poundsToAdd)
+    });
 
     if (conversational) {
       const advice = this.generateGravityAdvice(currentOG, targetOG, poundsToAdd, baseMalt.name);
@@ -1441,15 +1511,15 @@ The recipe I've created should give you a beautiful ${style} with excellent drin
   generateGravityAdvice(currentOG, targetOG, adjustment, maltName) {
     const direction = adjustment > 0 ? 'increased' : 'decreased';
     const change = Math.abs(adjustment);
-    
+
     return `🎯 **Gravity Adjustment: ${currentOG.toFixed(3)} → ${targetOG.toFixed(3)}**
 
 **Change Made:**
 - ${direction.charAt(0).toUpperCase() + direction.slice(1)} ${maltName} by ${change.toFixed(2)} lbs
 
 **Why This Works:**
-${adjustment > 0 
-  ? '- More base malt = more fermentable sugars = higher OG\n- This maintains the recipe balance while hitting your target' 
+${adjustment > 0
+  ? '- More base malt = more fermentable sugars = higher OG\n- This maintains the recipe balance while hitting your target'
   : '- Less base malt = fewer fermentable sugars = lower OG\n- Recipe proportions stay balanced'}
 
 **Pro Tips:**
@@ -1461,10 +1531,11 @@ ${adjustment > 0
   /**
    * Adjust recipe bitterness (IBU)
    */
-  async adjustBitterness(recipe, targetIBU, conversational = true) {
+  adjustBitterness(recipe, targetIBU, conversational = true) {
     const currentIBU = this.calculateIBU(recipe);
     const adjustment = targetIBU - currentIBU;
-    
+
+    // Early exit for minimal changes
     if (Math.abs(adjustment) < 2) {
       return {
         recipe: recipe,
@@ -1474,7 +1545,7 @@ ${adjustment > 0
     }
 
     // Find bittering hop (longest boil time)
-    const bitteringHopIndex = recipe.hops.reduce((maxIndex, hop, index) => 
+    const bitteringHopIndex = recipe.hops.reduce((maxIndex, hop, index) =>
       hop.time > recipe.hops[maxIndex].time ? index : maxIndex, 0);
 
     if (bitteringHopIndex === -1) {
@@ -1483,17 +1554,30 @@ ${adjustment > 0
 
     const bitteringHop = recipe.hops[bitteringHopIndex];
     const scaleFactor = targetIBU / currentIBU;
-    
+
+    // Optimized object creation with direct property assignment
     const adjustedRecipe = {
-      ...recipe,
       name: `${recipe.name} (${targetIBU} IBU)`,
-      hops: recipe.hops.map((h, index) => 
-        index === bitteringHopIndex 
-          ? { ...h, amount: Math.round((h.amount * scaleFactor) * 100) / 100 }
-          : h
-      ),
-      targetIBU: targetIBU
+      type: recipe.type,
+      batchSize: recipe.batchSize,
+      efficiency: recipe.efficiency,
+      boilTime: recipe.boilTime,
+      style: recipe.style,
+      targetOG: recipe.targetOG,
+      targetFG: recipe.targetFG,
+      targetABV: recipe.targetABV,
+      targetIBU: targetIBU,
+      notes: recipe.notes,
+      fermentables: recipe.fermentables,
+      yeast: recipe.yeast,
+      misc: recipe.misc,
+      hops: recipe.hops.slice()
     };
+    
+    // Direct property modification on cloned array
+    adjustedRecipe.hops[bitteringHopIndex] = Object.assign({}, bitteringHop, {
+      amount: this.roundAmount(bitteringHop.amount * scaleFactor)
+    });
 
     if (conversational) {
       const advice = this.generateBitternessAdvice(currentIBU, targetIBU, bitteringHop, scaleFactor);
@@ -1513,15 +1597,15 @@ ${adjustment > 0
   generateBitternessAdvice(currentIBU, targetIBU, hop, scaleFactor) {
     const direction = scaleFactor > 1 ? 'increased' : 'decreased';
     const changePercent = Math.round(Math.abs((scaleFactor - 1) * 100));
-    
+
     return `🍺 **Bitterness Adjustment: ${currentIBU.toFixed(1)} → ${targetIBU.toFixed(1)} IBU**
 
 **Change Made:**
 - ${direction.charAt(0).toUpperCase() + direction.slice(1)} ${hop.name} by ${changePercent}% (${hop.amount} → ${(hop.amount * scaleFactor).toFixed(2)} oz)
 
 **Balance Notes:**
-${scaleFactor > 1 
-  ? '- Higher bitterness will create a more aggressive hop character\n- Consider the malt backbone can handle this level' 
+${scaleFactor > 1
+  ? '- Higher bitterness will create a more aggressive hop character\n- Consider the malt backbone can handle this level'
   : '- Lower bitterness will let malt sweetness come through more\n- Great for showcasing specialty malts'}
 
 **Brewing Tips:**
@@ -1533,10 +1617,11 @@ ${scaleFactor > 1
   /**
    * Adjust recipe color (SRM)
    */
-  async adjustColor(recipe, targetSRM, conversational = true) {
+  adjustColor(recipe, targetSRM, conversational = true) {
     const currentSRM = this.calculateSRM(recipe);
     const adjustment = targetSRM - currentSRM;
-    
+
+    // Early exit for minimal changes
     if (Math.abs(adjustment) < 1) {
       return {
         recipe: recipe,
@@ -1546,42 +1631,52 @@ ${scaleFactor > 1
     }
 
     // Find crystal/specialty malts to adjust
-    const specialtyMaltIndex = recipe.fermentables.findIndex(f => 
-      f.name.toLowerCase().includes('crystal') || 
+    const specialtyMaltIndex = recipe.fermentables.findIndex(f =>
+      f.name.toLowerCase().includes('crystal') ||
       f.name.toLowerCase().includes('caramel') ||
       (f.lovibond && f.lovibond > 10)
     );
 
-    let adjustedRecipe;
+    // Optimized object creation with direct property assignment
+    const adjustedRecipe = {
+      name: `${recipe.name} (${targetSRM} SRM)`,
+      type: recipe.type,
+      batchSize: recipe.batchSize,
+      efficiency: recipe.efficiency,
+      boilTime: recipe.boilTime,
+      style: recipe.style,
+      targetOG: recipe.targetOG,
+      targetFG: recipe.targetFG,
+      targetABV: recipe.targetABV,
+      targetIBU: recipe.targetIBU,
+      targetSRM: targetSRM,
+      notes: recipe.notes,
+      hops: recipe.hops,
+      yeast: recipe.yeast,
+      misc: recipe.misc,
+      fermentables: recipe.fermentables.slice()
+    };
+
     if (adjustment > 0 && specialtyMaltIndex !== -1) {
       // Darken by increasing specialty malts
       const specialtyMalt = recipe.fermentables[specialtyMaltIndex];
-      const increase = adjustment * 0.1; // Rough estimate
+      const increase = adjustment * 0.1;
       
-      adjustedRecipe = {
-        ...recipe,
-        name: `${recipe.name} (${targetSRM} SRM)`,
-        fermentables: recipe.fermentables.map((f, index) => 
-          index === specialtyMaltIndex 
-            ? { ...f, amount: Math.round((f.amount + increase) * 100) / 100 }
-            : f
-        ),
-        targetSRM: targetSRM
-      };
+      adjustedRecipe.fermentables[specialtyMaltIndex] = Object.assign({}, specialtyMalt, {
+        amount: this.roundAmount(specialtyMalt.amount + increase)
+      });
     } else if (adjustment < 0) {
-      // Lighten by reducing specialty malts
+      // Lighten by reducing specialty malts - targeted updates only
       const reduction = Math.abs(adjustment) * 0.1;
       
-      adjustedRecipe = {
-        ...recipe,
-        name: `${recipe.name} (${targetSRM} SRM)`,
-        fermentables: recipe.fermentables.map(f => 
-          (f.lovibond && f.lovibond > 10) 
-            ? { ...f, amount: Math.max(0, Math.round((f.amount - reduction) * 100) / 100) }
-            : f
-        ),
-        targetSRM: targetSRM
-      };
+      for (let i = 0; i < adjustedRecipe.fermentables.length; i++) {
+        const f = adjustedRecipe.fermentables[i];
+        if (f.lovibond && f.lovibond > 10) {
+          adjustedRecipe.fermentables[i] = Object.assign({}, f, {
+            amount: Math.max(0, this.roundAmount(f.amount - reduction))
+          });
+        }
+      }
     } else {
       return { error: "Could not find appropriate malts to adjust color" };
     }
@@ -1604,7 +1699,7 @@ ${scaleFactor > 1
   generateColorAdvice(currentSRM, targetSRM, adjustment) {
     const direction = adjustment > 0 ? 'darker' : 'lighter';
     const colorName = this.getSRMColorName(targetSRM);
-    
+
     return `🎨 **Color Adjustment: ${currentSRM.toFixed(1)} → ${targetSRM.toFixed(1)} SRM (${colorName})**
 
 **Change Made:**
@@ -1612,8 +1707,8 @@ ${scaleFactor > 1
 - ${adjustment > 0 ? 'Increased specialty malts' : 'Reduced specialty malts'}
 
 **Color Impact:**
-${adjustment > 0 
-  ? '- Deeper color will add more caramel/roasted flavors\n- May slightly increase body and sweetness' 
+${adjustment > 0
+  ? '- Deeper color will add more caramel/roasted flavors\n- May slightly increase body and sweetness'
   : '- Lighter color will reduce caramel notes\n- Cleaner, crisper flavor profile'}
 
 **Visual Result:**
@@ -1649,7 +1744,7 @@ ${adjustment > 0
    * Calculate estimated OG from recipe
    */
   calculateOG(recipe) {
-    const totalPoints = recipe.fermentables.reduce((sum, f) => 
+    const totalPoints = recipe.fermentables.reduce((sum, f) =>
       sum + (f.amount * (f.ppg || 37) * (recipe.efficiency || 72) / 100), 0);
     return 1 + (totalPoints / recipe.batchSize / 1000);
   }
@@ -1680,7 +1775,7 @@ ${adjustment > 0
    * Calculate estimated SRM from recipe
    */
   calculateSRM(recipe) {
-    const totalSRM = recipe.fermentables.reduce((sum, f) => 
+    const totalSRM = recipe.fermentables.reduce((sum, f) =>
       sum + ((f.amount * (f.lovibond || 2)) / recipe.batchSize), 0);
     return 1.4922 * Math.pow(totalSRM, 0.6859);
   }
@@ -1713,7 +1808,7 @@ ${adjustment > 0
     const mashSection = this.generateMashSteps(recipe);
     steps.sections.push(mashSection);
 
-    // Boil process  
+    // Boil process
     const boilSection = this.generateBoilSteps(recipe);
     steps.sections.push(boilSection);
 
@@ -1791,7 +1886,7 @@ ${adjustment > 0
    */
   generateFermentationSteps(recipe) {
     const yeast = recipe.yeast[0] || { name: 'Ale Yeast', temperature: '64-68°F' };
-    
+
     return {
       title: "🍺 Fermentation",
       duration: "7-14 days",
@@ -1834,7 +1929,7 @@ ${adjustment > 0
   printRecipe(recipe, includeSteps = true) {
     const printWindow = window.open('', '_blank');
     const printContent = this.generatePrintableRecipe(recipe, includeSteps);
-    
+
     printWindow.document.write(printContent);
     printWindow.document.close();
     printWindow.focus();
@@ -1849,126 +1944,117 @@ ${adjustment > 0
     const currentOG = this.calculateOG(recipe).toFixed(3);
     const currentIBU = this.calculateIBU(recipe).toFixed(1);
     const currentSRM = this.calculateSRM(recipe).toFixed(1);
-    
-    let html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>${recipe.name} - Recipe</title>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 0.5in; line-height: 1.4; }
-          .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-          .recipe-title { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-          .recipe-style { font-size: 16px; color: #666; }
-          .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
-          .stat-box { text-align: center; border: 1px solid #ddd; padding: 10px; border-radius: 5px; }
-          .stat-value { font-size: 18px; font-weight: bold; color: #333; }
-          .stat-label { font-size: 12px; color: #666; }
-          .section { margin: 20px 0; }
-          .section-title { font-size: 16px; font-weight: bold; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
-          .ingredient-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-          .ingredient-table th, .ingredient-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-          .ingredient-table th { background-color: #f5f5f5; font-weight: bold; }
-          .footer { margin-top: 40px; font-size: 12px; color: #666; text-align: center; }
-          @media print { .no-print { display: none; } }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <div class="recipe-title">${recipe.name}</div>
-          <div class="recipe-style">${recipe.style} • ${recipe.batchSize} Gallon Batch</div>
-          <div style="font-size: 12px; margin-top: 10px;">Generated: ${currentDate}</div>
-        </div>
 
-        <div class="stats-grid">
-          <div class="stat-box">
-            <div class="stat-value">${currentOG}</div>
-            <div class="stat-label">Original Gravity</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-value">${recipe.targetFG || '1.012'}</div>
-            <div class="stat-label">Final Gravity</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-value">${currentIBU}</div>
-            <div class="stat-label">IBU</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-value">${currentSRM}</div>
-            <div class="stat-label">SRM</div>
-          </div>
-        </div>
+    // Pre-build table rows for better performance
+    let fermentableRows = '';
+    for (let i = 0; i < recipe.fermentables.length; i++) {
+      const f = recipe.fermentables[i];
+      fermentableRows += `<tr><td>${f.name}</td><td>${f.amount} ${f.unit}</td><td>${f.ppg || 37}</td><td>${f.lovibond || 2}°L</td></tr>`;
+    }
 
-        <div class="section">
-          <div class="section-title">Fermentables</div>
-          <table class="ingredient-table">
-            <tr><th>Ingredient</th><th>Amount</th><th>PPG</th><th>Lovibond</th></tr>
-            ${recipe.fermentables.map(f => `
-              <tr>
-                <td>${f.name}</td>
-                <td>${f.amount} ${f.unit}</td>
-                <td>${f.ppg || 37}</td>
-                <td>${f.lovibond || 2}°L</td>
-              </tr>
-            `).join('')}
-          </table>
-        </div>
+    let hopRows = '';
+    for (let i = 0; i < recipe.hops.length; i++) {
+      const h = recipe.hops[i];
+      hopRows += `<tr><td>${h.name}</td><td>${h.amount} ${h.unit}</td><td>${h.alpha || 5}%</td><td>${h.time} min</td><td>${h.use || 'Boil'}</td></tr>`;
+    }
 
-        <div class="section">
-          <div class="section-title">Hops</div>
-          <table class="ingredient-table">
-            <tr><th>Hop</th><th>Amount</th><th>Alpha</th><th>Time</th><th>Use</th></tr>
-            ${recipe.hops.map(h => `
-              <tr>
-                <td>${h.name}</td>
-                <td>${h.amount} ${h.unit}</td>
-                <td>${h.alpha || 5}%</td>
-                <td>${h.time} min</td>
-                <td>${h.use || 'Boil'}</td>
-              </tr>
-            `).join('')}
-          </table>
-        </div>
+    let yeastRows = '';
+    for (let i = 0; i < recipe.yeast.length; i++) {
+      const y = recipe.yeast[i];
+      yeastRows += `<tr><td>${y.name}</td><td>${y.type}</td><td>${y.form}</td><td>${y.amount} ${y.unit}</td><td>${y.attenuation}%</td></tr>`;
+    }
 
-        <div class="section">
-          <div class="section-title">Yeast</div>
-          <table class="ingredient-table">
-            <tr><th>Strain</th><th>Type</th><th>Form</th><th>Amount</th><th>Attenuation</th></tr>
-            ${recipe.yeast.map(y => `
-              <tr>
-                <td>${y.name}</td>
-                <td>${y.type}</td>
-                <td>${y.form}</td>
-                <td>${y.amount} ${y.unit}</td>
-                <td>${y.attenuation}%</td>
-              </tr>
-            `).join('')}
-          </table>
-        </div>
-    `;
+    let html = `<!DOCTYPE html>
+<html>
+<head>
+  <title>${recipe.name} - Recipe</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0.5in; line-height: 1.4; }
+    .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+    .recipe-title { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+    .recipe-style { font-size: 16px; color: #666; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
+    .stat-box { text-align: center; border: 1px solid #ddd; padding: 10px; border-radius: 5px; }
+    .stat-value { font-size: 18px; font-weight: bold; color: #333; }
+    .stat-label { font-size: 12px; color: #666; }
+    .section { margin: 20px 0; }
+    .section-title { font-size: 16px; font-weight: bold; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+    .ingredient-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    .ingredient-table th, .ingredient-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .ingredient-table th { background-color: #f5f5f5; font-weight: bold; }
+    .footer { margin-top: 40px; font-size: 12px; color: #666; text-align: center; }
+    @media print { .no-print { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="recipe-title">${recipe.name}</div>
+    <div class="recipe-style">${recipe.style} • ${recipe.batchSize} Gallon Batch</div>
+    <div style="font-size: 12px; margin-top: 10px;">Generated: ${currentDate}</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-value">${currentOG}</div>
+      <div class="stat-label">Original Gravity</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">${recipe.targetFG || '1.012'}</div>
+      <div class="stat-label">Final Gravity</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">${currentIBU}</div>
+      <div class="stat-label">IBU</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">${currentSRM}</div>
+      <div class="stat-label">SRM</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Fermentables</div>
+    <table class="ingredient-table">
+      <tr><th>Ingredient</th><th>Amount</th><th>PPG</th><th>Lovibond</th></tr>
+      ${fermentableRows}
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Hops</div>
+    <table class="ingredient-table">
+      <tr><th>Hop</th><th>Amount</th><th>Alpha</th><th>Time</th><th>Use</th></tr>
+      ${hopRows}
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Yeast</div>
+    <table class="ingredient-table">
+      <tr><th>Strain</th><th>Type</th><th>Form</th><th>Amount</th><th>Attenuation</th></tr>
+      ${yeastRows}
+    </table>
+  </div>`;
 
     if (includeSteps) {
-      // Add brewing steps for print version
       html += `
-        <div style="page-break-before: always;"></div>
-        <div class="section">
-          <div class="section-title">Brewing Instructions</div>
-          <div style="margin: 15px 0;">
-            <strong>Mash:</strong> 152°F for 60 minutes<br>
-            <strong>Boil:</strong> ${recipe.boilTime} minutes<br>
-            <strong>Fermentation:</strong> ${recipe.yeast[0]?.temperature || '65-68°F'} for 7-10 days
-          </div>
-        </div>
-      `;
+  <div style="page-break-before: always;"></div>
+  <div class="section">
+    <div class="section-title">Brewing Instructions</div>
+    <div style="margin: 15px 0;">
+      <strong>Mash:</strong> 152°F for 60 minutes<br>
+      <strong>Boil:</strong> ${recipe.boilTime} minutes<br>
+      <strong>Fermentation:</strong> ${recipe.yeast[0]?.temperature || '65-68°F'} for 7-10 days
+    </div>
+  </div>`;
     }
 
     html += `
-        <div class="footer">
-          Generated by BrewMetrics AI Brewmaster • ${new Date().toLocaleDateString()}
-        </div>
-      </body>
-      </html>
-    `;
+  <div class="footer">
+    Generated by BrewMetrics AI Brewmaster • ${currentDate}
+  </div>
+</body>
+</html>`;
 
     return html;
   }
@@ -2015,7 +2101,7 @@ ${adjustment > 0
   generateRecipeTutorial(recipe) {
     const difficulty = this.assessRecipeDifficulty(recipe);
     const keyTechniques = this.identifyKeyTechniques(recipe);
-    
+
     return {
       title: `🎓 Brewing Tutorial: ${recipe.name}`,
       difficulty: difficulty,
@@ -2048,7 +2134,7 @@ ${adjustment > 0
           title: "🍺 Tasting Notes",
           content: [
             "Expected aroma characteristics",
-            "Flavor profile breakdown", 
+            "Flavor profile breakdown",
             "Mouthfeel and body expectations",
             "Common off-flavors to watch for"
           ]
@@ -2062,20 +2148,20 @@ ${adjustment > 0
    */
   assessRecipeDifficulty(recipe) {
     let complexity = 0;
-    
+
     // Fermentables complexity
     complexity += recipe.fermentables.length > 4 ? 2 : 0;
     complexity += recipe.fermentables.some(f => f.lovibond > 100) ? 1 : 0;
-    
+
     // Hops complexity
     complexity += recipe.hops.length > 4 ? 2 : 0;
     complexity += recipe.hops.some(h => h.use === 'Dry Hop') ? 1 : 0;
-    
+
     // Style complexity
     if (recipe.style.toLowerCase().includes('sour')) complexity += 3;
     if (recipe.style.toLowerCase().includes('imperial')) complexity += 2;
     if (recipe.style.toLowerCase().includes('belgian')) complexity += 1;
-    
+
     if (complexity <= 2) return 'Beginner';
     if (complexity <= 5) return 'Intermediate';
     return 'Advanced';
@@ -2086,14 +2172,14 @@ ${adjustment > 0
    */
   identifyKeyTechniques(recipe) {
     const techniques = [];
-    
+
     // Mashing technique
     techniques.push({
       name: "Single Infusion Mash",
       description: "Standard mashing technique for most ales",
       tips: ["Maintain 152°F throughout mash", "Stir gently every 15 minutes"]
     });
-    
+
     // Hop techniques
     if (recipe.hops.some(h => h.time === 0)) {
       techniques.push({
@@ -2102,7 +2188,7 @@ ${adjustment > 0
         tips: ["Let temperature drop to 170°F", "Steep for 20-30 minutes"]
       });
     }
-    
+
     if (recipe.hops.some(h => h.use === 'Dry Hop')) {
       techniques.push({
         name: "Dry Hopping",
@@ -2110,7 +2196,7 @@ ${adjustment > 0
         tips: ["Add during active fermentation", "Sanitize hops with vodka spray"]
       });
     }
-    
+
     return techniques;
   }
 
@@ -2144,7 +2230,7 @@ ${adjustment > 0
         await this.ensureAuthenticated();
         const functions = firebase.functions('us-central1');
         const loadRecipe = functions.httpsCallable('loadRecipeIntoDesigner');
-        
+
         const result = await loadRecipe({ recipe });
         if (result.data.success) {
           recipe = result.data.recipe;
@@ -2153,7 +2239,7 @@ ${adjustment > 0
     } catch (error) {
       this.logger.warn('Firebase function not available, using direct loading', error);
     }
-    
+
     // Continue with existing loading logic
     try {
       // Check if we're on the recipe designer page
@@ -2167,7 +2253,7 @@ ${adjustment > 0
 
       // Try multiple ways to access the recipe designer
       let designer = window.recipeDesigner || window.RecipeDesigner;
-      
+
       if (!designer) {
         // Look for the instance in global scope
         for (let key in window) {
@@ -2201,10 +2287,10 @@ ${adjustment > 0
 
       // Update the UI form fields
       this.updateRecipeDesignerUI(recipe);
-      
+
       // Update the ingredient displays
       this.updateIngredientDisplays(recipe, designer);
-      
+
       // Trigger calculations and display updates
       setTimeout(() => {
         try {
@@ -2214,12 +2300,12 @@ ${adjustment > 0
         } catch (calcError) {
           this.logger.warn('Error in calculations, trying fallback', calcError);
           // Try manual calculation trigger
-          const calculateBtn = document.querySelector('[onclick*="calculate"]') || 
+          const calculateBtn = document.querySelector('[onclick*="calculate"]') ||
                               document.querySelector('.calculate-btn');
           if (calculateBtn) calculateBtn.click();
         }
       }, 200);
-      
+
       this.logger.info('Recipe loaded into designer successfully', recipe.name);
       return true;
     } catch (error) {
@@ -2235,7 +2321,7 @@ ${adjustment > 0
   showDetailedError(error) {
     console.group('🤖 AI Brewmaster Recipe Loading Debug');
     console.error('Error details:', error);
-    console.log('Available global objects:', Object.keys(window).filter(key => 
+    console.log('Available global objects:', Object.keys(window).filter(key =>
       key.toLowerCase().includes('recipe') || key.toLowerCase().includes('designer')
     ));
     console.log('Recipe designer instance check:', {
@@ -2260,19 +2346,19 @@ ${adjustment > 0
       // Update basic recipe info
       const nameInput = document.getElementById('recipe-name');
       if (nameInput) nameInput.value = recipe.name;
-      
+
       const batchSizeInput = document.getElementById('batch-vol');
       if (batchSizeInput) {
         batchSizeInput.value = recipe.batchSize;
         batchSizeInput.dispatchEvent(new Event('input', { bubbles: true }));
       }
-      
+
       const efficiencyInput = document.getElementById('efficiency');
       if (efficiencyInput) {
         efficiencyInput.value = recipe.efficiency;
         efficiencyInput.dispatchEvent(new Event('input', { bubbles: true }));
       }
-      
+
       const boilTimeInput = document.getElementById('boil-time');
       if (boilTimeInput) {
         boilTimeInput.value = recipe.boilTime;
@@ -2281,23 +2367,23 @@ ${adjustment > 0
 
       // Clear and populate ingredient tables
       this.clearIngredientTables();
-      
+
       // Add ingredients one by one
       recipe.fermentables.forEach(fermentable => {
         this.addIngredientToTableDirect('fermentables', fermentable);
       });
-      
+
       recipe.hops.forEach(hop => {
         this.addIngredientToTableDirect('hops', hop);
       });
-      
+
       recipe.yeast.forEach(yeast => {
         this.addIngredientToTableDirect('yeast', yeast);
       });
 
       // Try to trigger calculations manually
       setTimeout(() => {
-        const calculateBtn = document.querySelector('button[onclick*="calculate"]') || 
+        const calculateBtn = document.querySelector('button[onclick*="calculate"]') ||
                            document.querySelector('.calculate-btn') ||
                            document.getElementById('calculate-stats');
         if (calculateBtn) calculateBtn.click();
@@ -2321,19 +2407,19 @@ ${adjustment > 0
       nameInput.value = recipe.name;
       nameInput.dispatchEvent(new Event('input', { bubbles: true }));
     }
-    
+
     const batchSizeInput = document.getElementById('batch-vol');
     if (batchSizeInput) {
       batchSizeInput.value = recipe.batchSize;
       batchSizeInput.dispatchEvent(new Event('input', { bubbles: true }));
     }
-    
+
     const efficiencyInput = document.getElementById('efficiency');
     if (efficiencyInput) {
       efficiencyInput.value = recipe.efficiency;
       efficiencyInput.dispatchEvent(new Event('input', { bubbles: true }));
     }
-    
+
     const boilTimeInput = document.getElementById('boil-time');
     if (boilTimeInput) {
       boilTimeInput.value = recipe.boilTime;
@@ -2355,7 +2441,7 @@ ${adjustment > 0
   updateIngredientDisplays(recipe, designer) {
     // Clear existing ingredient tables
     this.clearIngredientTables();
-    
+
     // Trigger ingredient display updates through the designer
     if (designer.updateIngredientDisplay) {
       setTimeout(() => {
@@ -2366,16 +2452,16 @@ ${adjustment > 0
       recipe.fermentables.forEach(fermentable => {
         this.addIngredientToTable('fermentables', fermentable);
       });
-      
+
       recipe.hops.forEach(hop => {
         this.addIngredientToTable('hops', hop);
       });
-      
+
       recipe.yeast.forEach(yeast => {
         this.addIngredientToTable('yeast', yeast);
       });
     }
-    
+
     this.logger.info('Updated ingredient displays');
   }
 
@@ -2388,28 +2474,28 @@ ${adjustment > 0
       'fermentable-list', 'hop-list', 'yeast-list',
       'fermentables-table-body', 'hops-table-body', 'yeast-table-body'
     ];
-    
+
     possibleTableIds.forEach(tableId => {
       const table = document.getElementById(tableId);
       if (table) {
         // Only clear AI-generated rows to preserve any existing manual entries
         const aiRows = table.querySelectorAll('tr[data-ai-generated="true"]');
         aiRows.forEach(row => row.remove());
-        
+
         // If table is completely empty, clear it completely
         if (table.children.length === 0) {
           table.innerHTML = '';
         }
       }
     });
-    
+
     // Also try clearing tables by class selectors
     const tableSelectors = [
       '.fermentables-table tbody',
-      '.hops-table tbody', 
+      '.hops-table tbody',
       '.yeast-table tbody'
     ];
-    
+
     tableSelectors.forEach(selector => {
       const table = document.querySelector(selector);
       if (table) {
@@ -2417,7 +2503,7 @@ ${adjustment > 0
         aiRows.forEach(row => row.remove());
       }
     });
-    
+
     this.logger.info('Cleared AI-generated ingredient tables');
   }
 
@@ -2432,21 +2518,21 @@ ${adjustment > 0
       `${type}s-list`, // plural form
       `${type.replace('fermentables', 'fermentable')}-list`
     ];
-    
+
     let table = null;
     for (const id of possibleIds) {
       table = document.getElementById(id);
       if (table) break;
     }
-    
+
     if (!table) {
       this.logger.warn(`Could not find table for ${type}, trying selector approach`);
       // Try finding table by class or other selectors
-      table = document.querySelector(`.${type}-table tbody`) || 
+      table = document.querySelector(`.${type}-table tbody`) ||
               document.querySelector(`table[data-type="${type}"] tbody`) ||
               document.querySelector(`#recipe-tabs .${type} tbody`);
     }
-    
+
     if (!table) {
       this.logger.error(`Could not find table element for ${type}`);
       return;
@@ -2454,7 +2540,7 @@ ${adjustment > 0
 
     const row = document.createElement('tr');
     row.setAttribute('data-ai-generated', 'true');
-    
+
     if (type === 'fermentables') {
       row.innerHTML = `
         <td>${ingredient.name}</td>
@@ -2482,7 +2568,7 @@ ${adjustment > 0
         <td><button type="button" onclick="this.closest('tr').remove(); if(window.recipeDesigner) window.recipeDesigner.calculateStats();">Remove</button></td>
       `;
     }
-    
+
     table.appendChild(row);
     this.logger.info(`Added ${type} ingredient to table: ${ingredient.name}`);
   }
@@ -2494,7 +2580,7 @@ ${adjustment > 0
     try {
       // Try the normal method first
       this.addIngredientToTable(type, ingredient);
-      
+
       // Also try to find and click "Add" buttons to ensure ingredients are properly registered
       const addButtons = document.querySelectorAll(`[data-type="${type}"] .add-btn, button[onclick*="add"][onclick*="${type}"]`);
       if (addButtons.length === 0) {
@@ -2516,7 +2602,7 @@ ${adjustment > 0
     const doc = this.generateRecipeDocument(recipe, instructions);
     const blob = new Blob([doc], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
-    
+
     const a = document.createElement('a');
     a.href = url;
     a.download = `${recipe.name.replace(/\s+/g, '_')}_Recipe.txt`;
@@ -2532,18 +2618,18 @@ ${adjustment > 0
   generateRecipeDocument(recipe, instructions) {
     let doc = `${recipe.name}\n`;
     doc += `${'='.repeat(recipe.name.length)}\n\n`;
-    
+
     doc += `Style: ${recipe.style}\n`;
     doc += `Batch Size: ${recipe.batchSize} gallons\n`;
     doc += `Efficiency: ${recipe.efficiency}%\n`;
     doc += `Boil Time: ${recipe.boilTime} minutes\n\n`;
-    
+
     doc += `Target Stats:\n`;
     doc += `OG: ${recipe.targetOG}\n`;
     doc += `FG: ${recipe.targetFG}\n`;
     doc += `ABV: ${recipe.targetABV}%\n`;
     doc += `IBU: ${recipe.targetIBU}\n\n`;
-    
+
     // Fermentables
     doc += `FERMENTABLES:\n`;
     doc += `-----------\n`;
@@ -2551,7 +2637,7 @@ ${adjustment > 0
       doc += `${f.amount} ${f.unit} ${f.name}\n`;
     });
     doc += `\n`;
-    
+
     // Hops
     doc += `HOPS:\n`;
     doc += `-----\n`;
@@ -2559,7 +2645,7 @@ ${adjustment > 0
       doc += `${h.amount} ${h.unit} ${h.name} (${h.alpha}% AA) - ${h.time} min ${h.use}\n`;
     });
     doc += `\n`;
-    
+
     // Yeast
     doc += `YEAST:\n`;
     doc += `------\n`;
@@ -2567,11 +2653,11 @@ ${adjustment > 0
       doc += `${y.amount} ${y.unit} ${y.name} (${y.attenuation}% attenuation)\n`;
     });
     doc += `\n`;
-    
+
     // Instructions
     doc += `BREWING INSTRUCTIONS:\n`;
     doc += `====================\n\n`;
-    
+
     instructions.sections.forEach(section => {
       doc += `${section.title.toUpperCase()}:\n`;
       doc += `${'-'.repeat(section.title.length + 1)}\n`;
@@ -2580,10 +2666,10 @@ ${adjustment > 0
       });
       doc += `\n`;
     });
-    
+
     doc += `Generated by BrewMetrics AI Brewmaster\n`;
     doc += `Date: ${new Date().toLocaleDateString()}\n`;
-    
+
     return doc;
   }
 
@@ -2615,7 +2701,7 @@ ${adjustment > 0
         return authInstance.currentUser.get().getAuthResponse().access_token;
       }
     }
-    
+
     // Fallback to gcloud auth if available
     try {
       const response = await fetch('/auth/token');
@@ -2626,7 +2712,7 @@ ${adjustment > 0
     } catch (error) {
       console.warn('Could not get auth token:', error);
     }
-    
+
     throw new Error('No authentication token available');
   }
 
@@ -2653,7 +2739,7 @@ ${adjustment > 0
 // Initialize AI Brewmaster when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   window.AIBrewmaster = new AIBrewmaster();
-  
+
   // Check for AI recipe in URL parameters
   const urlParams = new URLSearchParams(window.location.search);
   const aiRecipeData = urlParams.get('aiRecipe');

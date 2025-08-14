@@ -1,7 +1,6 @@
 // Comprehensive Brewing Ingredients Database
 class BrewingIngredientsDatabase {
-    constructor() {
-        this.ingredients = {
+    static ingredients = {
             fermentables: [
                 // Base Malts
                 { name: 'American 2-Row', supplier: 'Briess', type: 'Base Malt', yield: 81, color: 2, price: 1.20 },
@@ -94,15 +93,20 @@ class BrewingIngredientsDatabase {
                 { name: 'Irish Moss', supplier: 'LD Carlson', type: 'Fining', use: 'Protein coagulation', price: 3.25 },
                 { name: 'Whirlfloc Tablets', supplier: 'LD Carlson', type: 'Fining', use: 'Protein coagulation', price: 8.50 }
             ]
-        };
+    };
+
+    constructor() {}
+
+    _getIngredientsForCategory(category) {
+        return BrewingIngredientsDatabase.ingredients[category] || [];
     }
 
     getIngredientsByCategory(category) {
-        return this.ingredients[category] || [];
+        return this._getIngredientsForCategory(category);
     }
 
     searchIngredients(category, query) {
-        const ingredients = this.ingredients[category] || [];
+        const ingredients = this._getIngredientsForCategory(category);
         return ingredients.filter(item => 
             item.name.toLowerCase().includes(query.toLowerCase()) ||
             item.supplier?.toLowerCase().includes(query.toLowerCase()) ||
@@ -111,20 +115,12 @@ class BrewingIngredientsDatabase {
     }
 
     getIngredientByName(category, name) {
-        const ingredients = this.ingredients[category] || [];
-        return ingredients.find(item => item.name === name);
-    }
-
-    getSuppliers(category) {
-        const ingredients = this.ingredients[category] || [];
-        return [...new Set(ingredients.map(item => item.supplier).filter(Boolean))];
-    }
-
-    getTypes(category) {
-        const ingredients = this.ingredients[category] || [];
-        return [...new Set(ingredients.map(item => item.type).filter(Boolean))];
+        const ingredients = this._getIngredientsForCategory(category);
+        return ingredients.find(ingredient => ingredient.name.toLowerCase() === name.toLowerCase());
     }
 }
 
-// Global instance
-window.brewingIngredientsDB = new BrewingIngredientsDatabase();
+// Create global instance
+if (typeof window !== 'undefined') {
+    window.brewingIngredientsDB = new BrewingIngredientsDatabase();
+}

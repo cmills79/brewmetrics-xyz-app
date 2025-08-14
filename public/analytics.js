@@ -203,9 +203,9 @@ class BrewMetricsAnalytics {
   }
 
   /**
-   * Get Firebase auth token for API requests
+   * Get Firebase auth token for API requests with retry logic
    */
-  async getAuthToken() {
+  async getAuthToken(retries = 2) {
     if (typeof firebase === 'undefined' || !firebase.auth) {
       throw new Error('Firebase auth not available');
     }
@@ -215,7 +215,18 @@ class BrewMetricsAnalytics {
       throw new Error('User not authenticated');
     }
 
-    return await user.getIdToken();
+    try {
+      return await user.getIdToken(true); // Force refresh
+    } catch (error) {
+      this.logger.warn('Auth token request failed', { error: error.message, retries });
+      
+      if (retries > 0) {
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+        return this.getAuthToken(retries - 1);
+      }
+      
+      throw new Error(`Failed to get auth token after retries: ${error.message}`);
+    }
   }
 
   /**
