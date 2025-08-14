@@ -2,21 +2,21 @@
 
 // Wait for the HTML document to be fully loaded before running script logic
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Initialize utilities
+    // Standardized check for BrewMetricsUtils
     const { logger, errorHandler, loadingIndicator } = window.BrewMetricsUtils || {};
-    
-    if (!logger) {
-        console.error('BrewMetricsUtils not loaded. Please include utils.js before this script.');
-        return;
+    if (!logger || !errorHandler || !loadingIndicator) {
+        console.error('BrewMetricsUtils or its components are not loaded. Please ensure utils.js is included and loaded correctly.');
+        // Fallback to console if utils are missing
+        window.logger = { info: console.log, error: console.error, warn: console.warn };
+        window.errorHandler = { displayError: console.error, clearError: () => {}, handleFirebaseError: (err) => console.error(err) };
+        window.loadingIndicator = { show: () => console.log('Loading...'), hide: () => {} };
     }
-    
-    logger.info("Authentication page loaded");
+
+    logger.info("Authentication page logic initiated");
 
     // --- Get DOM Elements ---
-    // (Keep all your getElementById calls here)
-    const loginForm = document.getElementById('login'); // Should find it now
-    const registerForm = document.getElementById('register'); // Should find it now
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
     const loginEmailInput = document.getElementById('login-email');
     const loginPasswordInput = document.getElementById('login-password');
     const registerBreweryNameInput = document.getElementById('register-brewery-name');
@@ -24,21 +24,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerGmbInput = document.getElementById('register-gmb');
     const registerEmailInput = document.getElementById('register-email');
     const registerPasswordInput = document.getElementById('register-password');
-    const errorMessageDiv = document.getElementById('error-message'); // Should find it now
-    const showRegisterLink = document.getElementById('show-register'); // Should find it now
-    const showLoginLink = document.getElementById('show-login'); // Should find it now
-    const loginSection = document.getElementById('login-form'); // Should find it now
-    const registerSection = document.getElementById('register-form'); // Should find it now
+    const errorMessageDiv = document.getElementById('error-message');
+    const showRegisterLink = document.getElementById('show-register');
+    const showLoginLink = document.getElementById('show-login');
+    const mainContent = document.getElementById('main-content');
+    const pageLoader = document.getElementById('page-loader');
 
-    // --- Add Event Listeners ---
+    // --- Firebase Auth State Listener ---
+    // This is the core fix for the authentication issue.
+    // It listens for changes in auth state and ensures Firebase has initialized before redirecting.
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // If user is logged in, redirect to the dashboard.
+            logger.info("User is already logged in. Redirecting to dashboard.", { uid: user.uid });
+            window.location.href = 'dashboard.html';
+        } else {
+            // If user is not logged in, hide the loader and show the login/register forms.
+            logger.info("No active user session found. Displaying authentication forms.");
+            if (pageLoader) pageLoader.style.display = 'none';
+            if (mainContent) mainContent.style.display = 'block';
+        }
+    });
+
+    // --- Event Listeners ---
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            // Clear previous errors
             errorHandler.clearError();
-            
-            // Get values at submission time
+
             const email = loginEmailInput?.value?.trim();
             const password = loginPasswordInput?.value;
 
@@ -48,172 +61,90 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             logger.info("Login attempt started", { email });
-
-            // Show loading indicator
             loadingIndicator.show();
-            loginForm.style.display = 'none';
 
-            // Use Firebase auth
-            auth.signInWithEmailAndPassword(email, password)
+            firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    logger.info("User logged in successfully", { 
-                        uid: userCredential.user.uid, 
-                        email: userCredential.user.email 
-                    });
-                    
-                    // Redirect to dashboard page
-                    window.location.href = 'dashboard.html';
+                    logger.info("User logged in successfully. Firebase will redirect.", { uid: userCredential.user.uid });
+                    // No need to redirect here, onAuthStateChanged will handle it.
                 })
                 .catch((error) => {
                     logger.error("Login failed", error);
                     errorHandler.handleFirebaseError(error);
-                    
-                    // Show form again on error
                     loadingIndicator.hide();
-                    loginForm.style.display = 'block';
                 });
         });
-    } else {
-        logger.error("Login form element not found");
     }
 
     if (registerForm) {
-         registerForm.addEventListener('submit', (e) => {
+        registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            clearAuthError();
-            // Get values at submission time
-            const email = registerEmailInput ? registerEmailInput.value : null;
-            const password = registerPasswordInput ? registerPasswordInput.value : null;
-            const breweryName = registerBreweryNameInput ? registerBreweryNameInput.value : null;
-            const location = registerLocationInput ? registerLocationInput.value : null;
-            const gmbLink = registerGmbInput ? registerGmbInput.value : ''; // Default to empty string
+            errorHandler.clearError();
+            
+            const email = registerEmailInput?.value?.trim();
+            const password = registerPasswordInput?.value;
+            const breweryName = registerBreweryNameInput?.value?.trim();
+            const location = registerLocationInput?.value?.trim();
+            const gmbLink = registerGmbInput?.value?.trim() || '';
 
             if (!email || !password || !breweryName || !location) {
-                 displayAuthError("Please fill in all required registration fields.");
-                 return;
+                errorHandler.displayError("Please fill in all required registration fields.");
+                return;
             }
             if (password.length < 6) {
-                displayAuthError("Password must be at least 6 characters long.");
+                errorHandler.displayError("Password must be at least 6 characters long.");
                 return;
             }
 
-            console.log(`Attempting registration for: ${email}`);
+            logger.info("Registration attempt started", { email });
+            loadingIndicator.show();
 
-            // Show loading indicator
-            registerForm.parentNode.insertBefore(loadingIndicator, registerForm); // Insert before form
-            loadingIndicator.style.display = 'block';
-            registerForm.style.display = 'none'; // Hide the form
-
-            auth.createUserWithEmailAndPassword(email, password)
-                 .then((userCredential) => {
-                     const user = userCredential.user;
-                     console.log('User registered:', user.uid);
-                     // Now save brewery details to Firestore
-                     // Use 'db' declared globally by index.html inline script
-                     return db.collection('breweries').doc(user.uid).set({
-                         breweryName: breweryName,
-                         location: location,
-                         gmbLink: gmbLink,
-                         email: user.email, // Use the email from the auth user
-                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                     });
-                 })
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    logger.info('User registered successfully. Saving brewery details to Firestore.', { uid: user.uid });
+                    
+                    // Save brewery details to Firestore
+                    return firebase.firestore().collection('breweries').doc(user.uid).set({
+                        breweryName: breweryName,
+                        location: location,
+                        gmbLink: gmbLink,
+                        email: user.email,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                })
                 .then(() => {
-                     console.log('Brewery details saved to Firestore.');
-                      // if (registerForm) registerForm.reset(); // Reset form
-                     window.location.href = 'dashboard.html'; // Redirect
-                 })
-                 .catch((error) => {
-                     console.error("Registration or Firestore Error:", error);
-                     displayAuthError(error.code); // Pass error code
-
-                     // Hide loading indicator, show form again on error
-                     loadingIndicator.style.display = 'none';
-                     registerForm.style.display = 'block';
-                 });
-         });
-    } else {
-         console.error("Register form element not found!");
+                    logger.info('Brewery details saved. Firebase will redirect.');
+                    // onAuthStateChanged will handle the redirect to the dashboard.
+                })
+                .catch((error) => {
+                    logger.error("Registration or Firestore Error:", error);
+                    errorHandler.handleFirebaseError(error);
+                    loadingIndicator.hide();
+                });
+        });
     }
 
     // --- Toggle Forms ---
-    if (showRegisterLink && showLoginLink && loginSection && registerSection) {
+    if (showRegisterLink && showLoginLink) {
+        const loginSection = document.getElementById('login-section');
+        const registerSection = document.getElementById('register-section');
+
         showRegisterLink.addEventListener('click', (e) => {
             e.preventDefault();
-            loginSection.style.display = 'none';
-            registerSection.style.display = 'block';
-            clearAuthError();
-            // Optional: Clear form fields when toggling
-             if (loginForm) loginForm.reset();
+            if (loginSection) loginSection.style.display = 'none';
+            if (registerSection) registerSection.style.display = 'block';
+            errorHandler.clearError();
+            if (loginForm) loginForm.reset();
         });
 
         showLoginLink.addEventListener('click', (e) => {
             e.preventDefault();
-            registerSection.style.display = 'none';
-            loginSection.style.display = 'block';
-            clearAuthError();
-             // Optional: Clear form fields when toggling
-             if (registerForm) registerForm.reset();
+            if (registerSection) registerSection.style.display = 'none';
+            if (loginSection) loginSection.style.display = 'block';
+            errorHandler.clearError();
+            if (registerForm) registerForm.reset();
         });
-    } else {
-        // Log which elements specifically weren't found
-        if (!showRegisterLink) console.error("Show Register Link not found");
-        if (!showLoginLink) console.error("Show Login Link not found");
-        if (!loginSection) console.error("Login Section not found");
-        if (!registerSection) console.error("Register Section not found");
     }
-    
-    // --- Form Clearing Function ---
-    function clearFormFields(formElement) {
-        if (formElement) {
-            formElement.reset();
-        }
-    }
-
-    // --- Error Handling Functions ---
-    function displayAuthError(errorCodeOrMessage) {
-        let message = errorCodeOrMessage; // Default to the raw message/code
-        console.log("Displaying error for code/message:", errorCodeOrMessage); // Debugging
-        if (errorMessageDiv) {
-            // Map common error codes to user-friendly messages
-            switch (errorCodeOrMessage) {
-                case 'auth/invalid-email':
-                    message = 'Please enter a valid email address.';
-                    break;
-                case 'auth/user-not-found':
-                case 'auth/wrong-password':
-                case 'auth/invalid-credential': // Catch this modern code too
-                    message = 'Incorrect email or password. Please try again.';
-                    break;
-                case 'auth/email-already-in-use':
-                    message = 'This email address is already registered. Please login or use a different email.';
-                    break;
-                 case 'auth/weak-password':
-                     message = 'Password is too weak. Please use at least 6 characters.';
-                     break;
-                 case 'auth/missing-password':
-                     message = 'Please enter your password.';
-                     break;
-                 // Add more mappings as needed
-                 default:
-                     // If it's not a recognized code, display it or a generic message
-                     // Avoid showing raw internal messages to the user unless debugging
-                     console.error("Unhandled Auth Error Code:", errorCodeOrMessage);
-                     message = 'An unexpected error occurred. Please try again.';
-            }
-            errorMessageDiv.textContent = message;
-            errorMessageDiv.classList.remove('hidden');
-        } else {
-            console.error("Error display element (#error-message) not found!");
-        }
-    }
-
-    function clearAuthError() {
-         if (errorMessageDiv) {
-            errorMessageDiv.textContent = '';
-            errorMessageDiv.classList.add('hidden');
-        }
-    }
-} // <-- Add this closing brace to end the DOMContentLoaded callback
-); // <-- Add this closing parenthesis and semicolon to close the event listener
-// --- END OF script.js --
+});
+// --- END OF script.js ---

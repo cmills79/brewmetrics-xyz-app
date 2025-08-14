@@ -95,7 +95,15 @@ class BrewingIngredientsDatabase {
             ]
     };
 
-    constructor() {}
+    constructor() {
+        this._ingredientMaps = {};
+        for (const category in BrewingIngredientsDatabase.ingredients) {
+            this._ingredientMaps[category] = BrewingIngredientsDatabase.ingredients[category].reduce((map, ingredient) => {
+                map[ingredient.name.toLowerCase()] = ingredient;
+                return map;
+            }, {});
+        }
+    }
 
     _getIngredientsForCategory(category) {
         return BrewingIngredientsDatabase.ingredients[category] || [];
@@ -107,16 +115,17 @@ class BrewingIngredientsDatabase {
 
     searchIngredients(category, query) {
         const ingredients = this._getIngredientsForCategory(category);
+        const lowerCaseQuery = query.toLowerCase();
         return ingredients.filter(item => 
-            item.name.toLowerCase().includes(query.toLowerCase()) ||
-            item.supplier?.toLowerCase().includes(query.toLowerCase()) ||
-            item.type?.toLowerCase().includes(query.toLowerCase())
+            item.name.toLowerCase().includes(lowerCaseQuery) ||
+            item.supplier?.toLowerCase().includes(lowerCaseQuery) ||
+            item.type?.toLowerCase().includes(lowerCaseQuery)
         );
     }
 
     getIngredientByName(category, name) {
-        const ingredients = this._getIngredientsForCategory(category);
-        return ingredients.find(ingredient => ingredient.name.toLowerCase() === name.toLowerCase());
+        const categoryMap = this._ingredientMaps[category];
+        return categoryMap ? categoryMap[name.toLowerCase()] : undefined;
     }
 }
 

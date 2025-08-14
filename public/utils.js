@@ -1,12 +1,13 @@
 // Utility functions for BrewMetrics application
-// Production-ready logging and error handling
+// Production-ready logging, error handling, and sanitization
 
+/**
+ * A simple, production-ready logger that only outputs messages in development environments.
+ */
 class Logger {
   constructor() {
     this.isDevelopment = window.location.hostname === 'localhost' || 
-                       window.location.hostname === '127.0.0.1' ||
-                       window.location.hostname.includes('127.0.0.1') ||
-                       window.location.port !== '';
+                       window.location.hostname === '127.0.0.1';
   }
 
   info(message, data = null) {
@@ -22,19 +23,14 @@ class Logger {
   }
 
   error(message, error = null) {
-    if (this.isDevelopment) {
-      console.error(`[ERROR] ${message}`, error || '');
-    }
-    // In production, you might want to send to error tracking service
-  }
-
-  debug(message, data = null) {
-    if (this.isDevelopment) {
-      console.log(`[DEBUG] ${message}`, data || '');
-    }
+    // In a real production environment, this would send errors to a tracking service (e.g., Sentry, LogRocket)
+    console.error(`[ERROR] ${message}`, error || '');
   }
 }
 
+/**
+ * Centralized error handler for displaying user-friendly messages and processing Firebase errors.
+ */
 class ErrorHandler {
   constructor(logger) {
     this.logger = logger;
@@ -45,38 +41,34 @@ class ErrorHandler {
     if (errorContainer) {
       errorContainer.textContent = message;
       errorContainer.classList.remove('hidden');
-      
-      // Auto-hide after 10 seconds
-      setTimeout(() => {
-        this.clearError(containerId);
-      }, 10000);
+      setTimeout(() => this.clearError(containerId), 8000); // Hide after 8s
+    } else {
+      this.logger.error(`Error display container #${containerId} not found.`);
     }
-    this.logger.error('User error displayed:', message);
   }
 
   clearError(containerId = 'error-message') {
     const errorContainer = document.getElementById(containerId);
     if (errorContainer) {
-      errorContainer.classList.add('hidden');
       errorContainer.textContent = '';
+      errorContainer.classList.add('hidden');
     }
   }
 
   handleFirebaseError(error) {
     let userMessage = 'An unexpected error occurred. Please try again.';
-    
+    this.logger.error('Firebase Error:', error);
+
     switch (error.code) {
       case 'auth/user-not-found':
-        userMessage = 'No account found with this email address.';
-        break;
-      case 'auth/wrong-password':
-        userMessage = 'Incorrect password. Please try again.';
+      case 'auth/invalid-credential':
+        userMessage = 'Incorrect email or password. Please try again.';
         break;
       case 'auth/email-already-in-use':
-        userMessage = 'An account with this email already exists.';
+        userMessage = 'This email address is already registered. Please login.';
         break;
       case 'auth/weak-password':
-        userMessage = 'Password is too weak. Please choose a stronger password.';
+        userMessage = 'Password is too weak. Must be at least 6 characters.';
         break;
       case 'auth/invalid-email':
         userMessage = 'Please enter a valid email address.';
@@ -85,79 +77,92 @@ class ErrorHandler {
         userMessage = 'Network error. Please check your connection and try again.';
         break;
       case 'permission-denied':
-        userMessage = 'You don\'t have permission to access this data.';
-        break;
-      case 'unavailable':
-        userMessage = 'Service temporarily unavailable. Please try again later.';
+        userMessage = "You don't have permission to perform this action.";
         break;
       default:
-        this.logger.error('Unhandled Firebase error:', error);
+        this.logger.error('Unhandled Firebase error code:', error.code);
     }
-    
     this.displayError(userMessage);
     return userMessage;
   }
 }
 
+/**
+ * A simple loading indicator to show during async operations.
+ */
 class LoadingIndicator {
-  constructor() {
-    this.createLoadingElement();
+  constructor(elementId = 'global-loading-indicator') {
+    this.indicator = document.getElementById(elementId);
+    if (!this.indicator) {
+      this.indicator = this._createIndicator(elementId);
+      document.body.appendChild(this.indicator);
+    }
   }
 
-  createLoadingElement() {
-    if (!document.getElementById('global-loading')) {
-      const loading = document.createElement('div');
-      loading.id = 'global-loading';
-      loading.innerHTML = `
-        <div class="loading-overlay">
-          <div class="loading-spinner">
-            <div class="bubbles">
-              <div class="bubble"></div>
-              <div class="bubble"></div>
-              <div class="bubble"></div>
-            </div>
-          </div>
-        </div>
-      `;
-      loading.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        display: none;
-        z-index: 9999;
-        justify-content: center;
-        align-items: center;
-      `;
-      document.body.appendChild(loading);
-    }
+  _createIndicator(id) {
+    const indicator = document.createElement('div');
+    indicator.id = id;
+    indicator.className = 'loading-overlay';
+    indicator.innerHTML = '<div class="loading-spinner"></div>';
+    return indicator;
   }
 
   show() {
-    const loading = document.getElementById('global-loading');
-    if (loading) {
-      loading.style.display = 'flex';
-    }
+    this.indicator.style.display = 'flex';
   }
 
   hide() {
-    const loading = document.getElementById('global-loading');
-    if (loading) {
-      loading.style.display = 'none';
-    }
+    this.indicator.style.display = 'none';
   }
 }
 
-// Global utilities
+/**
+ * Sanitizer utility to prevent XSS attacks.
+ * Relies on DOMPurify, which must be loaded before this script.
+ */
+class Sanitizer {
+  constructor(logger) {
+    this.logger = logger;
+    if (typeof DOMPurify === 'undefined') {
+      this.logger.error('DOMPurify is not loaded. Sanitization will not work.');
+      this.isReady = false;
+    } else {
+      this.isReady = true;
+      // You can configure DOMPurify here if needed
+      // DOMPurify.setConfig({ ... });
+    }
+  }
+
+  /**
+   * Sanitizes a string of HTML, removing any potentially malicious code.
+   * @param {string} dirtyHtml The HTML string to sanitize.
+   * @returns {string} The sanitized HTML string.
+   */
+  sanitize(dirtyHtml) {
+    if (!this.isReady || typeof dirtyHtml !== 'string') {
+      // Fallback for safety: return an empty string or log an error
+      this.logger.error('Sanitization failed. DOMPurify not ready or input is not a string.');
+      // Return text content to be safe, prevents HTML rendering
+      const div = document.createElement('div');
+      div.textContent = dirtyHtml;
+      return div.innerHTML;
+    }
+    return DOMPurify.sanitize(dirtyHtml);
+  }
+}
+
+
+// --- Global Initialization ---
+
 const logger = new Logger();
 const errorHandler = new ErrorHandler(logger);
 const loadingIndicator = new LoadingIndicator();
+const sanitizer = new Sanitizer(logger);
 
-// Export for use in other scripts
+// Export a single, global utility object
 window.BrewMetricsUtils = {
   logger,
   errorHandler,
-  loadingIndicator
+  loadingIndicator,
+  sanitizer, // Add the new sanitizer
 };
